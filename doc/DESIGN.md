@@ -42,7 +42,9 @@ Parent class that has a state representation and calculate next state
 **Subclasses**
 Each simulation would have its own package of states and overrides the next state method to determine how to calculate its next state. GridLogic classes will call its next state method and pass in its arguments
 *Burning Tree*
+
 *No Tree*
+
 *Regular Tree*
 
 *Shark*
