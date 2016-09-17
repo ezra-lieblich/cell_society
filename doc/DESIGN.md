@@ -19,46 +19,78 @@ In order to achieve maximum flexibility by providing the user with as many optio
 ###CLASSES
 
 ### MainMenu
+
 View that contains buttons to select a simulation and then switches to simulation screen
+
 ###Grid Controller
+
 Controller class
+
 Shows the main menu and reads from corresponding XML file
+
 Starts the grid animation.
+
 In charge of stepping.
 
 
 ###GridLogic
+
 Parent class would contain simple methods that all simulations need to interact with the grid. It will access the Grid class to manipulate the grid. It will call each Cell’s method that determines the next state and update the Grid accordingly depending on the simulations specific logic 
+
 **Subclasses**
+
 Each simulation will have its own class that extends GridLogic. They will override or add methods that are specific for the interactions of each sim.
+
 ### Grid View
+
 Contains the Grid Class and updates the UI based on the status of the Grid. Also contains an instance of the ToolBar class
+
+
 ### Toolbar
+
 Toolbar contains the UI for all the buttons to change the parameters of the simulation and handles input that communicates with GridController
+
 ### Grid
+
 Model class that has a 2D array of all the different type of cells. It will have getters to provide access to the array and also basic methods to manipulate, add, and delete from the array. Also has a list of empty spaces in Grid
+
 ###Cell
+
 Parent class that has a state representation and calculate next state
+
 **Subclasses**
+
 Each simulation would have its own package of states and overrides the next state method to determine how to calculate its next state. GridLogic classes will call its next state method and pass in its arguments
+
 *Burning Tree*
 
 *No Tree*
 
 *Regular Tree*
 
+
 *Shark*
+
 *Fish*
 
+
 *X*
+
 *O*
+
 Implement interaction between the classes within the subclasses.
 
+
 ###Action
+
 **Subclasses**
+
 *MoveTree*
+
 *MoveWater*
+
 *MoveXO*
+
 All of these contain the algorithms for how Trees, Sharks/Fish, and XOs move and 
 ### XML Reader
 Initializes the file and creates the Grid object. 
@@ -79,26 +111,38 @@ Figure 3: Both Scenes
 
 
 ##DESIGN DETAILS
+
 **USE CASES**
+
 *Apply the rules to a middle cell: set the next state of a cell to dead by counting its number of neighbors using the Game of Life rules for a cell in the middle (i.e., with all its neighbors).*
+
 GRIDLOGIC calls cell.performLogic method, which has CELL calculate the next state for the middle cell. Method in GRIDLOGIC then sets the cell’s next state in the grid. GRIDVIEW then displays the changed state of the middle cell.
 
+
 *Apply the rules to an edge cell: set the next state of a cell to live by counting its number of neighbors using the Game of Life rules for a cell on the edge (i.e., with some of its neighbors missing).*
+
 Same as above.
 
+
 *Move to the next generation: update all cells in a simulation from their current state to their next state and display the result graphically.*
+
 GRIDCONTROLLER contains the step function, so every time the cells need to be updated from their similar state, GRIDLOGIC and GRIDVIEW will run in synchronization with GRID CONTROLLER when step function increments. 
 
+
 *Set a simulation parameter: set the value of a parameter, probCatch, for a simulation, Fire, based on the value given in an XML file.*
+
 XMLREADER will read initial conditions for the grid, GRID will initialize based off the data from XMLREADER.
 
+
 *Switch simulations: use the GUI to change the current simulation from Game of Life to Wator.*
+
 MAINMENU will be responsible for choosing the different simulations to switch to. When in game, TOOLBAR provides path back to MAINMENU to switch simulations.
 
 
 
 
 ##DESIGN CONSIDERATIONS
+
 The first design decision we had to make was where to determine the next state of the cell. We were debating whether to perform that in the Cell class or our GridLogic class. Putting in in our logic class would make it easier to write the methods since it would have easier access to the grid and it’s neighbors. This would also make the Cell class a lot simpler and have less sub-classes. However, we ultimately decided to put the method in cell class. This makes the logic class a lot cleaner because we don’t need an if tree figuring out what state it is in and then performing logic based off its state. Instead we just go through each cell and call Cells handle next state method.
 Another design choice we made was to have a Grid class have methods to update the grid instead of putting those methods inside GridLogic. We thought that since have a separate GridView class that does depend on Grid, that putting in those methods in GridLogic would be too much dependence. 
 Separate Toolbar from GridView was another design choice we made. Originally we thought it would make sense to put the whole UI view component in one class. However, since the Toolbar is going to be handling the parameters of the Grid and GridView we decided to create a separate class for this. Also this is good because now Toolbar interacts with the GridLogic and GridView doesn’t, so this separates the dependencies. 
