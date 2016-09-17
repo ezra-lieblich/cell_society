@@ -1,3 +1,3 @@
-![](classStructure1.png)
+![](doc/classStructure1.png)
 
-![](/design_imgs/classStructure.png)
+![](doc/design_imgs/classStructure.png)
