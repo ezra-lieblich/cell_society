@@ -4,25 +4,25 @@ CompSci 308: Cell Society Brainstorm
 > This is the link to the assignment: [CellSociety](http://www.cs.duke.edu/courses/compsci308/fall16/assign/02_cellsociety/)
 
 
-##INTRODUCTION
+## INTRODUCTION
 
 This project involves designing several different cell automata simulations. Specifically, this project will build simulations such as [Schelling’s model of segregation](http://nifty.stanford.edu/2014/mccown-schelling-model-segregation/), [Wa-Tor World model of predator-prey relationships](http://nifty.stanford.edu/2011/scott-wator-world/), [Spreading of Fire](http://nifty.stanford.edu/2007/shiflet-fire/). In order to successfully build these simulations,  we will have to display understanding of 2D arrays, random number generation, user interface design, algorithm design, JavaFx, XML, class inheritance and many other important topics in software design and implementation.
 Our primary design goal is to seamlessly transition between different cell automata simulations. This includes the ability to easily change the rules of interaction between cells, the appearance of cells, and the appearance of the grid, among other things. Other design goals include laying down the foundation of a friendly user interface that can be easily tailored to the user’s needs.
 In order to achieve maximum flexibility by providing the user with as many options to modify the simulations as possible, our architecture will be completely open. Third-parties will be able to add their own cell types, grid types, cell interactions, and many other factors that will maximize the potential of our Cell Automata simulator.
 
-##OVERVIEW
+## OVERVIEW
 
 [Class Structure Picture](https://git.cs.duke.edu/CompSci308_2016Fall/cellsociety_team01/blob/master/doc/design_imgs/classStructure.jpg)
 
 [Another Class Structure Picture](https://git.cs.duke.edu/CompSci308_2016Fall/cellsociety_team01/blob/master/doc/design_imgs/classStructure1.jpg)
 
-###CLASSES
+### CLASSES
 
 ### MainMenu
 
 View that contains buttons to select a simulation and then switches to simulation screen
 
-###Grid Controller
+### Grid Controller
 
 Controller class
 
@@ -33,7 +33,7 @@ Starts the grid animation.
 In charge of stepping.
 
 
-###GridLogic
+### GridLogic
 
 Parent class would contain simple methods that all simulations need to interact with the grid. It will access the Grid class to manipulate the grid. It will call each Cell’s method that determines the next state and update the Grid accordingly depending on the simulations specific logic 
 
@@ -54,7 +54,7 @@ Toolbar contains the UI for all the buttons to change the parameters of the simu
 
 Model class that has a 2D array of all the different type of cells. It will have getters to provide access to the array and also basic methods to manipulate, add, and delete from the array. Also has a list of empty spaces in Grid
 
-###Cell
+### Cell
 
 Parent class that has a state representation and calculate next state
 
@@ -81,7 +81,7 @@ Each simulation would have its own package of states and overrides the next stat
 Implement interaction between the classes within the subclasses.
 
 
-###Action
+### Action
 
 **Subclasses**
 
@@ -96,7 +96,7 @@ All of these contain the algorithms for how Trees, Sharks/Fish, and XOs move and
 Initializes the file and creates the Grid object. 
 Fills in the grid depending on the XML File and returns to GridController
 
-##USER INTERFACE
+## USER INTERFACE
 
 
 [Figure 1: Main Menu Screen](https://git.cs.duke.edu/CompSci308_2016Fall/cellsociety_team01/blob/master/doc/design_imgs/CellAutomataMainScreenImage.JPG)
@@ -110,7 +110,7 @@ Overall there will be two scenes: the main menu scene and the simulation scene.
 
 
 
-##DESIGN DETAILS
+## DESIGN DETAILS
 
 **USE CASES**
 
@@ -141,13 +141,13 @@ MAINMENU will be responsible for choosing the different simulations to switch to
 
 
 
-##DESIGN CONSIDERATIONS
+## DESIGN CONSIDERATIONS
 
 The first design decision we had to make was where to determine the next state of the cell. We were debating whether to perform that in the Cell class or our GridLogic class. Putting in in our logic class would make it easier to write the methods since it would have easier access to the grid and it’s neighbors. This would also make the Cell class a lot simpler and have less sub-classes. However, we ultimately decided to put the method in cell class. This makes the logic class a lot cleaner because we don’t need an if tree figuring out what state it is in and then performing logic based off its state. Instead we just go through each cell and call Cells handle next state method.
 Another design choice we made was to have a Grid class have methods to update the grid instead of putting those methods inside GridLogic. We thought that since have a separate GridView class that does depend on Grid, that putting in those methods in GridLogic would be too much dependence. 
 Separate Toolbar from GridView was another design choice we made. Originally we thought it would make sense to put the whole UI view component in one class. However, since the Toolbar is going to be handling the parameters of the Grid and GridView we decided to create a separate class for this. Also this is good because now Toolbar interacts with the GridLogic and GridView doesn’t, so this separates the dependencies. 
 
-##TEAM RESPONSIBILITIES
+## TEAM RESPONSIBILITIES
 
 Classes Everyone Will Work On:
 GridLogic, Cell, GridController
