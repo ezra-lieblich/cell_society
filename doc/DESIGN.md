@@ -6,8 +6,8 @@ CompSci 308: Cell Society Brainstorm
 
 ##INTRODUCTION
 
-This project involves designing several different cell automata simulations. Specifically, this project will build simulations such as [Schelling‚Äôs model of segregation](http://nifty.stanford.edu/2014/mccown-schelling-model-segregation/), [Wa-Tor World model of predator-prey relationships](http://nifty.stanford.edu/2011/scott-wator-world/), [Spreading of Fire](http://nifty.stanford.edu/2007/shiflet-fire/). In order to successfully build these simulations,  we will have to display understanding of 2D arrays, random number generation, user interface design, algorithm design, JavaFx, XML, class inheritance and many other important topics in software design and implementation.
-Our primary design goal is to seamlessly transition between different cell automata simulations. This includes the ability to easily change the rules of interaction between cells, the appearance of cells, and the appearance of the grid, among other things. Other design goals include laying down the foundation of a friendly user interface that can be easily tailored to the user‚Äôs needs.
+This project involves designing several different cell automata simulations. Specifically, this project will build simulations such as [Schellingís model of segregation](http://nifty.stanford.edu/2014/mccown-schelling-model-segregation/), [Wa-Tor World model of predator-prey relationships](http://nifty.stanford.edu/2011/scott-wator-world/), [Spreading of Fire](http://nifty.stanford.edu/2007/shiflet-fire/). In order to successfully build these simulations,  we will have to display understanding of 2D arrays, random number generation, user interface design, algorithm design, JavaFx, XML, class inheritance and many other important topics in software design and implementation.
+Our primary design goal is to seamlessly transition between different cell automata simulations. This includes the ability to easily change the rules of interaction between cells, the appearance of cells, and the appearance of the grid, among other things. Other design goals include laying down the foundation of a friendly user interface that can be easily tailored to the userís needs.
 In order to achieve maximum flexibility by providing the user with as many options to modify the simulations as possible, our architecture will be completely open. Third-parties will be able to add their own cell types, grid types, cell interactions, and many other factors that will maximize the potential of our Cell Automata simulator.
 
 ##OVERVIEW
@@ -35,7 +35,7 @@ In charge of stepping.
 
 ###GridLogic
 
-Parent class would contain simple methods that all simulations need to interact with the grid. It will access the Grid class to manipulate the grid. It will call each Cell‚Äôs method that determines the next state and update the Grid accordingly depending on the simulations specific logic 
+Parent class would contain simple methods that all simulations need to interact with the grid. It will access the Grid class to manipulate the grid. It will call each Cellís method that determines the next state and update the Grid accordingly depending on the simulations specific logic 
 
 **Subclasses**
 
@@ -99,14 +99,14 @@ Fills in the grid depending on the XML File and returns to GridController
 ##USER INTERFACE
 
 
-Figure 1: Main Menu Screen
+[Figure 1: Main Menu Screen](https://git.cs.duke.edu/CompSci308_2016Fall/cellsociety_team01/blob/master/doc/design_imgs/CellAutomataMainScreenImage.JPG)
 This is our initial idea for a main menu screen. The main menu screen will be initialized as a pop up window. The user will be taken to the simulation that is clicked via a scene switch.
 
-Figure 2: In Simulation Screen
-This is our idea for the in simulation screen. The window will occupy the full screen, but the grid will not. The user will be able to modify the x and y dimensions of the grid by typing integer values into text boxes by XSIZE and YSIZE and pressing/clicking enter. The grid will grow or shrink accordingly. This function, and ALL TEXTBOX functions, will not be available while a simulation is running -- they will only be available after pressing the restart button/before starting the simulation. If the user should enter an invalid value (for example, a word instead of a number into XSIZE or YSIZE), an alert box will appear in the center of the window with a message telling the user allowed input conditions. The restart, start, stop, and main menu will all be buttons that the user can click. If the user presses main menu, the simulation will pause, an alert box will pop up with a yes and no question of: ‚ÄúAre you sure you want to return to the main menu.‚Äù.
+[Figure 2: In Simulation Screen](https://git.cs.duke.edu/CompSci308_2016Fall/cellsociety_team01/blob/master/doc/design_imgs/CellAutomataSimScreenImage.JPG)
+This is our idea for the in simulation screen. The window will occupy the full screen, but the grid will not. The user will be able to modify the x and y dimensions of the grid by typing integer values into text boxes by XSIZE and YSIZE and pressing/clicking enter. The grid will grow or shrink accordingly. This function, and ALL TEXTBOX functions, will not be available while a simulation is running -- they will only be available after pressing the restart button/before starting the simulation. If the user should enter an invalid value (for example, a word instead of a number into XSIZE or YSIZE), an alert box will appear in the center of the window with a message telling the user allowed input conditions. The restart, start, stop, and main menu will all be buttons that the user can click. If the user presses main menu, the simulation will pause, an alert box will pop up with a yes and no question of: Are you sure you want to return to the main menu.
 Overall there will be two scenes: the main menu scene and the simulation scene.
 
-Figure 3: Both Scenes
+[Figure 3: Both Scenes]( https://git.cs.duke.edu/CompSci308_2016Fall/cellsociety_team01/blob/master/doc/design_imgs/CellAutomataOverallImage.JPG)
 
 
 
@@ -116,7 +116,7 @@ Figure 3: Both Scenes
 
 *Apply the rules to a middle cell: set the next state of a cell to dead by counting its number of neighbors using the Game of Life rules for a cell in the middle (i.e., with all its neighbors).*
 
-GRIDLOGIC calls cell.performLogic method, which has CELL calculate the next state for the middle cell. Method in GRIDLOGIC then sets the cell‚Äôs next state in the grid. GRIDVIEW then displays the changed state of the middle cell.
+GRIDLOGIC calls cell.performLogic method, which has CELL calculate the next state for the middle cell. Method in GRIDLOGIC then sets the cellís next state in the grid. GRIDVIEW then displays the changed state of the middle cell.
 
 
 *Apply the rules to an edge cell: set the next state of a cell to live by counting its number of neighbors using the Game of Life rules for a cell on the edge (i.e., with some of its neighbors missing).*
@@ -143,9 +143,9 @@ MAINMENU will be responsible for choosing the different simulations to switch to
 
 ##DESIGN CONSIDERATIONS
 
-The first design decision we had to make was where to determine the next state of the cell. We were debating whether to perform that in the Cell class or our GridLogic class. Putting in in our logic class would make it easier to write the methods since it would have easier access to the grid and it‚Äôs neighbors. This would also make the Cell class a lot simpler and have less sub-classes. However, we ultimately decided to put the method in cell class. This makes the logic class a lot cleaner because we don‚Äôt need an if tree figuring out what state it is in and then performing logic based off its state. Instead we just go through each cell and call Cells handle next state method.
+The first design decision we had to make was where to determine the next state of the cell. We were debating whether to perform that in the Cell class or our GridLogic class. Putting in in our logic class would make it easier to write the methods since it would have easier access to the grid and itís neighbors. This would also make the Cell class a lot simpler and have less sub-classes. However, we ultimately decided to put the method in cell class. This makes the logic class a lot cleaner because we donít need an if tree figuring out what state it is in and then performing logic based off its state. Instead we just go through each cell and call Cells handle next state method.
 Another design choice we made was to have a Grid class have methods to update the grid instead of putting those methods inside GridLogic. We thought that since have a separate GridView class that does depend on Grid, that putting in those methods in GridLogic would be too much dependence. 
-Separate Toolbar from GridView was another design choice we made. Originally we thought it would make sense to put the whole UI view component in one class. However, since the Toolbar is going to be handling the parameters of the Grid and GridView we decided to create a separate class for this. Also this is good because now Toolbar interacts with the GridLogic and GridView doesn‚Äôt, so this separates the dependencies. 
+Separate Toolbar from GridView was another design choice we made. Originally we thought it would make sense to put the whole UI view component in one class. However, since the Toolbar is going to be handling the parameters of the Grid and GridView we decided to create a separate class for this. Also this is good because now Toolbar interacts with the GridLogic and GridView doesnít, so this separates the dependencies. 
 
 ##TEAM RESPONSIBILITIES
 
@@ -160,3 +160,4 @@ GridView,Toolbar, XO
 
 Chris:
 XML, Tree, Life
+
