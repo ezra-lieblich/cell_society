@@ -1,20 +1,30 @@
 package cellsociety_team01;
 
+import javafx.scene.Scene;
+
 public class GridController {
 	private MainMenu menu;
 	private GridLogic logic;
 	private GridView view;
 	private XmlReader reader;
+	
+	private String title;
 
 	private boolean isSetupFinished;
 
 	public GridController() {
 		menu = new MainMenu();
 		isSetupFinished = false;
+		
+		//temporary code
+		title = "Test";
 	}
 
-	public void init() {
+	public Scene init(int screenWidth, int screenHeight) {
 		menu.init();
+		
+		
+//		return new ;
 	}
 
 	public void step(double elapsedTime) {
@@ -35,4 +45,7 @@ public class GridController {
 		isSetupFinished = true;
 	}
 
+	public String getTitle(){
+		return title;
+	}
 }
