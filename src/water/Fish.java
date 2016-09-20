@@ -3,6 +3,7 @@ package water;
 import java.util.ArrayList;
 
 import cellsociety_team01.Cell;
+import javafx.scene.paint.Color;
 
 public class Fish extends Cell {
 	private int currentReproduceTurn;
@@ -14,6 +15,7 @@ public class Fish extends Cell {
 	public Fish(int x, int y) {
 		super.init(x, y);
 		currentReproduceTurn = 0;
+		color = Color.GREENYELLOW;
 	}
 
 	@Override
@@ -47,6 +49,10 @@ public class Fish extends Cell {
 		return temp.get((int) (Math.random() * temp.size()));
 	}
 	
+	@Override
+	public String toString(){
+		return "F";
+	}
 	
 	
 	
@@ -58,6 +64,7 @@ public class Fish extends Cell {
 	public boolean isReproducing() {
 		return isReproducing;
 	}
+
 
 	
 }

@@ -2,13 +2,15 @@ package cellsociety_team01;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.Color;
+
+import javafx.scene.paint.Color;
 
 public class Cell {
 	private ArrayList<Cell> neighbors;
-	private Color color;
+	protected Color color;
 	private int XPosition;
 	private int YPosition;
+	
 	
 	public Cell(){}
 	
@@ -46,6 +48,10 @@ public class Cell {
 	// Gets the y coordinates of the cell
 	public int getCoordsY() {
 		return YPosition;
+	}
+	
+	public Color getColor(){
+		return color;
 	}
 	
 	

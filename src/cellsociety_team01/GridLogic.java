@@ -8,7 +8,7 @@ public class GridLogic {
 	public GridLogic(Grid grid) {
 		this.grid = grid;
 	}
-	public void step(double elapsedTime) {
+	public void step() {
 		
 	}
 }

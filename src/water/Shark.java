@@ -3,6 +3,7 @@ package water;
 import java.util.ArrayList;
 
 import cellsociety_team01.Cell;
+import javafx.scene.paint.Color;
 
 public class Shark extends Cell {
 
@@ -14,11 +15,13 @@ public class Shark extends Cell {
 
 	private boolean isReproducing;
 	private boolean isDead;
+	
 
 	public Shark(int x, int y) {
 		super.init(x, y);
 		currentReproduceTurn = 0;
 		turnsNoFish = 0;
+		color = Color.ORANGE;
 	}
 
 	@Override
@@ -72,6 +75,10 @@ public class Shark extends Cell {
 		return tempEmpty.get((int) (Math.random() * tempEmpty.size()));
 	}
 	
+	@Override
+	public String toString(){
+		return "S";
+	}
 	
 	
 	
@@ -88,7 +95,6 @@ public class Shark extends Cell {
 	public boolean isDead() {
 		return isDead;
 	}
-	
-	
+
 
 }

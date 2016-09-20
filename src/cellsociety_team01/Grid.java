@@ -26,6 +26,7 @@ public class Grid {
 			for (int j = y - 1; j <= y + 1; j++) {
 				if (validIndex(i, j) && !(i == x && j == y))
 					neighbors.add(grid[x][y]);
+				
 			}
 		}
 		return neighbors;

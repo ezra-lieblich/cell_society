@@ -7,6 +7,10 @@ import cellsociety_team01.Grid;
 
 public class WaterGrid extends Grid {
 
+	public WaterGrid(int x, int y) {
+		grid = new Cell[x][y];
+	}
+	
 	@Override
 	public ArrayList<Cell> getNeighbors(int x, int y) {
 		ArrayList<Cell> neighbors = new ArrayList<Cell>();
