@@ -20,7 +20,7 @@ public class WaterGridLogic extends GridLogic {
 			}
 		}
 
-		//
+		// update grid based on states
 		for (int r = 0; r < grid.getRows(); r++) {
 			for (int c = 0; r < grid.getColumns(); c++) {
 				updateGrid(grid.getGridIndex(r, c));
@@ -33,13 +33,61 @@ public class WaterGridLogic extends GridLogic {
 	}
 
 	private void updateGrid(Cell cell) {
-		if(cell instanceof EmptyCell) return;
-		if(cell instanceof Fish){
+		if (cell instanceof EmptyCell)
+			return;
+		if (cell instanceof Fish) {
+			updateFish((Fish) cell);
 			return;
 		}
-		if(cell instanceof Shark){
+		if (cell instanceof Shark) {
+			updateShark((Shark) cell);
 			return;
 		}
+	}
+
+	private void updateFish(Fish fish) {
+		Cell nextLocation = fish.getNextLocation();
+		if (nextLocation == null)
+			return;
+
+		//resolve conflicts
+		if(!(grid.getGridIndex(nextLocation.getCoordsX(), nextLocation.getCoordsY()) instanceof EmptyCell)){
+			checkState(fish,grid.getNeighbors(fish.getCoordsX(), fish.getCoordsY()));
+			updateFish(fish);
+			return;
+		}
+		
+		setFishGridIndex(nextLocation.getCoordsX(), nextLocation.getCoordsY());
+
+		if (!fish.isReproducing()) {
+			setEmptyGridIndex(fish.getCoordsX(), fish.getCoordsY());
+		}
+	}
+
+	private void setFishGridIndex(int x, int y) {
+		grid.setGridIndex(new Fish(x, y), x, y);
+	}
+
+	private void setEmptyGridIndex(int x, int y) {
+		grid.setGridIndex(new EmptyCell(x, y), x, y);
+	}
+
+	private void setSharkGridIndex(int x, int y) {
+		grid.setGridIndex(new Shark(x, y), x, y);
+	}
+
+	private void updateShark(Shark shark) {
+		if (shark.isDead()) {
+			int x = shark.getCoordsX();
+			int y = shark.getCoordsY();
+			grid.setGridIndex(new EmptyCell(x, y), x, y);
+			return;
+		}
+
+	}
+
+	private void updateCell(Cell cell) {
+
 	}
 
 }

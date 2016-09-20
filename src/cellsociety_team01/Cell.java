@@ -44,7 +44,7 @@ public class Cell {
 	}
 	
 	// Gets the y coordinates of the cell
-	private int getCoordsY() {
+	public int getCoordsY() {
 		return YPosition;
 	}
 	
