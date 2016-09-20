@@ -30,6 +30,7 @@ gen/
 *.exe
 *.o
 *.so
+*.classpath
 
 # Packages #
 ############
