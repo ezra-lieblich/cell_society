@@ -4,10 +4,9 @@ public class GridController {
 	private MainMenu menu;
 	private GridLogic logic;
 	private GridView view;
-	private XMLReader reader;
+	private XmlReader reader;
 
 	private boolean isSetupFinished;
-	
 
 	public GridController() {
 		menu = new MainMenu();
@@ -30,7 +29,7 @@ public class GridController {
 	}
 
 	private void setup(String path) {
-		reader = new XMLReader(path);
+		reader = new XmlReader(path);
 		logic = reader.getGridLogic();
 		view = reader.getGridView();
 		isSetupFinished = true;

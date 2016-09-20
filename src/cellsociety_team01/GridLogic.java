@@ -1,12 +1,14 @@
 package cellsociety_team01;
 
 public class GridLogic {
-	private Grid grid;
+	protected Grid grid;
+	
+	public GridLogic(){}
 	
 	public GridLogic(Grid grid) {
 		this.grid = grid;
 	}
-	public void step(double elapsed_time) {
+	public void step(double elapsedTime) {
 		
 	}
 }
