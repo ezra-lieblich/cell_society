@@ -3,7 +3,6 @@ package water;
 import java.util.ArrayList;
 
 import cellsociety_team01.Cell;
-import cellsociety_team01.Grid;
 import cellsociety_team01.GridLogic;
 
 public class WaterGridLogic extends GridLogic {
@@ -50,13 +49,13 @@ public class WaterGridLogic extends GridLogic {
 		if (nextLocation == null)
 			return;
 
-		//resolve conflicts
-		if(!(grid.getGridIndex(nextLocation.getCoordsX(), nextLocation.getCoordsY()) instanceof EmptyCell)){
-			checkState(fish,grid.getNeighbors(fish.getCoordsX(), fish.getCoordsY()));
+		// resolve conflicts
+		if (!(grid.getGridIndex(nextLocation.getCoordsX(), nextLocation.getCoordsY()) instanceof EmptyCell)) {
+			checkState(fish, grid.getNeighbors(fish.getCoordsX(), fish.getCoordsY()));
 			updateFish(fish);
 			return;
 		}
-		
+
 		setFishGridIndex(nextLocation.getCoordsX(), nextLocation.getCoordsY());
 
 		if (!fish.isReproducing()) {
@@ -64,6 +63,32 @@ public class WaterGridLogic extends GridLogic {
 		}
 	}
 
+	private void updateShark(Shark shark) {
+		if (shark.isDead()) {
+			setEmptyGridIndex(shark.getCoordsX(), shark.getCoordsY());
+			return;
+		}
+
+		Cell nextLocation = shark.getNextLocation();
+		if(nextLocation == null)
+			return;
+		
+		// resolve conflicts
+		if (grid.getGridIndex(nextLocation.getCoordsX(), nextLocation.getCoordsY()) instanceof Shark) {
+			checkState(shark, grid.getNeighbors(shark.getCoordsX(), shark.getCoordsY()));
+			updateShark(shark);
+			return;
+		}
+		
+		setSharkGridIndex(nextLocation.getCoordsX(), nextLocation.getCoordsY());
+
+		if (!shark.isReproducing()) {
+			setEmptyGridIndex(shark.getCoordsX(), shark.getCoordsY());
+		}
+
+	}
+	
+	//set methods for all classes
 	private void setFishGridIndex(int x, int y) {
 		grid.setGridIndex(new Fish(x, y), x, y);
 	}
@@ -76,18 +101,5 @@ public class WaterGridLogic extends GridLogic {
 		grid.setGridIndex(new Shark(x, y), x, y);
 	}
 
-	private void updateShark(Shark shark) {
-		if (shark.isDead()) {
-			int x = shark.getCoordsX();
-			int y = shark.getCoordsY();
-			grid.setGridIndex(new EmptyCell(x, y), x, y);
-			return;
-		}
-
-	}
-
-	private void updateCell(Cell cell) {
-
-	}
 
 }
