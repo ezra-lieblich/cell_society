@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 
 public class Grid {
-	private Cell[][] grid;
+	protected Cell[][] grid;
 	
 	public Grid(){}
 
@@ -32,7 +32,7 @@ public class Grid {
 	}
 
 	private boolean validIndex(int x, int y) {
-		return (x >= 0 && x < grid.length) && (y >= 0 && y < grid[0].length);
+		return (x >= 0 && x < getRows()) && (y >= 0 && y < getColumns());
 	}
 	
 	public int getColumns(){
