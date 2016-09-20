@@ -1,25 +1,54 @@
 package water;
+
 import java.util.ArrayList;
 
 import cellsociety_team01.Cell;
 
 public class Fish extends Cell {
-	private int turnsPerReproduce;
-	private int currentTurn;
+	private int currentReproduceTurn;
 	private ArrayList<Cell> neighbors;
-	
-	private boolean isReproducing;
-	
+	private Cell nextLocation;
 
-	public Fish(int x, int y, int turnsPerReproduce) {
+	private boolean isReproducing;
+
+	public Fish(int x, int y) {
 		super.init(x, y);
-		this.turnsPerReproduce = turnsPerReproduce;
-		currentTurn = 0;
+		currentReproduceTurn = 0;
 	}
-	
+
 	@Override
 	public void calculateNextState(ArrayList<Cell> neighborList) {
 		neighbors = neighborList;
+
+		isReproducing = handleTurn();
+		nextLocation = determineNextLocation();
+
+	}
+
+	private boolean handleTurn() {
+		currentReproduceTurn++;
+		if (currentReproduceTurn == WaterGridLogic.TURNS_PER_FISH_REPRODUCE) {
+			currentReproduceTurn = 0;
+			return true;
+		}
+		return false;
+	}
+
+	private Cell determineNextLocation() {
+		ArrayList<Cell> temp = new ArrayList<Cell>();
+		for (Cell c : neighbors) {
+			if (c instanceof EmptyCell)
+				temp.add(c);
+		}
+		//dont move if nowhere to move
+		if (temp.size() == 0)
+			return null;
+		//move to random cell;
+		return temp.get((int) (Math.random() * temp.size()));
+	}
+	
+	public Cell getNextLocation() {
+		return nextLocation;
 	}
 
 }

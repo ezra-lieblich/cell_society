@@ -10,12 +10,17 @@ public class WaterGrid extends Grid {
 	@Override
 	public ArrayList<Cell> getNeighbors(int x, int y) {
 		ArrayList<Cell> neighbors = new ArrayList<Cell>();
-		for (int i = x - 1; i <= x + 1; i++) {
-			for (int j = y - 1; j <= y + 1; j++) {
-				neighbors.add(getGridIndex(adjustIndex(i, getRows()),adjustIndex(j, getColumns())));
-			}
-		}
+
+		neighbors.add(getAdjustedNeighbor(x, y + 1));
+		neighbors.add(getAdjustedNeighbor(x, y - 1));
+		neighbors.add(getAdjustedNeighbor(x + 1, y));
+		neighbors.add(getAdjustedNeighbor(x - 1, y));
+
 		return neighbors;
+	}
+
+	private Cell getAdjustedNeighbor(int i, int j) {
+		return getGridIndex(adjustIndex(i, getRows()), adjustIndex(j, getColumns()));
 	}
 
 	private int adjustIndex(int index, int maxIndex) {
