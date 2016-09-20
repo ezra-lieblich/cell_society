@@ -47,8 +47,17 @@ public class Fish extends Cell {
 		return temp.get((int) (Math.random() * temp.size()));
 	}
 	
+	
+	
+	
+	//getters
 	public Cell getNextLocation() {
 		return nextLocation;
 	}
 
+	public boolean isReproducing() {
+		return isReproducing;
+	}
+
+	
 }
