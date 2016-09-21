@@ -29,7 +29,7 @@ public class Cell {
 	}
 	
 	// Sets the color of the cell.
-	private void setColor(Color newColor)
+	protected void setColor(Color newColor)
 	{
 		color = newColor;
 	}
