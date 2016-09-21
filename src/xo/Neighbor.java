@@ -9,6 +9,8 @@ public class Neighbor extends Cell {
 	private double similarPercentage;
 	public Neighbor(int x, int y) {
 		super(x,y);
+		//assume similar percantage is now 50%
+		similarPercentage = .3;
 	}
 	@Override
 	public void calculateNextState(ArrayList<Cell> neighborList) {
@@ -21,13 +23,13 @@ public class Neighbor extends Cell {
 		int similar_neighbors = 0;
 		int total_neighbors = 0;
 		for(Cell neighbor: neighborList) {
-			if (neighbor instanceof Cell) {
+			if (neighbor instanceof Neighbor) {
 				total_neighbors++;
 				if(this.getClass().equals(neighbor.getClass())){
 					similar_neighbors++;
 				}
 			}
 		}
-		return ((double) similar_neighbors/total_neighbors) > similarPercentage;
+		return ((double) similar_neighbors/total_neighbors) >= similarPercentage;
 	}
 }
