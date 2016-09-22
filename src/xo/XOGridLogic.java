@@ -44,7 +44,6 @@ public class XOGridLogic extends GridLogic{
 			Empty vacated_cell = new Empty(neighbor.getCoordsX(), neighbor.getCoordsY());
 			grid.setGridIndex(vacated_cell, vacated_cell.getCoordsX(), vacated_cell.getCoordsY());
 			Cell new_location = availableSpaces.get((int)(Math.random() * (availableSpaces.size()-1)));
-			//availableSpaces.remove(new_location);
 			int new_x = new_location.getCoordsX();
 			int new_y = new_location.getCoordsY();
 			if(neighbor.getClass().equals(Group1.class)) 

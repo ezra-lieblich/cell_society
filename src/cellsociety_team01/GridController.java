@@ -32,7 +32,7 @@ public class GridController {
 	public Scene init(int screenWidth, int screenHeight) {
 		// menu.init();
 		//Grid grid = createRandomWaterGrid(10, 10);
-		Grid grid = createXOGrid(5,5);
+		Grid grid = createXOGrid(20,20);
 		logic = new XOGridLogic(grid);
 		//logic = new WaterGridLogic(grid);
 		Group root = new Group();

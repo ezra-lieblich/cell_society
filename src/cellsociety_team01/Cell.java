@@ -28,7 +28,8 @@ public class Cell {
 		neighbors = neighborList;
 	}
 	
-	// Sets the color of the cell.
+	//Sets the color of the cell.
+	//Should be protected so children can set color
 	protected void setColor(Color newColor)
 	{
 		color = newColor;

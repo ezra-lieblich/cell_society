@@ -10,7 +10,7 @@ public class Neighbor extends Cell {
 	public Neighbor(int x, int y) {
 		super(x,y);
 		//assume similar percantage is now 50%
-		similarPercentage = .3;
+		similarPercentage = .5;
 	}
 	@Override
 	public void calculateNextState(ArrayList<Cell> neighborList) {
