@@ -34,4 +34,23 @@ public class WaterGrid extends Grid {
 			return index + maxIndex;
 		return index;
 	}
+	
+	public void moveCellGridIndex(int fromX, int fromY, int toX, int toY) {
+		Cell temp = getGridIndex(fromX, fromY);
+		temp.setCoords(toX, toY);
+		setGridIndex(temp, toX, toY);
+		setEmptyGridIndex(fromX,fromY);
+	}
+	
+	public void setEmptyGridIndex(int x, int y) {
+		setGridIndex(new EmptyCell(x, y), x, y);
+	}
+	
+	public void setSharkGridIndex(int x, int y) {
+		setGridIndex(new Shark(x, y), x, y);
+	}
+	
+	public void setFishGridIndex(int x, int y) {
+		setGridIndex(new Fish(x, y), x, y);
+	}
 }

@@ -11,22 +11,24 @@ public class WaterGridLogic extends GridLogic {
 	public static int TURNS_FOR_SHARK_DEATH = 2;
 	public static int TURNS_PER_SHARK_REPRODUCE = 5;
 
-	public WaterGridLogic(Grid grid) {
+	private WaterGrid grid;
+
+	public WaterGridLogic(WaterGrid grid) {
 		this.grid = grid;
 	}
 
 	@Override
 	public void step() {
-		
-		// test print
-		for (int r = 0; r < grid.getRows(); r++) {
-			for (int c = 0; c < grid.getColumns(); c++) {
-				System.out.print(grid.getGridIndex(r, c).toString() + " ");
-			}
-			System.out.println();
-		}
-		System.out.println();
-		
+
+		// // test print
+		// for (int r = 0; r < grid.getRows(); r++) {
+		// for (int c = 0; c < grid.getColumns(); c++) {
+		// System.out.print(grid.getGridIndex(r, c).toString() + " ");
+		// }
+		// System.out.println();
+		// }
+		// System.out.println();
+
 		// check state
 		for (int r = 0; r < grid.getRows(); r++) {
 			for (int c = 0; c < grid.getColumns(); c++) {
@@ -40,7 +42,6 @@ public class WaterGridLogic extends GridLogic {
 				updateGrid(grid.getGridIndex(r, c));
 			}
 		}
-
 
 	}
 
@@ -73,20 +74,26 @@ public class WaterGridLogic extends GridLogic {
 			return;
 		}
 
-		setFishGridIndex(nextLocation.getCoordsX(), nextLocation.getCoordsY());
+		// save previous coords because it is about to change
+		int fishX = fish.getCoordsX();
+		int fishY = fish.getCoordsY();
 
-		if (!fish.isReproducing()) {
-			setEmptyGridIndex(fish.getCoordsX(), fish.getCoordsY());
+		grid.moveCellGridIndex(fish.getCoordsX(), fish.getCoordsY(), nextLocation.getCoordsX(),
+				nextLocation.getCoordsY());
+
+		if (fish.isReproducing()) {
+			grid.setFishGridIndex(fishX, fishY);
 		}
 	}
 
 	private void updateShark(Shark shark) {
 		if (shark.isDead()) {
-			setEmptyGridIndex(shark.getCoordsX(), shark.getCoordsY());
+			grid.setEmptyGridIndex(shark.getCoordsX(), shark.getCoordsY());
 			return;
 		}
 
 		Cell nextLocation = shark.getNextLocation();
+
 		if (nextLocation == null)
 			return;
 
@@ -96,26 +103,19 @@ public class WaterGridLogic extends GridLogic {
 			updateShark(shark);
 			return;
 		}
+		// save previous coords because it is about to change
+		int sharkX = shark.getCoordsX();
+		int sharkY = shark.getCoordsY();
 
-		setSharkGridIndex(nextLocation.getCoordsX(), nextLocation.getCoordsY());
+		grid.moveCellGridIndex(shark.getCoordsX(), shark.getCoordsY(), nextLocation.getCoordsX(),
+				nextLocation.getCoordsY());
 
-		if (!shark.isReproducing()) {
-			setEmptyGridIndex(shark.getCoordsX(), shark.getCoordsY());
+		if (shark.isReproducing()) {
+			grid.setSharkGridIndex(sharkX, sharkY);
 		}
 
 	}
 
 	// set methods for all classes
-	private void setFishGridIndex(int x, int y) {
-		grid.setGridIndex(new Fish(x, y), x, y);
-	}
-
-	private void setEmptyGridIndex(int x, int y) {
-		grid.setGridIndex(new EmptyCell(x, y), x, y);
-	}
-
-	private void setSharkGridIndex(int x, int y) {
-		grid.setGridIndex(new Shark(x, y), x, y);
-	}
 
 }

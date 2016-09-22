@@ -31,10 +31,10 @@ public class GridController {
 
 	public Scene init(int screenWidth, int screenHeight) {
 		// menu.init();
-		//Grid grid = createRandomWaterGrid(10, 10);
-		Grid grid = createXOGrid(20,20);
-		logic = new XOGridLogic(grid);
-		//logic = new WaterGridLogic(grid);
+		//Grid grid = createXOGrid(20,20);
+		//logic = new XOGridLogic(grid);
+		WaterGrid grid = createRandomWaterGrid(60,60);
+		logic = new WaterGridLogic(grid);
 		Group root = new Group();
 		view = new GridView(root, grid);
 		//view = new GridView(root, grid);
@@ -64,24 +64,18 @@ public class GridController {
 	}
 
 	// for testing, creates a water grid with random types of cells
-	private Grid createRandomWaterGrid(int rows, int columns) {
-		Grid temp = new WaterGrid(rows, columns);
+	private WaterGrid createRandomWaterGrid(int rows, int columns) {
+		WaterGrid temp = new WaterGrid(rows, columns);
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
-				int ranGen = (int) (Math.random() * 3);
-				switch (ranGen) {
-				case 0:
-					temp.setGridIndex(new EmptyCell(r, c), r, c);
-					break;
-				case 1:
-					temp.setGridIndex(new Fish(r, c), r, c);
-					break;
-				case 2:
+				int ranGen = (int) (Math.random() * 10);
+				if(ranGen<=1)
 					temp.setGridIndex(new Shark(r, c), r, c);
-					break;
-				default:
-					break;
-				}
+				else if(1<ranGen&&ranGen<=8)
+					temp.setGridIndex(new Fish(r, c), r, c);
+				else
+					temp.setGridIndex(new EmptyCell(r, c), r, c);
+
 
 			}
 		}

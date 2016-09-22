@@ -21,8 +21,8 @@ import javafx.util.Duration;
  */
 public class Main extends Application {
     private int screenWidth, screenHeight;
-    private static final int MILLISECOND_DELAY = 1000;
-    private static final double SECOND_DELAY = 1;
+    private static final int MILLISECOND_DELAY = 200;
+    private static final double SECOND_DELAY = MILLISECOND_DELAY/1000;
 
     private GridController controller;
 

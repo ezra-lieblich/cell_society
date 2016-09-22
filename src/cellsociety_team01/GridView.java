@@ -19,6 +19,7 @@ public class GridView {
 	private int pixelWidth; 
 	private int pixelHeight;
 
+
 	/**
 	 * Sets the grid and root and also determines the size of the pixels
 	 * @param root Root is so we can add the Grid Cells to the view and scene
