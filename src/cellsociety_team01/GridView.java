@@ -8,7 +8,7 @@ public class GridView {
 	private Group root;
 	private Grid grid;
 	
-	private int pixelWidth =60; 
+	private int pixelWidth =10; 
 
 	public GridView(Group root, Grid grid) {
 		this.root = root;

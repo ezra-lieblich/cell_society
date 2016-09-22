@@ -31,6 +31,8 @@ public class Grid {
 		}
 		return neighbors;
 	}
+	
+	
 
 	private boolean validIndex(int x, int y) {
 		return (x >= 0 && x < getRows()) && (y >= 0 && y < getColumns());
