@@ -37,13 +37,12 @@ public class Main extends Application {
     	setupScreenResolution();
     	
         // create your own game here
-        controller = new GridController();
+        controller = new GridController(s);
         s.setTitle(controller.getTitle());
 
         // attach game to the stage and display it
-        Scene scene = controller.init(screenWidth, screenHeight);
-        s.setScene(scene);
-        s.show();
+        controller.init(screenWidth, screenHeight);
+
 
         // sets the game's loop
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),

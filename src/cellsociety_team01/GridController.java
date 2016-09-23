@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import water.*;
 import xo.Empty;
 import xo.Group1;
@@ -17,19 +18,22 @@ public class GridController {
 	private XmlReader reader;
 	private Toolbar toolbar;
 	private String title;
-	private Scene scene;
+	private Stage stage;
 
 	private boolean runSimulation;
 
-	public GridController() {
+	public GridController(Stage stage) {
+		this.stage = stage;
 		menu = new MainMenu();
 		runSimulation = false;
-
+		stage.setScene(menu.init());
+		stage.show();
 		// temporary code
 		title = "Test";
 	}
 
-	public Scene init(int screenWidth, int screenHeight) {
+	public void init(int screenWidth, int screenHeight) {
+        
 		// menu.init();
 		//Grid grid = createXOGrid(20,20);
 		//logic = new XOGridLogic(grid);
@@ -39,7 +43,8 @@ public class GridController {
 		view = new GridView(root, grid);
 		//view = new GridView(root, grid);
 		toolbar = new Toolbar(root, this);
-		return new Scene(root, screenWidth, screenHeight, Color.WHITE);
+		stage.setScene(new Scene(root, screenWidth, screenHeight, Color.WHITE));
+        
 	}
 
 	public void step(double elapsedTime) {
