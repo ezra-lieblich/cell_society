@@ -2,6 +2,8 @@ package cellsociety_team01;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import java.io.File;
+
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -13,6 +15,7 @@ import xo.Empty;
 import xo.Group1;
 import xo.Group2;
 import xo.XOGridLogic;
+import life.*;
 
 public class GridController {
 	private MainMenu menu;
@@ -27,11 +30,15 @@ public class GridController {
 
 	public GridController(Stage stage) {
 		this.stage = stage;
-		menu = new MainMenu();
+		menu = new MainMenu(this, stage);
 		stage.setScene(menu.init());
 		stage.show();
 		// temporary code
 		title = "Test";
+	}
+	
+	public void parseFile(File file){
+		System.out.println(file.getAbsolutePath());
 	}
 
 	public void init(int screenWidth, int screenHeight) {
@@ -59,6 +66,18 @@ public class GridController {
 		animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(frame);
+		//stage.setScene(new Scene(root, screenWidth, screenHeight, Color.WHITE));
+        
+		//view = new GridView(root, grid);
+//		WaterGrid grid = createRandomWaterGrid(60,60);
+//		logic = new WaterGridLogic(grid);
+//		Group root = new Group();
+//		view = new GridView(root, grid);
+//		LifeGrid grid = createLifeGrid(20,20);
+//		logic = new LifeGridLogic(grid);
+//		Group root = new Group();
+//		view = new GridView(root, grid);
+//		return new Scene(root, screenWidth, screenHeight, Color.WHITE);
 	}
 
 	public void step() {
@@ -73,12 +92,12 @@ public class GridController {
 		
 	}
 
-	// private void setup(String path) {
-	// reader = new XmlReader(path);
-	// logic = reader.getGridLogic();
-	// view = reader.getGridView();
-	// isSetupFinished = true;
-	// }
+//	private void setup(String path) {
+//		reader = new XmlReader("data/xml/GameOfLife1.xml");
+//		logic = reader.getGridLogic();
+//		view = reader.getGridView();
+//		isSetupFinished = true;
+//	}
 
 	public String getTitle() {
 		return title;
