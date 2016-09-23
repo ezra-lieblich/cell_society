@@ -13,7 +13,7 @@ import javafx.scene.shape.Rectangle;
 public class GridView {
 	
 	private BorderPane root;
-	private Grid grid;
+	private BasicGrid grid;
 	
 	private static final int GRIDSIZEX = 400;
 	private static final int GRIDSIZEY = 400;
@@ -27,11 +27,9 @@ public class GridView {
 	 * @param root Root is so we can add the Grid Cells to the view and scene
 	 * @param grid We need the grid so GridView can read it and update the View.
 	 */
-	public GridView(BorderPane root, Grid grid) {
-		this.gridView = new Group();
+	public GridView(BorderPane root, BasicGrid grid) {
 		this.root = root;
 		this.grid = grid;
-		root.setCenter(gridView);
 		setupPixelSize();
 	}
 
@@ -39,6 +37,8 @@ public class GridView {
 	 * Loops through each Cell in grid and adds it to the root to change the view
 	 */
 	public void step(){
+		gridView = new Group();
+		root.setCenter(gridView);
 		for(int r= 0 ;r<grid.getRows();r++){
 			for(int c = 0;c<grid.getColumns(); c++){
 				Rectangle temp = new Rectangle(r*pixelWidth, c*pixelHeight, pixelWidth, pixelHeight);

@@ -12,9 +12,10 @@ import java.io.IOException;
 
 public class XmlReader {
 	// Width of grid array, height of grid array, type of sim, data in each cell of the grid
-	private Grid grid;
+	private BasicGrid grid;
 	// Reset DOCUMENT_BUILDER before every parse
 	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
+
 
 	public static Element getRootElement(String xmlFilename) {
 		try {

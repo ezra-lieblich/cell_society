@@ -3,7 +3,7 @@ package tree;
 import java.util.ArrayList;
 
 import cellsociety_team01.Cell;
-import cellsociety_team01.Grid;
+import cellsociety_team01.BasicGrid;
 import cellsociety_team01.GridLogic;
 import tree.EmptyCell;
 import tree.TreeCell;
@@ -11,7 +11,7 @@ import tree.BurningCell;
 
 public class TreeGridLogic extends GridLogic {
 	
-	public TreeGridLogic(Grid grid) {
+	public TreeGridLogic(BasicGrid grid) {
 		this.grid = grid;
 	}
 
