@@ -1,5 +1,7 @@
 package cellsociety_team01;
 
+import java.io.File;
+
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -24,12 +26,16 @@ public class GridController {
 
 	public GridController(Stage stage) {
 		this.stage = stage;
-		menu = new MainMenu();
+		menu = new MainMenu(this, stage);
 		runSimulation = false;
 		stage.setScene(menu.init());
 		stage.show();
 		// temporary code
 		title = "Test";
+	}
+	
+	public void parseFile(File file){
+		System.out.println(file.getAbsolutePath());
 	}
 
 	public void init(int screenWidth, int screenHeight) {
@@ -43,7 +49,7 @@ public class GridController {
 		view = new GridView(root, grid);
 		//view = new GridView(root, grid);
 		toolbar = new Toolbar(root, this);
-		stage.setScene(new Scene(root, screenWidth, screenHeight, Color.WHITE));
+		//stage.setScene(new Scene(root, screenWidth, screenHeight, Color.WHITE));
         
 	}
 
