@@ -18,13 +18,13 @@ public class LifeGridLogic extends GridLogic {
 	public void step() {
 		
 		// test print
-		for (int r = 0; r < grid.getRows(); r++) {
-			for (int c = 0; c < grid.getColumns(); c++) {
-				System.out.print(grid.getGridIndex(r, c).toString() + " ");
-			}
-			System.out.println();
-		}
-		System.out.println();
+//		for (int r = 0; r < grid.getRows(); r++) {
+//			for (int c = 0; c < grid.getColumns(); c++) {
+//				System.out.print(grid.getGridIndex(r, c).toString() + " ");
+//			}
+//			System.out.println();
+//		}
+//		System.out.println();
 		
 		// check state
 		for (int r = 0; r < grid.getRows(); r++) {

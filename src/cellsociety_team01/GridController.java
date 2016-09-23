@@ -12,6 +12,7 @@ import xo.Empty;
 import xo.Group1;
 import xo.Group2;
 import xo.XOGridLogic;
+import life.*;
 
 public class GridController {
 	private MainMenu menu;
@@ -51,6 +52,16 @@ public class GridController {
 		toolbar = new Toolbar(root, this);
 		//stage.setScene(new Scene(root, screenWidth, screenHeight, Color.WHITE));
         
+		//view = new GridView(root, grid);
+//		WaterGrid grid = createRandomWaterGrid(60,60);
+//		logic = new WaterGridLogic(grid);
+//		Group root = new Group();
+//		view = new GridView(root, grid);
+//		LifeGrid grid = createLifeGrid(20,20);
+//		logic = new LifeGridLogic(grid);
+//		Group root = new Group();
+//		view = new GridView(root, grid);
+//		return new Scene(root, screenWidth, screenHeight, Color.WHITE);
 	}
 
 	public void step(double elapsedTime) {
@@ -66,12 +77,12 @@ public class GridController {
 		}
 	}
 
-	// private void setup(String path) {
-	// reader = new XmlReader(path);
-	// logic = reader.getGridLogic();
-	// view = reader.getGridView();
-	// isSetupFinished = true;
-	// }
+//	private void setup(String path) {
+//		reader = new XmlReader("data/xml/GameOfLife1.xml");
+//		logic = reader.getGridLogic();
+//		view = reader.getGridView();
+//		isSetupFinished = true;
+//	}
 
 	public String getTitle() {
 		return title;

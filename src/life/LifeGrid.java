@@ -27,7 +27,6 @@ public class LifeGrid extends Grid{
 
 		return neighbors;
 	}
-
 	// Returns cell at specified coordinates (i, j). Cells out of bounds will be considered dead cells.
 	private Cell getNeighbor(int i, int j) {
 		if (addBoundaryEmpty(i, getRows()) == true || addBoundaryEmpty(j, getColumns()) == true) {
