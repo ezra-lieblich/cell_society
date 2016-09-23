@@ -26,7 +26,6 @@ import life.LifeXMLFactory;
  * @author Eric S. Song
  */
 public class Main extends Application {
-    private int screenWidth, screenHeight;
     private static final int MILLISECOND_DELAY = 200;
     private static final double SECOND_DELAY = MILLISECOND_DELAY/1000;
 
@@ -41,33 +40,27 @@ public class Main extends Application {
     @Override
     public void start (Stage s) {
     	
-    	//assign screenWidth and screenHeight
-    	setupScreenResolution();
     	
         // create your own game here
-        controller = new GridController();
+        controller = new GridController(s);
         s.setTitle(controller.getTitle());
 
         // attach game to the stage and display it
-        Scene scene = controller.init(screenWidth, screenHeight);
-        s.setScene(scene);
-        s.show();
+        
+
 
         // sets the game's loop
+        /*
         KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
                                       e -> controller.step(SECOND_DELAY));
         Timeline animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
-
+        */
     }
     
-    private void setupScreenResolution(){
-    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    	screenWidth = (int) screenSize.getWidth();
-    	screenHeight = (int) screenSize.getHeight();
-    }
+
 
     /**
      * Start the program.
@@ -94,7 +87,7 @@ public class Main extends Application {
     }
     
     public void restartGame(){
-    	controller.init(screenWidth, screenHeight);
+    	controller.init();
     }
     
     

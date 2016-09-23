@@ -3,9 +3,9 @@ package tree;
 import java.util.ArrayList;
 
 import cellsociety_team01.Cell;
-import cellsociety_team01.Grid;
+import cellsociety_team01.BasicGrid;
 
-public class TreeGrid extends Grid{
+public class TreeGrid extends BasicGrid{
 	
 	public TreeGrid(int x, int y) {
 		grid = new Cell[x][y];

@@ -1,8 +1,17 @@
 package cellsociety_team01;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.io.File;
+
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
+import javafx.stage.Stage;
 import water.*;
 import xo.Empty;
 import xo.Group1;
@@ -11,50 +20,98 @@ import xo.XOGridLogic;
 import life.*;
 
 public class GridController {
-	private MainMenu menu;
+	//private 
 	private GridLogic logic;
 	private GridView view;
 	private XmlReader reader;
-
+	private Toolbar toolbar;
 	private String title;
 	private Scene scene;
+	private Timeline animation;
+	private Stage stage;
+	private Scene mainMenu;
+    private int screenWidth, screenHeight;
 
-	private boolean isSetupFinished;
+	public GridController(Stage stage) {
+		this.stage = stage;
 
-	public GridController() {
-		menu = new MainMenu();
-		isSetupFinished = false;
-
+		MainMenu menu = new MainMenu(this, stage);
+		mainMenu = menu.init();
+		stage.setScene(mainMenu);
+		stage.show();
 		// temporary code
 		title = "Test";
-
 	}
+	
+	public void parseFile(File file){
+		//System.out.println(file.getAbsolutePath());
+		
+		
+    	//assign screenWidth and screenHeight
+		setupScreenResolution();
+		init();
+	}
+	
+    private void setupScreenResolution(){
+    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    	screenWidth = (int) screenSize.getWidth();
+    	screenHeight = (int) screenSize.getHeight();
+    }
 
-	public Scene init(int screenWidth, int screenHeight) {
+	public void init() {
+        
 		// menu.init();
-		//Grid grid = createXOGrid(20,20);
-		//logic = new XOGridLogic(grid);
+
+		
+		BasicGrid grid = createXOGrid(20,20);
+		logic = new XOGridLogic(grid);
+		
+		//ToroidalGrid grid = createRandomWaterGrid(60,60);
+		//logic = new WaterGridLogic(grid);
+		
+		BorderPane root = new BorderPane();
+		view = new GridView(root, grid);
+		//view = new GridView(root, grid);
+		toolbar = new Toolbar(root, this);
+		createTimeline();
+		stage.setScene(scene = new Scene(root, screenWidth, screenHeight, Color.WHITE));
+		//display the view initially before starting simulation
+		view.step();
+     }
+
+	private void createTimeline() {
+		int MILLISECOND_DELAY = 500;
+		//double SECOND_DELAY = MILLISECOND_DELAY/1000;
+		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
+                e -> this.step());
+		animation = new Timeline();
+		animation.setCycleCount(Timeline.INDEFINITE);
+		animation.getKeyFrames().add(frame);
+		//stage.setScene(new Scene(root, screenWidth, screenHeight, Color.WHITE));
+        
 		//view = new GridView(root, grid);
 //		WaterGrid grid = createRandomWaterGrid(60,60);
 //		logic = new WaterGridLogic(grid);
 //		Group root = new Group();
 //		view = new GridView(root, grid);
-		LifeGrid grid = createLifeGrid(20,20);
-		logic = new LifeGridLogic(grid);
-		Group root = new Group();
-		view = new GridView(root, grid);
-		return new Scene(root, screenWidth, screenHeight, Color.WHITE);
+//		LifeGrid grid = createLifeGrid(20,20);
+//		logic = new LifeGridLogic(grid);
+//		Group root = new Group();
+//		view = new GridView(root, grid);
+//		return new Scene(root, screenWidth, screenHeight, Color.WHITE);
 	}
 
-	public void step(double elapsedTime) {
+	public void step() {
 		// if (!isSetupFinished) {
+
 		// if (menu.getFileChosen()) {
 		// setup(menu.getFilePath());
 		// }
 		// break;
 		// }
-		logic.step();
 		view.step();
+		logic.step();
+		
 	}
 
 //	private void setup(String path) {
@@ -69,8 +126,8 @@ public class GridController {
 	}
 
 	// for testing, creates a water grid with random types of cells
-	private WaterGrid createRandomWaterGrid(int rows, int columns) {
-		WaterGrid temp = new WaterGrid(rows, columns);
+	private ToroidalGrid createRandomWaterGrid(int rows, int columns) {
+		ToroidalGrid temp = new ToroidalGrid(rows, columns);
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
 				int ranGen = (int) (Math.random() * 10);
@@ -86,8 +143,8 @@ public class GridController {
 		}
 		return temp;
 	}
-	private Grid createXOGrid(int rows, int columns) {
-		Grid temp = new Grid(rows, columns);
+	private BasicGrid createXOGrid(int rows, int columns) {
+		BasicGrid temp = new BasicGrid(rows, columns);
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
 				int ranGen = (int) (Math.random() * 3);
@@ -108,17 +165,34 @@ public class GridController {
 		}
 		return temp;
 	}
-	private LifeGrid createLifeGrid(int rows, int columns) {
-		LifeGrid temp = new LifeGrid(rows, columns);
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < columns; c++) {
-				int ranGen = (int) (Math.random() * 10);
-				if(ranGen<=5)
-					temp.setGridIndex(new AliveCell(r, c), r, c);
-				else
-					temp.setGridIndex(new DeadCell(r, c), r, c);
-			}
-		}
-		return temp;
+
+	public void startSimulation() {
+		animation.play();;
+	}
+
+	public void stopSimulation() {
+		animation.stop();;
+	}
+
+	public void stepSimulation() {
+		animation.stop();
+		this.step();
+	}
+
+	public void updateSpeed(double value) {
+		double new_rate = value;
+		animation.setRate(new_rate);
+	}
+
+	public void resetSimulation() {
+		// Controller will tell grid to reset itself to the original implementation
+		//need to set original grid to back to 
+		// grid.resetGrid();
+		
+	}
+
+	public void changeSimulation() {
+		// TODO Auto-generated method stub
+		stage.setScene(mainMenu);
 	}
 }

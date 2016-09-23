@@ -3,9 +3,9 @@ package life;
 import java.util.ArrayList;
 
 import cellsociety_team01.Cell;
-import cellsociety_team01.Grid;
+import cellsociety_team01.BasicGrid;
 
-public class LifeGrid extends Grid{
+public class LifeGrid extends BasicGrid{
 	
 	public LifeGrid(int x, int y) {
 		grid = new Cell[x][y];
@@ -27,6 +27,7 @@ public class LifeGrid extends Grid{
 
 		return neighbors;
 	}
+	// Returns cell at specified coordinates (i, j). Cells out of bounds will be considered dead cells.
 
 	private Cell getNeighbor(int i, int j) {
 		if (addBoundaryEmpty(i, getRows()) == true || addBoundaryEmpty(j, getColumns()) == true) {
@@ -46,3 +47,4 @@ public class LifeGrid extends Grid{
 		return false;
 		}
 	}
+
