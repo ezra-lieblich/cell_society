@@ -69,7 +69,7 @@ public class MainMenu {
 
 	private Text createText() {
 		Text t = new Text("Cell Society");
-		t.setFont(Font.font ("Verdana", 50));
+		t.setFont(Font.font ("Verdana", 70));
 		t.setFill(Color.WHITE);
 		return t;
 	}

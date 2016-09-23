@@ -3,12 +3,13 @@ package cellsociety_team01;
 import java.util.ArrayList;
 
 
-public class Grid {
+public class BasicGrid {
 	protected Cell[][] grid;
+	protected ArrayList<Cell> neighbors;
 	
-	public Grid(){}
+	public BasicGrid(){}
 
-	public Grid(int x, int y) {
+	public BasicGrid(int x, int y) {
 		grid = new Cell[x][y];
 	}
 
@@ -21,14 +22,18 @@ public class Grid {
 	}
 
 	public ArrayList<Cell> getNeighbors(int x, int y) {
-		ArrayList<Cell> neighbors = new ArrayList<Cell>();
+		neighbors = new ArrayList<Cell>();
 		for (int i = x - 1; i <= x + 1; i++) {
 			for (int j = y - 1; j <= y + 1; j++) {
 				if (validIndex(i, j) && !(i == x && j == y))
-					neighbors.add(grid[i][j]);	
+					addIndex(i,j);
 			}
 		}
 		return neighbors;
+	}
+	
+	protected void addIndex(int x, int y){
+		neighbors.add(grid[x][y]);
 	}
 	
 	
