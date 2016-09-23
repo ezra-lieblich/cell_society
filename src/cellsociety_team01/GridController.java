@@ -1,9 +1,12 @@
 package cellsociety_team01;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import water.*;
 import xo.Empty;
 import xo.Group1;
@@ -18,6 +21,7 @@ public class GridController {
 	private Toolbar toolbar;
 	private String title;
 	private Scene scene;
+	private Timeline animation;
 
 	private boolean runSimulation;
 
@@ -39,6 +43,13 @@ public class GridController {
 		view = new GridView(root, grid);
 		//view = new GridView(root, grid);
 		toolbar = new Toolbar(root, this);
+		int MILLISECOND_DELAY = 200;
+		double SECOND_DELAY = MILLISECOND_DELAY/1000;
+		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
+                e -> this.step(SECOND_DELAY));
+		animation = new Timeline();
+		animation.setCycleCount(Timeline.INDEFINITE);
+		animation.getKeyFrames().add(frame);
 		return new Scene(root, screenWidth, screenHeight, Color.WHITE);
 	}
 
