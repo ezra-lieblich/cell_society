@@ -2,6 +2,7 @@ package cellsociety_team01;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import water.*;
 import xo.Empty;
@@ -14,19 +15,18 @@ public class GridController {
 	private GridLogic logic;
 	private GridView view;
 	private XmlReader reader;
-
+	private Toolbar toolbar;
 	private String title;
 	private Scene scene;
 
-	private boolean isSetupFinished;
+	private boolean runSimulation;
 
 	public GridController() {
 		menu = new MainMenu();
-		isSetupFinished = false;
+		runSimulation = false;
 
 		// temporary code
 		title = "Test";
-
 	}
 
 	public Scene init(int screenWidth, int screenHeight) {
@@ -35,9 +35,10 @@ public class GridController {
 		//logic = new XOGridLogic(grid);
 		WaterGrid grid = createRandomWaterGrid(60,60);
 		logic = new WaterGridLogic(grid);
-		Group root = new Group();
+		BorderPane root = new BorderPane();
 		view = new GridView(root, grid);
 		//view = new GridView(root, grid);
+		toolbar = new Toolbar(root, this);
 		return new Scene(root, screenWidth, screenHeight, Color.WHITE);
 	}
 
@@ -48,8 +49,10 @@ public class GridController {
 		// }
 		// break;
 		// }
-		logic.step();
 		view.step();
+		if (runSimulation){
+		logic.step();
+		}
 	}
 
 	// private void setup(String path) {
@@ -102,5 +105,18 @@ public class GridController {
 			}
 		}
 		return temp;
+	}
+
+	public void startSimulation() {
+		runSimulation = true;
+	}
+
+	public void stopSimulation() {
+		runSimulation = false;
+	}
+
+	public void stepSimulation() {
+		runSimulation = false;
+		logic.step();
 	}
 }

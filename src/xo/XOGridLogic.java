@@ -12,6 +12,10 @@ public class XOGridLogic extends GridLogic{
 	public XOGridLogic(Grid grid) {
 		this.grid = grid;
 	}
+	/**
+	 * Calculates the next state of each cell and then updates the grid
+	 * by moving unsatisfied cells to random empty cells
+	 */
 	public void step() {
 		upsetNeighbors = new ArrayList<Neighbor>();
 		availableSpaces = new ArrayList<Cell>();
@@ -22,7 +26,12 @@ public class XOGridLogic extends GridLogic{
 		}
 		updateGrid();
 	}
-	
+	/**
+	 * Calculates the next state and adds unsatisfied cells
+	 * to the list and also keeps track of the empty cells
+	 * @param row row of the cell that we are looking at
+	 * @param col column of the cell that we are looking at
+	 */
 	private void updateStatus(int row, int col) {
 		Cell cell = grid.getGridIndex(row, col);
 		cell.calculateNextState(grid.getNeighbors(row, col));

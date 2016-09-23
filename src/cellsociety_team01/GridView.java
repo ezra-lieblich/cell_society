@@ -1,6 +1,7 @@
 package cellsociety_team01;
 
 import javafx.scene.Group;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Rectangle;
 /**
  * GridView is called on by gridController and updates the view. It determines
@@ -11,11 +12,12 @@ import javafx.scene.shape.Rectangle;
  */
 public class GridView {
 	
-	private Group root;
+	private BorderPane root;
 	private Grid grid;
 	
 	private static final int GRIDSIZEX = 400;
 	private static final int GRIDSIZEY = 400;
+	private Group gridView;
 	private int pixelWidth; 
 	private int pixelHeight;
 
@@ -25,9 +27,11 @@ public class GridView {
 	 * @param root Root is so we can add the Grid Cells to the view and scene
 	 * @param grid We need the grid so GridView can read it and update the View.
 	 */
-	public GridView(Group root, Grid grid) {
+	public GridView(BorderPane root, Grid grid) {
+		this.gridView = new Group();
 		this.root = root;
 		this.grid = grid;
+		root.setCenter(gridView);
 		setupPixelSize();
 	}
 
@@ -39,7 +43,7 @@ public class GridView {
 			for(int c = 0;c<grid.getColumns(); c++){
 				Rectangle temp = new Rectangle(r*pixelWidth, c*pixelHeight, pixelWidth, pixelHeight);
 				temp.setFill(grid.getGridIndex(r, c).getColor());
-				root.getChildren().add(temp);
+				gridView.getChildren().add(temp);
 			}
 		}
 	}
