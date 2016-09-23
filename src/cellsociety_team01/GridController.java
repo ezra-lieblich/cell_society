@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import javafx.stage.Stage;
 import water.*;
 import xo.Empty;
 import xo.Group1;
@@ -22,38 +23,45 @@ public class GridController {
 	private String title;
 	private Scene scene;
 	private Timeline animation;
+	private Stage stage;
 
-	private boolean runSimulation;
-
-	public GridController() {
+	public GridController(Stage stage) {
+		this.stage = stage;
 		menu = new MainMenu();
-		runSimulation = false;
-
+		stage.setScene(menu.init());
+		stage.show();
 		// temporary code
 		title = "Test";
 	}
 
-	public Scene init(int screenWidth, int screenHeight) {
+	public void init(int screenWidth, int screenHeight) {
+        
 		// menu.init();
-		//Grid grid = createXOGrid(20,20);
-		//logic = new XOGridLogic(grid);
-		WaterGrid grid = createRandomWaterGrid(60,60);
-		logic = new WaterGridLogic(grid);
+		Grid grid = createXOGrid(20,20);
+		logic = new XOGridLogic(grid);
+		//WaterGrid grid = createRandomWaterGrid(20,20);
+		//logic = new WaterGridLogic(grid);
 		BorderPane root = new BorderPane();
 		view = new GridView(root, grid);
 		//view = new GridView(root, grid);
 		toolbar = new Toolbar(root, this);
-		int MILLISECOND_DELAY = 200;
-		double SECOND_DELAY = MILLISECOND_DELAY/1000;
+		createTimeline();
+		stage.setScene(new Scene(root, screenWidth, screenHeight, Color.WHITE));
+		//display the view initially before starting simulation
+		view.step();
+     }
+
+	private void createTimeline() {
+		int MILLISECOND_DELAY = 500;
+		//double SECOND_DELAY = MILLISECOND_DELAY/1000;
 		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
-                e -> this.step(SECOND_DELAY));
+                e -> this.step());
 		animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(frame);
-		return new Scene(root, screenWidth, screenHeight, Color.WHITE);
 	}
 
-	public void step(double elapsedTime) {
+	public void step() {
 		// if (!isSetupFinished) {
 		// if (menu.getFileChosen()) {
 		// setup(menu.getFilePath());
@@ -61,9 +69,8 @@ public class GridController {
 		// break;
 		// }
 		view.step();
-		if (runSimulation){
 		logic.step();
-		}
+		
 	}
 
 	// private void setup(String path) {
@@ -119,15 +126,29 @@ public class GridController {
 	}
 
 	public void startSimulation() {
-		runSimulation = true;
+		animation.play();;
 	}
 
 	public void stopSimulation() {
-		runSimulation = false;
+		animation.stop();;
 	}
 
 	public void stepSimulation() {
-		runSimulation = false;
-		logic.step();
+		animation.stop();
+		this.step();
+	}
+
+	public void updateSpeed(double value) {
+		double new_rate = value;
+		animation.setRate(new_rate);
+	}
+
+	public void resetSimulation() {
+		// Controller will tell grid to reset itslef to the original implementation
+		// grid.resetGrid();
+	}
+
+	public void changeSimulation() {
+		// TODO Auto-generated method stub
 	}
 }

@@ -7,9 +7,9 @@ import cellsociety_team01.Grid;
 import cellsociety_team01.GridLogic;
 
 public class WaterGridLogic extends GridLogic {
-	public static int TURNS_PER_FISH_REPRODUCE = 2;
-	public static int TURNS_FOR_SHARK_DEATH = 2;
-	public static int TURNS_PER_SHARK_REPRODUCE = 5;
+	protected static int TURNS_PER_FISH_REPRODUCE = 2;
+	protected static int TURNS_FOR_SHARK_DEATH = 2;
+	protected static int TURNS_PER_SHARK_REPRODUCE = 5;
 
 	private WaterGrid grid;
 
