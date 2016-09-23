@@ -1,5 +1,7 @@
 package cellsociety_team01;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.File;
 
 import javafx.scene.Group;
@@ -14,47 +16,67 @@ import xo.Group2;
 import xo.XOGridLogic;
 
 public class GridController {
-	private MainMenu menu;
+	//private 
 	private GridLogic logic;
 	private GridView view;
 	private XmlReader reader;
 	private Toolbar toolbar;
 	private String title;
 	private Stage stage;
+	private Scene mainMenu;
+	
+    private int screenWidth, screenHeight;
+    private boolean isSetupFinished = false;
 
 	private boolean runSimulation;
 
 	public GridController(Stage stage) {
 		this.stage = stage;
-		menu = new MainMenu(this, stage);
+		MainMenu menu = new MainMenu(this, stage);
 		runSimulation = false;
-		stage.setScene(menu.init());
+		mainMenu = menu.init();
+		stage.setScene(mainMenu);
 		stage.show();
 		// temporary code
 		title = "Test";
 	}
 	
 	public void parseFile(File file){
-		System.out.println(file.getAbsolutePath());
+		//System.out.println(file.getAbsolutePath());
+		
+		
+    	//assign screenWidth and screenHeight
+		setupScreenResolution();
+		init();
 	}
+	
+    private void setupScreenResolution(){
+    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    	screenWidth = (int) screenSize.getWidth();
+    	screenHeight = (int) screenSize.getHeight();
+    }
 
-	public void init(int screenWidth, int screenHeight) {
+	public void init() {
         
 		// menu.init();
-		//Grid grid = createXOGrid(20,20);
-		//logic = new XOGridLogic(grid);
-		WaterGrid grid = createRandomWaterGrid(60,60);
+		
+//		BasicGrid grid = createXOGrid(20,20);
+//		logic = new XOGridLogic(grid);
+		
+		ToroidalGrid grid = createRandomWaterGrid(60,60);
 		logic = new WaterGridLogic(grid);
+		
 		BorderPane root = new BorderPane();
 		view = new GridView(root, grid);
 		//view = new GridView(root, grid);
 		toolbar = new Toolbar(root, this);
-		//stage.setScene(new Scene(root, screenWidth, screenHeight, Color.WHITE));
-        
+		stage.setScene(new Scene(root, screenWidth, screenHeight, Color.WHITE));
+        isSetupFinished = true;
 	}
 
 	public void step(double elapsedTime) {
-		// if (!isSetupFinished) {
+		 if (!isSetupFinished)
+			 return;
 		// if (menu.getFileChosen()) {
 		// setup(menu.getFilePath());
 		// }
@@ -78,8 +100,8 @@ public class GridController {
 	}
 
 	// for testing, creates a water grid with random types of cells
-	private WaterGrid createRandomWaterGrid(int rows, int columns) {
-		WaterGrid temp = new WaterGrid(rows, columns);
+	private ToroidalGrid createRandomWaterGrid(int rows, int columns) {
+		ToroidalGrid temp = new ToroidalGrid(rows, columns);
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
 				int ranGen = (int) (Math.random() * 10);
@@ -95,8 +117,8 @@ public class GridController {
 		}
 		return temp;
 	}
-	private Grid createXOGrid(int rows, int columns) {
-		Grid temp = new Grid(rows, columns);
+	private BasicGrid createXOGrid(int rows, int columns) {
+		BasicGrid temp = new BasicGrid(rows, columns);
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
 				int ranGen = (int) (Math.random() * 3);

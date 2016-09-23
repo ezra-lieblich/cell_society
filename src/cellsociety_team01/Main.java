@@ -20,7 +20,6 @@ import javafx.util.Duration;
  * @author Eric S. Song
  */
 public class Main extends Application {
-    private int screenWidth, screenHeight;
     private static final int MILLISECOND_DELAY = 200;
     private static final double SECOND_DELAY = MILLISECOND_DELAY/1000;
 
@@ -33,15 +32,13 @@ public class Main extends Application {
     @Override
     public void start (Stage s) {
     	
-    	//assign screenWidth and screenHeight
-    	setupScreenResolution();
     	
         // create your own game here
         controller = new GridController(s);
         s.setTitle(controller.getTitle());
 
         // attach game to the stage and display it
-        controller.init(screenWidth, screenHeight);
+        
 
 
         // sets the game's loop
@@ -53,11 +50,7 @@ public class Main extends Application {
         animation.play();
     }
     
-    private void setupScreenResolution(){
-    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    	screenWidth = (int) screenSize.getWidth();
-    	screenHeight = (int) screenSize.getHeight();
-    }
+
 
     /**
      * Start the program.
@@ -67,7 +60,7 @@ public class Main extends Application {
     }
     
     public void restartGame(){
-    	controller.init(screenWidth, screenHeight);
+    	controller.init();
     }
     
     
