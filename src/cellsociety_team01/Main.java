@@ -4,6 +4,9 @@ package cellsociety_team01;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.File;
+
+import org.w3c.dom.Element;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -11,7 +14,10 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
+import cellsociety_team01.XmlReader;
+import cellsociety_team01.SimulationXMLFactory;
+import cellsociety_team01.XMLFactoryException;
+import life.LifeXMLFactory;
 
 /**
  * This is the main program, it is basically boilerplate to create
@@ -25,7 +31,9 @@ public class Main extends Application {
     private static final double SECOND_DELAY = MILLISECOND_DELAY/1000;
 
     private GridController controller;
-
+    
+    private static final String XML_FILES_LOCATION = "data/xml/";
+    private static final String XML_SUFFIX = ".xml";
 
     /**
      * Set things up at the beginning.
@@ -66,6 +74,23 @@ public class Main extends Application {
      */
     public static void main (String[] args) {
         launch(args);
+        XmlReader reader = new XmlReader();
+        SimulationXMLFactory factory = new LifeXMLFactory();
+        File folder = new File(XML_FILES_LOCATION);
+        for (File f : folder.listFiles()) {
+        	if (f.isFile() && f.getName().endsWith(XML_SUFFIX)) {
+        		try {
+        			Element root = reader.getRootElement(f.getAbsolutePath());
+        			Simulation s = factory.getSimulation(root);
+        			root.getAttribute("percentAlive");
+        			System.out.println(s);
+        		}
+        		catch (XMLFactoryException e) {
+        			System.err.println("Reading file " + f.getPath());
+        			e.printStackTrace();
+        		}
+        	}
+        }
     }
     
     public void restartGame(){

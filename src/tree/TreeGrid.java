@@ -1,13 +1,13 @@
-package life;
+package tree;
 
 import java.util.ArrayList;
 
 import cellsociety_team01.Cell;
 import cellsociety_team01.Grid;
 
-public class LifeGrid extends Grid{
+public class TreeGrid extends Grid{
 	
-	public LifeGrid(int x, int y) {
+	public TreeGrid(int x, int y) {
 		grid = new Cell[x][y];
 	}
 	
@@ -20,10 +20,6 @@ public class LifeGrid extends Grid{
 		neighbors.add(getNeighbor(x, y - 1));
 		neighbors.add(getNeighbor(x + 1, y));
 		neighbors.add(getNeighbor(x - 1, y));
-		neighbors.add(getNeighbor(x+1, y+1));
-		neighbors.add(getNeighbor(x-1, y-1));
-		neighbors.add(getNeighbor(x+1, y-1));
-		neighbors.add(getNeighbor(x-1, y+1));
 
 		return neighbors;
 	}

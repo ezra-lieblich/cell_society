@@ -8,6 +8,7 @@ import xo.Empty;
 import xo.Group1;
 import xo.Group2;
 import xo.XOGridLogic;
+import life.*;
 
 public class GridController {
 	private MainMenu menu;
@@ -33,11 +34,15 @@ public class GridController {
 		// menu.init();
 		//Grid grid = createXOGrid(20,20);
 		//logic = new XOGridLogic(grid);
-		WaterGrid grid = createRandomWaterGrid(60,60);
-		logic = new WaterGridLogic(grid);
+		//view = new GridView(root, grid);
+//		WaterGrid grid = createRandomWaterGrid(60,60);
+//		logic = new WaterGridLogic(grid);
+//		Group root = new Group();
+//		view = new GridView(root, grid);
+		LifeGrid grid = createLifeGrid(20,20);
+		logic = new LifeGridLogic(grid);
 		Group root = new Group();
 		view = new GridView(root, grid);
-		//view = new GridView(root, grid);
 		return new Scene(root, screenWidth, screenHeight, Color.WHITE);
 	}
 
@@ -52,12 +57,12 @@ public class GridController {
 		view.step();
 	}
 
-	// private void setup(String path) {
-	// reader = new XmlReader(path);
-	// logic = reader.getGridLogic();
-	// view = reader.getGridView();
-	// isSetupFinished = true;
-	// }
+//	private void setup(String path) {
+//		reader = new XmlReader("data/xml/GameOfLife1.xml");
+//		logic = reader.getGridLogic();
+//		view = reader.getGridView();
+//		isSetupFinished = true;
+//	}
 
 	public String getTitle() {
 		return title;
@@ -99,6 +104,19 @@ public class GridController {
 				default:
 					break;
 				}
+			}
+		}
+		return temp;
+	}
+	private LifeGrid createLifeGrid(int rows, int columns) {
+		LifeGrid temp = new LifeGrid(rows, columns);
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < columns; c++) {
+				int ranGen = (int) (Math.random() * 10);
+				if(ranGen<=5)
+					temp.setGridIndex(new AliveCell(r, c), r, c);
+				else
+					temp.setGridIndex(new DeadCell(r, c), r, c);
 			}
 		}
 		return temp;
