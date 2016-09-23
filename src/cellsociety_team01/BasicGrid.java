@@ -6,6 +6,8 @@ import java.util.ArrayList;
 public class BasicGrid {
 	protected Cell[][] grid;
 	protected ArrayList<Cell> neighbors;
+	//need to set originalGrid to the first implementation of grid
+	private Cell [][] originalGrid;
 	
 	public BasicGrid(){}
 
@@ -48,5 +50,9 @@ public class BasicGrid {
 	
 	public int getRows(){
 		return grid.length;
+	}
+	
+	private void setOriginalGrid() {
+		originalGrid = grid.clone();
 	}
 }

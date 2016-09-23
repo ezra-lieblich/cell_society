@@ -30,9 +30,7 @@ public class GridController {
 	private Timeline animation;
 	private Stage stage;
 	private Scene mainMenu;
-	
     private int screenWidth, screenHeight;
-    private boolean isSetupFinished = false;
 
 	public GridController(Stage stage) {
 		this.stage = stage;
@@ -76,7 +74,7 @@ public class GridController {
 		//view = new GridView(root, grid);
 		toolbar = new Toolbar(root, this);
 		createTimeline();
-		stage.setScene(new Scene(root, screenWidth, screenHeight, Color.WHITE));
+		stage.setScene(scene = new Scene(root, screenWidth, screenHeight, Color.WHITE));
 		//display the view initially before starting simulation
 		view.step();
      }
@@ -187,11 +185,14 @@ public class GridController {
 	}
 
 	public void resetSimulation() {
-		// Controller will tell grid to reset itslef to the original implementation
+		// Controller will tell grid to reset itself to the original implementation
+		//need to set original grid to back to 
 		// grid.resetGrid();
+		
 	}
 
 	public void changeSimulation() {
 		// TODO Auto-generated method stub
+		stage.setScene(mainMenu);
 	}
 }
