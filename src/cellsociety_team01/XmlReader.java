@@ -8,11 +8,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
+import grids.BasicFiniteGrid;
+
 import java.io.IOException;
 
 public class XmlReader {
 	// Width of grid array, height of grid array, type of sim, data in each cell of the grid
-	private BasicGrid grid;
+	private BasicFiniteGrid grid;
 	// Reset DOCUMENT_BUILDER before every parse
 	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
 

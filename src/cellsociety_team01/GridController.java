@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
 
+import grids.BasicFiniteGrid;
+import grids.BasicToroidalGrid;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -63,14 +65,14 @@ public class GridController {
 		// menu.init();
 
 		
-		BasicGrid grid = createXOGrid(20,20);
-		logic = new XOGridLogic(grid);
+//		BasicFiniteGrid grid = createXOGrid(20,20);
+//		logic = new XOGridLogic(grid);
 		
-		//ToroidalGrid grid = createRandomWaterGrid(60,60);
-		//logic = new WaterGridLogic(grid);
+		BasicToroidalGrid grid = createRandomWaterGrid(5,5);
+		logic = new WaterGridLogic(grid);
 		
 		BorderPane root = new BorderPane();
-		view = new GridView(root, grid);
+		view = new GridView(root, grid, screenWidth, screenHeight);
 		//view = new GridView(root, grid);
 		toolbar = new Toolbar(root, this);
 		createTimeline();
@@ -126,8 +128,8 @@ public class GridController {
 	}
 
 	// for testing, creates a water grid with random types of cells
-	private ToroidalGrid createRandomWaterGrid(int rows, int columns) {
-		ToroidalGrid temp = new ToroidalGrid(rows, columns);
+	private BasicToroidalGrid createRandomWaterGrid(int rows, int columns) {
+		BasicToroidalGrid temp = new BasicToroidalGrid(rows, columns);
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
 				int ranGen = (int) (Math.random() * 10);
@@ -143,8 +145,8 @@ public class GridController {
 		}
 		return temp;
 	}
-	private BasicGrid createXOGrid(int rows, int columns) {
-		BasicGrid temp = new BasicGrid(rows, columns);
+	private BasicFiniteGrid createXOGrid(int rows, int columns) {
+		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
 				int ranGen = (int) (Math.random() * 3);

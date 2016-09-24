@@ -3,14 +3,14 @@ package life;
 import java.util.ArrayList;
 
 import cellsociety_team01.Cell;
-import cellsociety_team01.BasicGrid;
 import cellsociety_team01.GridLogic;
+import grids.BasicFiniteGrid;
 import life.DeadCell;
 import life.AliveCell;
 
 public class LifeGridLogic extends GridLogic {
 	
-	public LifeGridLogic(BasicGrid grid) {
+	public LifeGridLogic(BasicFiniteGrid grid) {
 		this.grid = grid;
 	}
 

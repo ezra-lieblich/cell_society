@@ -1,5 +1,6 @@
 package cellsociety_team01;
 
+import grids.BasicFiniteGrid;
 import javafx.scene.Group;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Rectangle;
@@ -13,10 +14,9 @@ import javafx.scene.shape.Rectangle;
 public class GridView {
 	
 	private BorderPane root;
-	private BasicGrid grid;
+	private BasicFiniteGrid grid;
 	
-	private static final int GRIDSIZEX = 400;
-	private static final int GRIDSIZEY = 400;
+	private int gridSizeX,gridSizeY;
 	private Group gridView;
 	private int pixelWidth; 
 	private int pixelHeight;
@@ -27,7 +27,9 @@ public class GridView {
 	 * @param root Root is so we can add the Grid Cells to the view and scene
 	 * @param grid We need the grid so GridView can read it and update the View.
 	 */
-	public GridView(BorderPane root, BasicGrid grid) {
+	public GridView(BorderPane root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
+		gridSizeX = screenWidth*9/10;
+		gridSizeY = screenHeight*8/10;
 		this.root = root;
 		this.grid = grid;
 		setupPixelSize();
@@ -52,7 +54,8 @@ public class GridView {
 	 * Calculates the pixel size of each cell based on the size of the grid
 	 */
 	private void setupPixelSize() {
-		pixelWidth = GRIDSIZEX/grid.getColumns();
-		pixelHeight = GRIDSIZEY/grid.getRows();
+		int minPixels = Math.min(gridSizeX/grid.getColumns(), gridSizeY/grid.getRows());
+		pixelWidth = minPixels;
+		pixelHeight = minPixels;
 	}
 }

@@ -3,19 +3,19 @@ import java.io.File;
 
 import org.w3c.dom.Element;
 
-import cellsociety_team01.BasicGrid;
 import cellsociety_team01.XmlReader;
+import grids.BasicFiniteGrid;
 import life.LifeXMLFactory;
 
 public class GridInitiator {
-	private BasicGrid grid;
+	private BasicFiniteGrid grid;
 	private double xSize;
 	private double ySize;
 	private double stateOne;
 	private double stateTwo;
 	private Element root;
 	
-	public GridInitiator(BasicGrid grd, double xDim, double yDim, double stateA, double stateB, Element root, String xmlFilename) {
+	public GridInitiator(BasicFiniteGrid grd, double xDim, double yDim, double stateA, double stateB, Element root, String xmlFilename) {
 		grid = grd;
 		xDim = xSize;
 		yDim = ySize;

@@ -3,9 +3,9 @@ package life;
 import java.util.ArrayList;
 
 import cellsociety_team01.Cell;
-import cellsociety_team01.BasicGrid;
+import grids.BasicFiniteGrid;
 
-public class LifeGrid extends BasicGrid{
+public class LifeGrid extends BasicFiniteGrid{
 	
 	public LifeGrid(int x, int y) {
 		grid = new Cell[x][y];

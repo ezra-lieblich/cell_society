@@ -1,12 +1,13 @@
-package cellsociety_team01;
+package grids;
 
 import java.util.ArrayList;
 
+import cellsociety_team01.Cell;
 import water.EmptyCell;
 
-public class ToroidalGrid extends BasicGrid {
+public class BasicToroidalGrid extends BasicFiniteGrid {
 
-	public ToroidalGrid(int x, int y) {
+	public BasicToroidalGrid(int x, int y) {
 		grid = new Cell[x][y];
 	}
 	
@@ -38,23 +39,5 @@ public class ToroidalGrid extends BasicGrid {
 			return index + maxIndex;
 		return index;
 	}
-	
-	public void moveCellGridIndex(int fromX, int fromY, int toX, int toY) {
-		Cell temp = getGridIndex(fromX, fromY);
-		temp.setCoords(toX, toY);
-		setGridIndex(temp, toX, toY);
-		setGridIndex(new EmptyCell(fromX,fromY),fromX,fromY);
-	}
-	
-//	public void setEmptyGridIndex(int x, int y) {
-//		setGridIndex(new EmptyCell(x, y), x, y);
-//	}
-//	
-//	public void setSharkGridIndex(int x, int y) {
-//		setGridIndex(new Shark(x, y), x, y);
-//	}
-//	
-//	public void setFishGridIndex(int x, int y) {
-//		setGridIndex(new Fish(x, y), x, y);
-//	}
+
 }

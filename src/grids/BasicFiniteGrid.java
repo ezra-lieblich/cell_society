@@ -1,17 +1,20 @@
-package cellsociety_team01;
+package grids;
 
 import java.util.ArrayList;
 
+import cellsociety_team01.Cell;
+import water.EmptyCell;
 
-public class BasicGrid {
+
+public class BasicFiniteGrid {
 	protected Cell[][] grid;
 	protected ArrayList<Cell> neighbors;
 	//need to set originalGrid to the first implementation of grid
 	private Cell [][] originalGrid;
 	
-	public BasicGrid(){}
+	public BasicFiniteGrid(){}
 
-	public BasicGrid(int x, int y) {
+	public BasicFiniteGrid(int x, int y) {
 		grid = new Cell[x][y];
 	}
 
@@ -34,13 +37,20 @@ public class BasicGrid {
 		return neighbors;
 	}
 	
-	protected void addIndex(int x, int y){
+	public void moveCellGridIndex(int fromX, int fromY, int toX, int toY) {
+		Cell temp = getGridIndex(fromX, fromY);
+		temp.setCoords(toX, toY);
+		setGridIndex(temp, toX, toY);
+		setGridIndex(new EmptyCell(fromX,fromY),fromX,fromY);
+	}
+	
+	void addIndex(int x, int y){
 		neighbors.add(grid[x][y]);
 	}
 	
 	
 
-	private boolean validIndex(int x, int y) {
+	boolean validIndex(int x, int y) {
 		return (x >= 0 && x < getRows()) && (y >= 0 && y < getColumns());
 	}
 	
@@ -52,7 +62,7 @@ public class BasicGrid {
 		return grid.length;
 	}
 	
-	private void setOriginalGrid() {
+	void setOriginalGrid() {
 		originalGrid = grid.clone();
 	}
 }

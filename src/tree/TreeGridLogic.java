@@ -3,15 +3,15 @@ package tree;
 import java.util.ArrayList;
 
 import cellsociety_team01.Cell;
-import cellsociety_team01.BasicGrid;
 import cellsociety_team01.GridLogic;
+import grids.BasicFiniteGrid;
 import tree.EmptyCell;
 import tree.TreeCell;
 import tree.BurningCell;
 
 public class TreeGridLogic extends GridLogic {
 	
-	public TreeGridLogic(BasicGrid grid) {
+	public TreeGridLogic(BasicFiniteGrid grid) {
 		this.grid = grid;
 	}
 
