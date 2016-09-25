@@ -15,13 +15,14 @@ public class XmlReader {
 	private BasicGrid grid;
 	// Reset DOCUMENT_BUILDER before every parse
 	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
-
+	private static Element root;
 
 	public static Element getRootElement(String xmlFilename) {
 		try {
 			DOCUMENT_BUILDER.reset();
 			Document xmlDocument = DOCUMENT_BUILDER.parse(xmlFilename);
-			return xmlDocument.getDocumentElement();
+			root = xmlDocument.getDocumentElement();
+			return root;
 		}
 		catch (SAXException | IOException e) {
 			throw new XMLParserException(e);
@@ -36,5 +37,17 @@ public class XmlReader {
 			throw new XMLParserException(e);
 		}
 	}
+	
+	private String getSimName() {
+		String simName = root.getAttribute("simulation_name");
+		return simName;
+	}
+	
+	private void simChooser() {
+		if (XmlReader.getSimName().equals("GameOfLife")) {
+			
+		}
+	}
+	
 	
 }

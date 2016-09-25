@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
 
+import org.w3c.dom.Element;
+
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -31,7 +33,10 @@ public class GridController {
 	private Stage stage;
 	private Scene mainMenu;
     private int screenWidth, screenHeight;
-
+    private static final String XML_FILES_LOCATION = "data/xml/";
+    private static final String XML_SUFFIX = ".xml";
+    private SimulationXMLFactory factory;
+    
 	public GridController(Stage stage) {
 		this.stage = stage;
 
@@ -58,10 +63,32 @@ public class GridController {
     	screenHeight = (int) screenSize.getHeight();
     }
 
-	public void init() {
-        
+	public void init(BasicGrid grid) {
+      reader = new XmlReader();
+      File folder = new File(XML_FILES_LOCATION);
+      for (File f : folder.listFiles()) {
+      	if (f.isFile() && f.getName().endsWith(XML_SUFFIX)) {
+      		try {
+      			Element root = reader.getRootElement(f.getAbsolutePath());
+      			Simulation s = factory.getSimulation(root);
+      			root.getAttribute("percentAlive");
+      			System.out.println(s);
+      		}
+      		catch (XMLFactoryException e) {
+      			System.err.println("Reading file " + f.getPath());
+      			e.printStackTrace();
+      		}
+      	}
+      }
+		
+		
+		
+		
+		
+		
+		
 		// menu.init();
-
+		reader = new XmlReader();
 		System.out.println("init");
 		BasicGrid grid = createXOGrid();
 		logic = new XOGridLogic(grid);
