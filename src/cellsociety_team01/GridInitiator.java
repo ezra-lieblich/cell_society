@@ -9,17 +9,17 @@ import life.LifeXMLFactory;
 
 public class GridInitiator {
 	private BasicGrid grid;
-	private double xSize;
-	private double ySize;
+	private static int xSize;
+	private static int ySize;
 	private double stateOne;
 	private double stateTwo;
 	private double stateThree;
 	private double stateFour;
 	private double stateFive;
-	private Element root;
-	private String ans;
+	private static Element root;
+	private static String ans;
 	
-	public GridInitiator(BasicGrid grd, double xDim, double yDim, double stateA, double stateB, double stateC, double stateD, double stateE, Element root, String xmlFilename) {
+	public GridInitiator(BasicGrid grd, int xDim, int yDim, double stateA, double stateB, double stateC, double stateD, double stateE, Element root, String xmlFilename) {
 		grid = grd;
 		xDim = xSize;
 		yDim = ySize;
@@ -36,15 +36,15 @@ public class GridInitiator {
 		return ans;
 	}
 	
-	public double getXSize() {
+	public static int getXSize() {
 		String stringX = root.getAttribute(ans);
-		xSize = Double.parseDouble(stringX);
+		xSize = Integer.parseInt(stringX);
 		return xSize;
 	}
 	
-	public double getYSize() {
+	public static int getYSize() {
 		String stringY = root.getAttribute(ans);
-		ySize = Double.parseDouble(stringY);
+		ySize = Integer.parseInt(stringY);
 		return ySize;
 	}
 	

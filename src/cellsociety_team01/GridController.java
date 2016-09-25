@@ -63,7 +63,7 @@ public class GridController {
 		// menu.init();
 
 		System.out.println("init");
-		BasicGrid grid = createXOGrid(20,20);
+		BasicGrid grid = createXOGrid();
 		logic = new XOGridLogic(grid);
 		
 		//ToroidalGrid grid = createRandomWaterGrid(60,60);
@@ -143,10 +143,12 @@ public class GridController {
 		}
 		return temp;
 	}
-	private BasicGrid createXOGrid(int rows, int columns) {
-		BasicGrid temp = new BasicGrid(rows, columns);
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < columns; c++) {
+	private BasicGrid createXOGrid() {
+//	private BasicGrid createXOGrid(int rows, int columns) {
+//		BasicGrid temp = new BasicGrid(rows, columns);
+		BasicGrid temp = new BasicGrid();
+		for (int r = 0; r < temp.getRows(); r++) {
+			for (int c = 0; c < temp.getColumns(); c++) {
 				int ranGen = (int) (Math.random() * 3);
 				switch (ranGen) {
 				case 0:

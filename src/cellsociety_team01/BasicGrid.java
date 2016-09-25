@@ -1,6 +1,7 @@
 package cellsociety_team01;
 
 import java.util.ArrayList;
+import cellsociety_team01.GridInitiator;
 
 
 public class BasicGrid {
@@ -8,12 +9,18 @@ public class BasicGrid {
 	protected ArrayList<Cell> neighbors;
 	//need to set originalGrid to the first implementation of grid
 	private Cell [][] originalGrid;
+	private int x;
+	private int y;
 	
-	public BasicGrid(){}
-
-	public BasicGrid(int x, int y) {
+	public BasicGrid(){
+		x = GridInitiator.getXSize();
+		y = GridInitiator.getYSize();
 		grid = new Cell[x][y];
 	}
+
+//	public BasicGrid(int x, int y) {
+//		grid = new Cell[x][y];
+//	}
 
 	public Cell getGridIndex(int x, int y) {
 		return grid[x][y];
@@ -37,8 +44,6 @@ public class BasicGrid {
 	protected void addIndex(int x, int y){
 		neighbors.add(grid[x][y]);
 	}
-	
-	
 
 	private boolean validIndex(int x, int y) {
 		return (x >= 0 && x < getRows()) && (y >= 0 && y < getColumns());
