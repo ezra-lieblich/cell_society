@@ -38,6 +38,7 @@ public class GridController {
     private static final String XML_FILES_LOCATION = "data/xml/";
     private static final String XML_SUFFIX = ".xml";
     private SimulationXMLFactory factory;
+    private String simulationName;
     
 	public GridController(Stage stage) {
 		this.stage = stage;
@@ -52,11 +53,25 @@ public class GridController {
 	
 	public void parseFile(File file){
 		//System.out.println(file.getAbsolutePath());
-		
-		
+		reader = new XmlReader();
+	    File folder = new File(XML_FILES_LOCATION);
+	    for (File f : folder.listFiles()) {
+	    	if (f.isFile() && f.getName().endsWith(XML_SUFFIX)) {
+	    		try {
+	    			Element root = reader.getRootElement(f.getAbsolutePath());
+	    			Simulation s = factory.getSimulation(root);
+	    			simulationName = root.getAttribute("simulation_name");
+	    			System.out.println(s);
+	    		}
+	    		catch (XMLFactoryException e) {
+	    			System.err.println("Reading file " + f.getPath());
+	      			e.printStackTrace();
+	    		}
+	    	}
+	    }
     	//assign screenWidth and screenHeight
 		setupScreenResolution();
-		init();
+		init(simulationName);
 	}
 	
     private void setupScreenResolution(){
@@ -65,34 +80,14 @@ public class GridController {
     	screenHeight = (int) screenSize.getHeight();
     }
 
-	public void init(BasicGrid grid) {
-      reader = new XmlReader();
-      File folder = new File(XML_FILES_LOCATION);
-      for (File f : folder.listFiles()) {
-      	if (f.isFile() && f.getName().endsWith(XML_SUFFIX)) {
-      		try {
-      			Element root = reader.getRootElement(f.getAbsolutePath());
-      			Simulation s = factory.getSimulation(root);
-      			root.getAttribute("percentAlive");
-      			System.out.println(s);
-      		}
-      		catch (XMLFactoryException e) {
-      			System.err.println("Reading file " + f.getPath());
-      			e.printStackTrace();
-      		}
-      	}
-      }
+	public void init(String simulationName) {
+		reader.simChooser(simulationName);
 		
-		
-		
-		
-		
-	
-		// menu.init();
-		reader = new XmlReader();
-		System.out.println("init");
-		BasicGrid grid = createXOGrid();
-		logic = new XOGridLogic(grid);
+// 		menu.init();
+//		reader = new XmlReader();
+//		System.out.println("init");
+//		BasicGrid grid = createXOGrid();
+//		logic = new XOGridLogic(grid);
 
 		
 //		BasicFiniteGrid grid = createRandomWaterGrid(60,60);
