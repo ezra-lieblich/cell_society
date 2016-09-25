@@ -21,10 +21,6 @@ public class BasicFiniteGrid {
 		grid = new Cell[x][y];
 	}
 
-//	public BasicGrid(int x, int y) {
-//		grid = new Cell[x][y];
-//	}
-
 	public Cell getGridIndex(int x, int y) {
 		return grid[x][y];
 	}
