@@ -7,7 +7,9 @@ import java.awt.Toolkit;
 import java.io.File;
 
 import org.w3c.dom.Element;
-
+import grids.BasicFiniteGrid;
+import grids.BasicToroidalGrid;
+import grids.HexagonalFiniteGrid;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -85,19 +87,19 @@ public class GridController {
 		
 		
 		
-		
-		
+	
 		// menu.init();
 		reader = new XmlReader();
 		System.out.println("init");
 		BasicGrid grid = createXOGrid();
 		logic = new XOGridLogic(grid);
+
 		
-		//ToroidalGrid grid = createRandomWaterGrid(60,60);
-		//logic = new WaterGridLogic(grid);
+//		BasicFiniteGrid grid = createRandomWaterGrid(60,60);
+//		logic = new WaterGridLogic(grid);
 		
 		BorderPane root = new BorderPane();
-		view = new GridView(root, grid);
+		view = new GridView(root, grid, screenWidth, screenHeight);
 		//view = new GridView(root, grid);
 		toolbar = new Toolbar(root, this);
 		createTimeline();
@@ -153,8 +155,8 @@ public class GridController {
 	}
 
 	// for testing, creates a water grid with random types of cells
-	private ToroidalGrid createRandomWaterGrid(int rows, int columns) {
-		ToroidalGrid temp = new ToroidalGrid(rows, columns);
+	private BasicFiniteGrid createRandomWaterGrid(int rows, int columns) {
+		BasicFiniteGrid temp = new HexagonalFiniteGrid(rows, columns);
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
 				int ranGen = (int) (Math.random() * 10);
@@ -170,12 +172,11 @@ public class GridController {
 		}
 		return temp;
 	}
-	private BasicGrid createXOGrid() {
-//	private BasicGrid createXOGrid(int rows, int columns) {
-//		BasicGrid temp = new BasicGrid(rows, columns);
-		BasicGrid temp = new BasicGrid();
-		for (int r = 0; r < temp.getRows(); r++) {
-			for (int c = 0; c < temp.getColumns(); c++) {
+
+	private BasicFiniteGrid createXOGrid(int rows, int columns) {
+		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < columns; c++) {
 				int ranGen = (int) (Math.random() * 3);
 				switch (ranGen) {
 				case 0:

@@ -3,18 +3,18 @@ package water;
 import java.util.ArrayList;
 
 import cellsociety_team01.Cell;
-import cellsociety_team01.BasicGrid;
 import cellsociety_team01.GridLogic;
-import cellsociety_team01.ToroidalGrid;
+import grids.BasicFiniteGrid;
+import grids.BasicToroidalGrid;
 
 public class WaterGridLogic extends GridLogic {
 	protected static int TURNS_PER_FISH_REPRODUCE = 2;
 	protected static int TURNS_FOR_SHARK_DEATH = 2;
-	protected static int TURNS_PER_SHARK_REPRODUCE = 5;
+	protected static int TURNS_PER_SHARK_REPRODUCE = 10;
 
-	private ToroidalGrid grid;
+	private BasicFiniteGrid grid;
 
-	public WaterGridLogic(ToroidalGrid grid) {
+	public WaterGridLogic(BasicFiniteGrid grid) {
 		this.grid = grid;
 	}
 

@@ -3,13 +3,13 @@ package xo;
 import java.util.ArrayList;
 import java.util.List;
 import cellsociety_team01.Cell;
-import cellsociety_team01.BasicGrid;
 import cellsociety_team01.GridLogic;
+import grids.BasicFiniteGrid;
 
 public class XOGridLogic extends GridLogic{
 	private List<Neighbor> upsetNeighbors;
 	private List<Cell> availableSpaces;
-	public XOGridLogic(BasicGrid grid) {
+	public XOGridLogic(BasicFiniteGrid grid) {
 		this.grid = grid;
 	}
 	/**

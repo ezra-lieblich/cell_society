@@ -12,12 +12,13 @@ import org.xml.sax.SAXException;
 import water.EmptyCell;
 import water.Fish;
 import water.Shark;
+import grids.BasicFiniteGrid;
 
 import java.io.IOException;
 
 public class XmlReader {
 	// Width of grid array, height of grid array, type of sim, data in each cell of the grid
-	private BasicGrid grid;
+	private BasicFiniteGrid grid;
 	// Reset DOCUMENT_BUILDER before every parse
 	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
 	private static Element root;
