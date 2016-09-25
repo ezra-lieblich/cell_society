@@ -86,9 +86,9 @@ public class Main extends Application {
 //        }
     }
     
-    public void restartGame(){
-    	controller.init();
-    }
+//    public void restartGame(){
+//    	controller.init();
+//    }
     
     
 }

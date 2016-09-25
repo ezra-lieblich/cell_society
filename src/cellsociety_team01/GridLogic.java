@@ -1,11 +1,13 @@
 package cellsociety_team01;
 
+import grids.BasicFiniteGrid;
+
 public class GridLogic {
-	protected BasicGrid grid;
+	protected BasicFiniteGrid grid;
 	
 	public GridLogic(){}
 	
-	public GridLogic(BasicGrid grid) {
+	public GridLogic(BasicFiniteGrid grid) {
 		this.grid = grid;
 	}
 	public void step() {
