@@ -14,7 +14,7 @@ import javafx.scene.shape.Rectangle;
  * @author ezra
  *
  */
-public class GridView {
+public abstract class GridView {
 
 	private BorderPane root;
 	private BasicFiniteGrid grid;
@@ -48,25 +48,16 @@ public class GridView {
 		gridView = new Group();
 		BorderPane.setAlignment(gridView, Pos.CENTER_LEFT);
 		root.setCenter(gridView);
-		createSquareGrid();
+		visualizeGrid();
 	}
 
-	public void createSquareGrid() {
-		for (int r = 0; r < grid.getRows(); r++) {
-			for (int c = 0; c < grid.getColumns(); c++) {
-				Rectangle temp = new Rectangle(r * pixelWidth, c * pixelHeight, pixelWidth, pixelHeight);
-				temp.setFill(grid.getGridIndex(r, c).getColor());
-				gridView.getChildren().add(temp);
-			}
-		}
+	protected void visualizeGrid() {
+		
 	}
 
 	/**
 	 * Calculates the pixel size of each cell based on the size of the grid
 	 */
-	private void setupPixelSize() {
-		int minPixels = Math.min(gridSizeX / grid.getColumns(), gridSizeY / grid.getRows());
-		pixelWidth = minPixels;
-		pixelHeight = minPixels;
+	protected void setupPixelSize() {
 	}
 }
