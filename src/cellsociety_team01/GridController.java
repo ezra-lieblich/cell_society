@@ -8,6 +8,7 @@ import java.io.File;
 
 import grids.BasicFiniteGrid;
 import grids.BasicToroidalGrid;
+import grids.HexagonalFiniteGrid;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -68,7 +69,7 @@ public class GridController {
 //		BasicFiniteGrid grid = createXOGrid(20,20);
 //		logic = new XOGridLogic(grid);
 		
-		BasicToroidalGrid grid = createRandomWaterGrid(5,5);
+		BasicFiniteGrid grid = createRandomWaterGrid(60,60);
 		logic = new WaterGridLogic(grid);
 		
 		BorderPane root = new BorderPane();
@@ -128,8 +129,8 @@ public class GridController {
 	}
 
 	// for testing, creates a water grid with random types of cells
-	private BasicToroidalGrid createRandomWaterGrid(int rows, int columns) {
-		BasicToroidalGrid temp = new BasicToroidalGrid(rows, columns);
+	private BasicFiniteGrid createRandomWaterGrid(int rows, int columns) {
+		BasicFiniteGrid temp = new HexagonalFiniteGrid(rows, columns);
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
 				int ranGen = (int) (Math.random() * 10);
