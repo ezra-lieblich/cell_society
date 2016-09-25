@@ -28,9 +28,10 @@ public class LifeGrid extends BasicGrid{
 		return neighbors;
 	}
 	// Returns cell at specified coordinates (i, j). Cells out of bounds will be considered dead cells.
+
 	private Cell getNeighbor(int i, int j) {
 		if (addBoundaryEmpty(i, getRows()) == true || addBoundaryEmpty(j, getColumns()) == true) {
-			DeadCell addthis = null;
+			DeadCell addthis = new DeadCell(i,j);
 			return addthis;
 		}
 		return getGridIndex(i, j);
@@ -44,5 +45,6 @@ public class LifeGrid extends BasicGrid{
 			return true;
 		}
 		return false;
+		}
 	}
-}
+

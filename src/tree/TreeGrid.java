@@ -24,16 +24,22 @@ public class TreeGrid extends BasicGrid{
 		return neighbors;
 	}
 
-	private int adjustIndex(int index, int maxIndex) {
-		if (index >= maxIndex)
-			return index % maxIndex;
-		if (index < 0)
-			return index + maxIndex;
-		return index;
+	private Cell getNeighbor(int i, int j) {
+		if (addBoundaryEmpty(i, getRows()) == true || addBoundaryEmpty(j, getColumns()) == true) {
+			EmptyCell addthis = new EmptyCell(i,j);
+			return addthis;
+		}
+		return getGridIndex(i, j);
 	}
 	
-	// Returns cell at specified coordinates (i, j).
-	private Cell getNeighbor(int i, int j) {
-		return getGridIndex(adjustIndex(i, getRows()), adjustIndex(j, getColumns()));
+	private boolean addBoundaryEmpty(int index, int maxIndex) {
+		if (index >= maxIndex) {
+			return true;
+		}
+		if (index <= 0) {
+			return true;
+		}
+		return false;
+		}
 	}	
-}
+
