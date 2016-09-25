@@ -77,11 +77,4 @@ public class GridInitiator {
 		stateFive = Double.parseDouble(stringFive);
 		return stateFive;
 	}
-	
-	
-	
-	
-		
-	
-	
 }
