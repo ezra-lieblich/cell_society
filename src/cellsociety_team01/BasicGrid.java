@@ -13,14 +13,11 @@ public class BasicGrid {
 	private int y;
 	
 	public BasicGrid(){
-		x = GridInitiator.getXSize();
-		y = GridInitiator.getYSize();
-		grid = new Cell[x][y];
 	}
 
-//	public BasicGrid(int x, int y) {
-//		grid = new Cell[x][y];
-//	}
+	public BasicGrid(int x, int y) {
+		grid = new Cell[x][y];
+	}
 
 	public Cell getGridIndex(int x, int y) {
 		return grid[x][y];
