@@ -1,5 +1,6 @@
 package cellsociety_team01;
 
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Rectangle;
@@ -38,6 +39,7 @@ public class GridView {
 	 */
 	public void step(){
 		gridView = new Group();
+		BorderPane.setAlignment(gridView, Pos.CENTER_LEFT);
 		root.setCenter(gridView);
 		for(int r= 0 ;r<grid.getRows();r++){
 			for(int c = 0;c<grid.getColumns(); c++){
