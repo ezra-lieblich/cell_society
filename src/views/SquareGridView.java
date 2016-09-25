@@ -1,9 +1,7 @@
 package views;
 
-import javafx.geometry.Pos;
 import cellsociety_team01.GridView;
 import grids.BasicFiniteGrid;
-import javafx.scene.Group;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Rectangle;
 
@@ -16,14 +14,6 @@ import javafx.scene.shape.Rectangle;
  *
  */
 public class SquareGridView extends GridView{
-
-	private BorderPane root;
-	private BasicFiniteGrid grid;
-
-	private int gridSizeX, gridSizeY;
-	private Group gridView;
-	private int pixelWidth;
-	private int pixelHeight;
 
 	/**
 	 * Sets the grid and root and also determines the size of the pixels
@@ -48,10 +38,11 @@ public class SquareGridView extends GridView{
 //		createSquareGrid();
 //	}
 
+	@Override
 	protected void visualizeGrid() {
 		for (int r = 0; r < grid.getRows(); r++) {
 			for (int c = 0; c < grid.getColumns(); c++) {
-				Rectangle temp = new Rectangle(r * pixelWidth, c * pixelHeight, pixelWidth, pixelHeight);
+				Rectangle temp = new Rectangle(c * pixelWidth, r * pixelWidth, pixelWidth, pixelWidth);
 				temp.setFill(grid.getGridIndex(r, c).getColor());
 				gridView.getChildren().add(temp);
 			}
@@ -63,8 +54,7 @@ public class SquareGridView extends GridView{
 	 */
 	@Override
 	protected void setupPixelSize() {
-		int minPixels = Math.min(gridSizeX / grid.getColumns(), gridSizeY / grid.getRows());
+		double minPixels = Math.min(gridSizeX / grid.getColumns(), gridSizeY / grid.getRows());
 		pixelWidth = minPixels;
-		pixelHeight = minPixels;
 	}
 }

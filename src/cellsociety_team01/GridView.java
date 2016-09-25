@@ -16,13 +16,12 @@ import javafx.scene.shape.Rectangle;
  */
 public abstract class GridView {
 
-	private BorderPane root;
-	private BasicFiniteGrid grid;
+	protected BorderPane root;
+	protected BasicFiniteGrid grid;
 
-	private int gridSizeX, gridSizeY;
-	private Group gridView;
-	private int pixelWidth;
-	private int pixelHeight;
+	protected double gridSizeX, gridSizeY;
+	protected Group gridView;
+	protected double pixelWidth;
 
 	/**
 	 * Sets the grid and root and also determines the size of the pixels
