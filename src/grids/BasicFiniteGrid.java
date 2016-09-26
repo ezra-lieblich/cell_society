@@ -32,7 +32,7 @@ public class BasicFiniteGrid {
 		neighbors = new ArrayList<Cell>();
 		for (int i = x - 1; i <= x + 1; i++) {
 			for (int j = y - 1; j <= y + 1; j++) {
-				if (!(i == x && j == y))
+				if (validIndex(i,j)&&!(i == x && j == y))
 					addIndex(i,j);
 			}
 		}

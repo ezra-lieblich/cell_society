@@ -7,4 +7,7 @@
 	<YGridSize>40</YGridSize>
 	<percentFish>.75</percentFish>
 	<percentShark>.15</percentShark>
+	<fishReproduce>2</fishReproduce>
+	<sharkDeath>2</sharkDeath>
+	<sharkReproduce>10</sharkReproduce>
 </Simulation>

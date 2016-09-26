@@ -9,8 +9,10 @@ import grids.BasicFiniteGrid;
 public class XOGridLogic extends GridLogic{
 	private List<Neighbor> upsetNeighbors;
 	private List<Cell> availableSpaces;
-	public XOGridLogic(BasicFiniteGrid grid) {
+	protected static double percentSimilar;
+	public XOGridLogic(BasicFiniteGrid grid, double percent_similar) {
 		this.grid = grid;
+		XOGridLogic.percentSimilar = percent_similar;
 	}
 	/**
 	 * Calculates the next state of each cell and then updates the grid

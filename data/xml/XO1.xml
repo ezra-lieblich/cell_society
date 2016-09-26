@@ -5,6 +5,7 @@
 	<simulation_author>Christopher Lu</simulation_author>
 	<XGridSize>40</XGridSize>
 	<YGridSize>40</YGridSize>
-	<percentX>.75</percentX>
-	<percentO>.15</percentO>
+	<percentX>0.75</percentX>
+	<percentO>0.15</percentO>
+	<similarPercentage>0.5</similarPercentage>
 </Simulation>
