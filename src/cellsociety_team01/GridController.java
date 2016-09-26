@@ -17,13 +17,14 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import javafx.stage.Stage;
 import water.*;
+import water.EmptyCell;
 import xo.Empty;
 import xo.Group1;
 import xo.Group2;
 import xo.XOGridLogic;
 import life.*;
 import tree.*;
-import xo.*;
+
 import views.SquareGridView;
 
 public class GridController {

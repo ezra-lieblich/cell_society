@@ -7,7 +7,7 @@ import cellsociety_team01.Cell;
 public class HexagonalFiniteGrid extends BasicFiniteGrid {
 
 	public HexagonalFiniteGrid(int x, int y) {
-		grid = new Cell[x][y];
+		super(x,y);
 	}
 
 	public ArrayList<Cell> getNeighbors(int x, int y) {
