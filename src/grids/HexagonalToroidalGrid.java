@@ -3,25 +3,22 @@ package grids;
 import java.util.ArrayList;
 
 import cellsociety_team01.Cell;
-import water.EmptyCell;
 
-public class BasicToroidalGrid extends BasicFiniteGrid {
-
-	public BasicToroidalGrid(int x, int y) {
+public class HexagonalToroidalGrid extends HexagonalFiniteGrid{
+	
+	public HexagonalToroidalGrid(int x, int y){
 		super(x,y);
 	}
-	
-//	@Override
-//	public ArrayList<Cell> getNeighbors(int x, int y) {
-//		ArrayList<Cell> neighbors = new ArrayList<Cell>();
-//
-//		neighbors.add(getAdjustedNeighbor(x, y + 1));
-//		neighbors.add(getAdjustedNeighbor(x, y - 1));
-//		neighbors.add(getAdjustedNeighbor(x + 1, y));
-//		neighbors.add(getAdjustedNeighbor(x - 1, y));
-//
-//		return neighbors;
-//	}
+
+
+	@Override
+	ArrayList<Cell> getHexagonalNeighbors(int x, int y, int[] xModifier, int[] yModifier) {
+		neighbors = new ArrayList<Cell>();
+		for (int i = 0; i < xModifier.length; i++) {
+				addIndex(x + xModifier[i], y + yModifier[i]);
+		}
+		return neighbors;
+	}
 	
 	@Override
 	protected void addIndex(int x, int y){

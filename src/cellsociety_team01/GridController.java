@@ -17,12 +17,14 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import javafx.stage.Stage;
 import water.*;
+import water.EmptyCell;
 import xo.Empty;
 import xo.Group1;
 import xo.Group2;
 import xo.XOGridLogic;
 import life.*;
 import tree.*;
+import views.SquareGridView;
 
 public class GridController {
 	//private 
@@ -103,7 +105,7 @@ public class GridController {
 //		logic = new WaterGridLogic(grid);
 		
 		BorderPane root = new BorderPane();
-		view = new GridView(root, grid, screenWidth, screenHeight);
+		view = new SquareGridView(root, grid, screenWidth, screenHeight);
 		//view = new GridView(root, grid);
 		toolbar = new Toolbar(root, this);
 		createTimeline();
