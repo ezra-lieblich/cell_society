@@ -13,11 +13,13 @@ import org.w3c.dom.NodeList;
  * @author Rhondu Smithwick
  * @author Robert Duvall
  */
-public abstract class XMLFactory {
+public class XMLFactory {
     /**
      * @return if this is a valid XML file for this specific XML object type
      */
-    protected abstract boolean isValidFile (Element root);
+    protected  boolean isValidFile (Element root) {
+    	return true;
+    }
 
     /**
      * Get the value of an attribute.

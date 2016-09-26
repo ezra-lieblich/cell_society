@@ -59,6 +59,7 @@ public class GridController {
 	    if (file.isFile() && file.getName().endsWith(XML_SUFFIX)) {
 //	    		try {
     		reader = new XmlReader();
+    		System.out.println(reader.getRootElement(file));
 			Element root = reader.getRootElement(file);
 			simulationName = root.getAttribute("simulation_name");
 			System.out.println(simulationName);
