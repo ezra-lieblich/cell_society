@@ -4,7 +4,6 @@ import cellsociety_team01.GridView;
 import grids.BasicFiniteGrid;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 
 /**
  * TriangleGridView extends GridView and specifically creates a grid with
@@ -13,6 +12,9 @@ import javafx.scene.shape.Rectangle;
  * @author eric
  */
 public class TriangleGridView extends GridView {
+	
+	private double triangleHeightMultiplier = Math.sqrt(3) / 2;
+	private double triangleWidthMultiplier = 0.5;
 
 	public TriangleGridView(BorderPane root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
 		super(root, grid, screenWidth, screenHeight);
@@ -26,15 +28,15 @@ public class TriangleGridView extends GridView {
 				Double[] rootPoint;
 				if(c%2==0){
 					rootPoint = new Double[]{
-						    c*pixelWidth, r*pixelWidth*Math.sqrt(3),
-						    (c+2)*pixelWidth, r*pixelWidth*Math.sqrt(3),
-						    (c+1)*pixelWidth, (r+1)*pixelWidth*Math.sqrt(3) };
+						    c*pixelWidth*triangleWidthMultiplier, r*pixelWidth*triangleHeightMultiplier,
+						    (c+2)*pixelWidth*triangleWidthMultiplier, r*pixelWidth*triangleHeightMultiplier,
+						    (c+1)*pixelWidth*triangleWidthMultiplier, (r+1)*pixelWidth*triangleHeightMultiplier };
 				}
 				else{
 					rootPoint = new Double[]{
-						    (c+1)*pixelWidth, r*pixelWidth*Math.sqrt(3),
-						    c*pixelWidth, (r+1)*pixelWidth*Math.sqrt(3),
-						    (c+2)*pixelWidth, (r+1)*pixelWidth*Math.sqrt(3) };
+						    (c+1)*pixelWidth*triangleWidthMultiplier, r*pixelWidth*triangleHeightMultiplier,
+						    c*pixelWidth*triangleWidthMultiplier, (r+1)*pixelWidth*triangleHeightMultiplier,
+						    (c+2)*pixelWidth*triangleWidthMultiplier, (r+1)*pixelWidth*triangleHeightMultiplier };
 				}
 				polygon.getPoints().addAll(rootPoint);
 				polygon.setFill(grid.getGridIndex(r, c).getColor());
@@ -49,9 +51,8 @@ public class TriangleGridView extends GridView {
 	@Override
 	protected void setupPixelSize() {
 		// equalateral triangle has height multiplier of sqrt(3)/2
-		double triangleMultiplier = Math.sqrt(3) / 2;
-		double tempHeight = gridSizeX / grid.getRows() / triangleMultiplier;
-		double minPixels = Math.min(tempHeight, gridSizeY / grid.getColumns() / 2);
+		
+		double minPixels = Math.min(gridSizeX* triangleHeightMultiplier/ grid.getRows(), gridSizeY *triangleWidthMultiplier/ grid.getColumns());
 		pixelWidth = minPixels;
 	}
 

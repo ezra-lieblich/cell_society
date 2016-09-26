@@ -19,6 +19,7 @@ import grids.BasicFiniteGrid;
 import life.*;
 import tree.*;
 
+import java.io.File;
 import java.io.IOException;
 
 public class XmlReader {
@@ -28,10 +29,10 @@ public class XmlReader {
 	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
 	private static Element root;
 
-	public static Element getRootElement(String xmlFilename) {
+	public static Element getRootElement(File xmlFile) {
 		try {
 			DOCUMENT_BUILDER.reset();
-			Document xmlDocument = DOCUMENT_BUILDER.parse(xmlFilename);
+			Document xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);
 			root = xmlDocument.getDocumentElement();
 			return root;
 		}
@@ -49,19 +50,27 @@ public class XmlReader {
 		}
 	}
 	
-	public void simChooser(String simulationName) {
+	public BasicFiniteGrid simChooser(String simulationName) {
 		if (simulationName.equals("GameOfLife")) {
-			initiateLife();
+			return initiateLife();
 		}
 		if (simulationName.equals("SpreadOfFire")) {
-			initiateTree();
+			return initiateTree();
 		}
 		if (simulationName.equals("WaTorWorld")) {
-			initiateWaTor();
+			return initiateWaTor();
 		}
 		if (simulationName.equals("XO")) {
-			initiateXO();
+			return initiateXO();
 		}
+		else {
+			return initiateLife();
+		}
+	}
+	
+	public String getSim() {
+		String Sim = root.getAttribute("simulation_name");
+		return Sim;
 	}
 	
 	private BasicFiniteGrid initiateLife() {

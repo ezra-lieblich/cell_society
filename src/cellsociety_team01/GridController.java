@@ -17,17 +17,20 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import javafx.stage.Stage;
 import water.*;
-import xo.Clear;
+import xo.*;
+import water.EmptyCell;
 import xo.Group1;
 import xo.Group2;
 import xo.XOGridLogic;
 import life.*;
+import tree.*;
+
 import views.SquareGridView;
 
 public class GridController {
 	//private 
 	private GridLogic logic;
-	private GridView view;
+	private SquareGridView view;
 	private XmlReader reader;
 	private Toolbar toolbar;
 	private String title;
@@ -53,24 +56,32 @@ public class GridController {
 	}
 	
 	public void parseFile(File file){
-		//System.out.println(file.getAbsolutePath());
-		reader = new XmlReader();
-	    File folder = new File(XML_FILES_LOCATION);
-	    for (File f : folder.listFiles()) {
-	    	if (f.isFile() && f.getName().endsWith(XML_SUFFIX)) {
-	    		try {
-	    			Element root = reader.getRootElement(f.getAbsolutePath());
-	    			Simulation s = factory.getSimulation(root);
-	    			simulationName = root.getAttribute("simulation_name");
-	    			System.out.println(s);
-	    		}
-	    		catch (XMLFactoryException e) {
-	    			System.err.println("Reading file " + f.getPath());
-	      			e.printStackTrace();
-	    		}
-	    	}
-	    }
-    	//assign screenWidth and screenHeight
+	    if (file.isFile() && file.getName().endsWith(XML_SUFFIX)) {
+//	    		try {
+    		reader = new XmlReader();
+			Element root = reader.getRootElement(file);
+			simulationName = root.getAttribute("simulation_name");
+			System.out.println(simulationName);
+			if (simulationName.equals("Game of Life")) {
+				factory = new LifeXMLFactory();
+			}
+			else if (simulationName.equals("Spread of Fire")) {
+				factory = new TreeXMLFactory();
+			}
+			else if (simulationName.equals("WaTor World")) {
+				factory = new WaterXMLFactory();
+			}
+			else if (simulationName.equals("XO Segregation")) {
+				factory = new XOXMLFactory();
+			}
+		}
+//	    			Simulation s = factory.getSimulation(root);
+    		//}
+//	    		catch (XMLFactoryException e) {
+//	    			System.err.println("Reading file " + f.getPath());
+//	      			e.printStackTrace();
+//	    		}
+	//assign screenWidth and screenHeight
 		setupScreenResolution();
 		init(simulationName);
 	}
@@ -82,19 +93,28 @@ public class GridController {
     }
 
 	public void init(String simulationName) {
-		reader.simChooser(simulationName);
+		BasicFiniteGrid grid = reader.simChooser(simulationName);
+		String simName = reader.getSim();
+		if (simName.equals("Game of Life")) {
+			logic = new  LifeGridLogic(grid);
+		}
+		else if (simName.equals("Spread of Fire")) {
+			logic = new TreeGridLogic(grid);
+		}
+		else if (simName.equals("WaTor World")) {
+			logic = new WaterGridLogic(grid);
+		}
+		else if (simName.equals("XO Segregation")) {
+			logic = new XOGridLogic(grid);
+		}
 		
-// 		menu.init();
-//		reader = new XmlReader();
-//		System.out.println("init");
-//		BasicGrid grid = createXOGrid();
+//		menu.init();
 //		logic = new XOGridLogic(grid);
 
 
 		//System.out.println("init");
-		BasicFiniteGrid grid = createXOGrid(20,20);
+		grid = createXOGrid(20,20);
 		logic = new XOGridLogic(grid);
-
 		
 //		BasicFiniteGrid grid = createRandomWaterGrid(60,60);
 //		logic = new WaterGridLogic(grid);
@@ -166,8 +186,7 @@ public class GridController {
 				else if(1<ranGen&&ranGen<=8)
 					temp.setGridIndex(new Fish(r, c), r, c);
 				else
-					temp.setGridIndex(new EmptyCell(r, c), r, c);
-
+					temp.setGridIndex(new water.EmptyCell(r, c), r, c);
 
 			}
 		}
