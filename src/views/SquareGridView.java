@@ -1,8 +1,7 @@
-package cellsociety_team01;
+package views;
 
-import javafx.geometry.Pos;
+import cellsociety_team01.GridView;
 import grids.BasicFiniteGrid;
-import javafx.scene.Group;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Rectangle;
 
@@ -14,14 +13,7 @@ import javafx.scene.shape.Rectangle;
  * @author ezra
  *
  */
-public abstract class GridView {
-
-	protected BorderPane root;
-	protected BasicFiniteGrid grid;
-
-	protected double gridSizeX, gridSizeY;
-	protected Group gridView;
-	protected double pixelWidth;
+public class SquareGridView extends GridView{
 
 	/**
 	 * Sets the grid and root and also determines the size of the pixels
@@ -31,32 +23,38 @@ public abstract class GridView {
 	 * @param grid
 	 *            We need the grid so GridView can read it and update the View.
 	 */
-	public GridView(BorderPane root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
-		gridSizeX = screenWidth * 9 / 10;
-		gridSizeY = screenHeight * 8 / 10;
-		this.root = root;
-		this.grid = grid;
-		setupPixelSize();
+	public SquareGridView(BorderPane root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
+		super(root,grid,screenWidth,screenHeight);
 	}
 
 	/**
 	 * Loops through each Cell in grid and adds it to the root to change the
 	 * view
 	 */
-	public void step() {
-		gridView = new Group();
-		BorderPane.setAlignment(gridView, Pos.CENTER_LEFT);
-		root.setCenter(gridView);
-		visualizeGrid();
-	}
+//	public void step() {
+//		gridView = new Group();
+//		BorderPane.setAlignment(gridView, Pos.CENTER_LEFT);
+//		root.setCenter(gridView);
+//		createSquareGrid();
+//	}
 
+	@Override
 	protected void visualizeGrid() {
-		
+		for (int r = 0; r < grid.getRows(); r++) {
+			for (int c = 0; c < grid.getColumns(); c++) {
+				Rectangle temp = new Rectangle(c * pixelWidth, r * pixelWidth, pixelWidth, pixelWidth);
+				temp.setFill(grid.getGridIndex(r, c).getColor());
+				gridView.getChildren().add(temp);
+			}
+		}
 	}
 
 	/**
 	 * Calculates the pixel size of each cell based on the size of the grid
 	 */
+	@Override
 	protected void setupPixelSize() {
+		double minPixels = Math.min(gridSizeX / grid.getColumns(), gridSizeY / grid.getRows());
+		pixelWidth = minPixels;
 	}
 }

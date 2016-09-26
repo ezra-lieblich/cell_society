@@ -3,13 +3,13 @@ package xo;
 import java.util.ArrayList;
 import java.util.List;
 import cellsociety_team01.Cell;
-import cellsociety_team01.BasicGrid;
 import cellsociety_team01.GridLogic;
+import grids.BasicFiniteGrid;
 
 public class XOGridLogic extends GridLogic{
 	private List<Neighbor> upsetNeighbors;
 	private List<Cell> availableSpaces;
-	public XOGridLogic(BasicGrid grid) {
+	public XOGridLogic(BasicFiniteGrid grid) {
 		this.grid = grid;
 	}
 	/**
@@ -50,7 +50,7 @@ public class XOGridLogic extends GridLogic{
 	 */
 	private void updateGrid() {
 		for(Neighbor neighbor : upsetNeighbors) {
-			Empty vacated_cell = new Empty(neighbor.getCoordsX(), neighbor.getCoordsY());
+			Clear vacated_cell = new Clear(neighbor.getCoordsX(), neighbor.getCoordsY());
 			grid.setGridIndex(vacated_cell, vacated_cell.getCoordsX(), vacated_cell.getCoordsY());
 			Cell new_location = availableSpaces.get((int)(Math.random() * (availableSpaces.size()-1)));
 			int new_x = new_location.getCoordsX();

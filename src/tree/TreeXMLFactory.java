@@ -1,23 +1,23 @@
-package life;
+package tree;
 import cellsociety_team01.Simulation;
 import cellsociety_team01.SimulationXMLFactory;
 import cellsociety_team01.XMLFactoryException;
-import life.LifeXML;
+import tree.TreeXML;
 import org.w3c.dom.Element;
 
 /**
- * Creates LifeXML object from an XML file.
+ * Creates TreeXML object from an XML file.
  *
  * @author Christopher Lu
  */
-public class LifeXMLFactory extends SimulationXMLFactory {
+public class TreeXMLFactory extends SimulationXMLFactory {
     private static final String XML_TAG_NAME = "GameOfLife";
 
 
     /**
-     * Create factory capable of generating LifeXML objects.
+     * Create factory capable of generating TreeXML objects.
      */
-    public LifeXMLFactory () {
+    public TreeXMLFactory () {
         super(XML_TAG_NAME);
     }
 
@@ -35,8 +35,10 @@ public class LifeXMLFactory extends SimulationXMLFactory {
         String simulationAuthor = getTextValue(root, "simulation_author");
         String xGridSize = getTextValue(root, "XGridSize");
         String yGridSize = getTextValue(root, "YGridSize");
-        String Alive = getTextValue(root, "percentAlive");
-        String Dead = getTextValue(root, "percentDead");
-        return new LifeXML(simulationName, simulationTitle, simulationAuthor, xGridSize, yGridSize, Alive, Dead);
+        String Tree = getTextValue(root, "percentTree");
+        String Burn = getTextValue(root, "percentBurn");
+        String Empty = getTextValue(root, "percentEmpty");
+        String probCatch = getTextValue(root, "probCatch");
+        return new TreeXML(simulationName, simulationTitle, simulationAuthor, xGridSize, yGridSize, Tree, Burn, Empty, probCatch);
     }
 }

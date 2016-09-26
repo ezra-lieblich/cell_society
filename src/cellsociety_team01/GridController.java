@@ -6,6 +6,10 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
 
+import org.w3c.dom.Element;
+import grids.BasicFiniteGrid;
+import grids.BasicToroidalGrid;
+import grids.HexagonalFiniteGrid;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -13,11 +17,12 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import javafx.stage.Stage;
 import water.*;
-import xo.Empty;
+import xo.Clear;
 import xo.Group1;
 import xo.Group2;
 import xo.XOGridLogic;
 import life.*;
+import views.SquareGridView;
 
 public class GridController {
 	//private 
@@ -31,7 +36,11 @@ public class GridController {
 	private Stage stage;
 	private Scene mainMenu;
     private int screenWidth, screenHeight;
-
+    private static final String XML_FILES_LOCATION = "data/xml/";
+    private static final String XML_SUFFIX = ".xml";
+    private SimulationXMLFactory factory;
+    private String simulationName;
+    
 	public GridController(Stage stage) {
 		this.stage = stage;
 
@@ -45,11 +54,25 @@ public class GridController {
 	
 	public void parseFile(File file){
 		//System.out.println(file.getAbsolutePath());
-		
-		
+		reader = new XmlReader();
+	    File folder = new File(XML_FILES_LOCATION);
+	    for (File f : folder.listFiles()) {
+	    	if (f.isFile() && f.getName().endsWith(XML_SUFFIX)) {
+	    		try {
+	    			Element root = reader.getRootElement(f.getAbsolutePath());
+	    			Simulation s = factory.getSimulation(root);
+	    			simulationName = root.getAttribute("simulation_name");
+	    			System.out.println(s);
+	    		}
+	    		catch (XMLFactoryException e) {
+	    			System.err.println("Reading file " + f.getPath());
+	      			e.printStackTrace();
+	    		}
+	    	}
+	    }
     	//assign screenWidth and screenHeight
 		setupScreenResolution();
-		init();
+		init(simulationName);
 	}
 	
     private void setupScreenResolution(){
@@ -58,19 +81,26 @@ public class GridController {
     	screenHeight = (int) screenSize.getHeight();
     }
 
-	public void init() {
-        
-		// menu.init();
+	public void init(String simulationName) {
+		reader.simChooser(simulationName);
+		
+// 		menu.init();
+//		reader = new XmlReader();
+//		System.out.println("init");
+//		BasicGrid grid = createXOGrid();
+//		logic = new XOGridLogic(grid);
+
 
 		//System.out.println("init");
-		BasicGrid grid = createXOGrid(20,20);
+		BasicFiniteGrid grid = createXOGrid(20,20);
 		logic = new XOGridLogic(grid);
+
 		
-		//ToroidalGrid grid = createRandomWaterGrid(60,60);
-		//logic = new WaterGridLogic(grid);
+//		BasicFiniteGrid grid = createRandomWaterGrid(60,60);
+//		logic = new WaterGridLogic(grid);
 		
 		BorderPane root = new BorderPane();
-		view = new GridView(root, grid);
+		view = new SquareGridView(root, grid, screenWidth, screenHeight);
 		//view = new GridView(root, grid);
 		toolbar = new Toolbar(root, this);
 		createTimeline();
@@ -126,8 +156,8 @@ public class GridController {
 	}
 
 	// for testing, creates a water grid with random types of cells
-	private ToroidalGrid createRandomWaterGrid(int rows, int columns) {
-		ToroidalGrid temp = new ToroidalGrid(rows, columns);
+	private BasicFiniteGrid createRandomWaterGrid(int rows, int columns) {
+		BasicFiniteGrid temp = new HexagonalFiniteGrid(rows, columns);
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
 				int ranGen = (int) (Math.random() * 10);
@@ -143,14 +173,15 @@ public class GridController {
 		}
 		return temp;
 	}
-	private BasicGrid createXOGrid(int rows, int columns) {
-		BasicGrid temp = new BasicGrid(rows, columns);
+
+	private BasicFiniteGrid createXOGrid(int rows, int columns) {
+		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
 				int ranGen = (int) (Math.random() * 3);
 				switch (ranGen) {
 				case 0:
-					temp.setGridIndex(new Empty(r, c), r, c);
+					temp.setGridIndex(new Clear(r, c), r, c);
 					break;
 				case 1:
 					temp.setGridIndex(new Group1(r, c), r, c);
