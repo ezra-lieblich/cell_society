@@ -51,9 +51,10 @@ public class MainMenu {
 		button.setOnAction(
 	            new EventHandler<ActionEvent>() {
 	                @Override
-	                public void handle(final ActionEvent e) {
+	                public void handle(final ActionEvent e) {             
 	                    File file = fileChooser.showOpenDialog(stage);
 	                    if (file != null) {
+	                    	System.out.println(file.getName());
 	                        controller.parseFile(file);
 	                    }
 	                }

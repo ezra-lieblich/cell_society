@@ -9,8 +9,10 @@ import grids.BasicFiniteGrid;
 public class XOGridLogic extends GridLogic{
 	private List<Neighbor> upsetNeighbors;
 	private List<Cell> availableSpaces;
-	public XOGridLogic(BasicFiniteGrid grid) {
+	protected static double percentSimilar;
+	public XOGridLogic(BasicFiniteGrid grid, double percent_similar) {
 		this.grid = grid;
+		XOGridLogic.percentSimilar = percent_similar;
 	}
 	/**
 	 * Calculates the next state of each cell and then updates the grid
@@ -50,7 +52,7 @@ public class XOGridLogic extends GridLogic{
 	 */
 	private void updateGrid() {
 		for(Neighbor neighbor : upsetNeighbors) {
-			Empty vacated_cell = new Empty(neighbor.getCoordsX(), neighbor.getCoordsY());
+			Clear vacated_cell = new Clear(neighbor.getCoordsX(), neighbor.getCoordsY());
 			grid.setGridIndex(vacated_cell, vacated_cell.getCoordsX(), vacated_cell.getCoordsY());
 			Cell new_location = availableSpaces.get((int)(Math.random() * (availableSpaces.size()-1)));
 			int new_x = new_location.getCoordsX();

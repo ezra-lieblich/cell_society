@@ -17,11 +17,12 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import javafx.stage.Stage;
 import water.*;
+import xo.*;
 import water.EmptyCell;
-import xo.Empty;
 import xo.Group1;
 import xo.Group2;
 import xo.XOGridLogic;
+import xo.XOXMLFactory;
 import life.*;
 import tree.*;
 import views.HexagonalGridView;
@@ -58,35 +59,10 @@ public class GridController {
 	
 	public void parseFile(File file){
 	    if (file.isFile() && file.getName().endsWith(XML_SUFFIX)) {
-//	    		try {
-
 			Element root = reader.getRootElement(file);
-//			for(int i=0;i<root.getChildNodes().getLength();i++){
-//			System.out.println(root.getChildNodes().item(i).getNodeName());
-//			}
 			XMLFactory tempFactory = new XMLFactory();
 			simulationName = tempFactory.getTextValue(root, "simulation_name");
-			System.out.println(simulationName);
-			if (simulationName.equals("Game of Life")) {
-				factory = new LifeXMLFactory();
-			}
-			else if (simulationName.equals("Spread of Fire")) {
-				factory = new TreeXMLFactory();
-			}
-//			else if (simulationName.equals("WaTor World")) {
-//				factory = new WaterXMLFactory();
-//			}
-//			else if (simulationName.equals("XO Segregation")) {
-//				factory = new XOXMLFactory();
-//			}
 		}
-//	    			Simulation s = factory.getSimulation(root);
-    		//}
-//	    		catch (XMLFactoryException e) {
-//	    			System.err.println("Reading file " + f.getPath());
-//	      			e.printStackTrace();
-//	    		}
-	//assign screenWidth and screenHeight
 		setupScreenResolution();
 		init(simulationName);
 	}
@@ -111,11 +87,17 @@ public class GridController {
 			logic = new WaterGridLogic(grid,reader.getFishReproduce(), reader.getSharkDeath(),reader.getSharkReproduce());
 		}
 		else if (simulationName.equals("XO Segregation")) {
-			logic = new XOGridLogic(grid);
+			logic = new XOGridLogic(grid, reader.getPercentSimilar());
 		}
 		
 //		menu.init();
 //		logic = new XOGridLogic(grid);
+
+
+		//System.out.println("init");
+		//grid = createXOGrid(20,20);
+		//logic = new XOGridLogic(grid);
+		
 //		BasicFiniteGrid grid = createRandomWaterGrid(60,60);
 //		logic = new WaterGridLogic(grid);
 		
@@ -131,45 +113,17 @@ public class GridController {
 
 	private void createTimeline() {
 		int MILLISECOND_DELAY = 500;
-		//double SECOND_DELAY = MILLISECOND_DELAY/1000;
 		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
                 e -> this.step());
 		animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(frame);
-		//stage.setScene(new Scene(root, screenWidth, screenHeight, Color.WHITE));
-        
-		//view = new GridView(root, grid);
-//		WaterGrid grid = createRandomWaterGrid(60,60);
-//		logic = new WaterGridLogic(grid);
-//		Group root = new Group();
-//		view = new GridView(root, grid);
-//		LifeGrid grid = createLifeGrid(20,20);
-//		logic = new LifeGridLogic(grid);
-//		Group root = new Group();
-//		view = new GridView(root, grid);
-//		return new Scene(root, screenWidth, screenHeight, Color.WHITE);
 	}
 
 	public void step() {
-		// if (!isSetupFinished) {
-
-		// if (menu.getFileChosen()) {
-		// setup(menu.getFilePath());
-		// }
-		// break;
-		// }
 		view.step();
 		logic.step();
-		
 	}
-
-//	private void setup(String path) {
-//		reader = new XmlReader("data/xml/GameOfLife1.xml");
-//		logic = reader.getGridLogic();
-//		view = reader.getGridView();
-//		isSetupFinished = true;
-//	}
 
 	public String getTitle() {
 		return title;
@@ -187,7 +141,6 @@ public class GridController {
 					temp.setGridIndex(new Fish(r, c), r, c);
 				else
 					temp.setGridIndex(new water.EmptyCell(r, c), r, c);
-
 			}
 		}
 		return temp;
@@ -200,7 +153,7 @@ public class GridController {
 				int ranGen = (int) (Math.random() * 3);
 				switch (ranGen) {
 				case 0:
-					temp.setGridIndex(new Empty(r, c), r, c);
+					temp.setGridIndex(new Clear(r, c), r, c);
 					break;
 				case 1:
 					temp.setGridIndex(new Group1(r, c), r, c);
@@ -217,15 +170,15 @@ public class GridController {
 	}
 
 	public void startSimulation() {
-		animation.play();;
+		animation.play();
 	}
 
 	public void stopSimulation() {
-		animation.stop();;
+		animation.pause();
 	}
 
 	public void stepSimulation() {
-		animation.stop();
+		animation.pause();
 		this.step();
 	}
 

@@ -5,8 +5,8 @@
 	<simulation_author>Christopher Lu</simulation_author>
 	<XGridSize>40</XGridSize>
 	<YGridSize>40</YGridSize>
-	<probCatch>0.15</probCatch>
-	<percentTree>.65</percentTree>
-	<percentBurn>.15</percentBurn>
-	<percentEmpty>.20</percentEmpty>
+	<probCatch>0.5</probCatch>
+	<percentTree>0.895</percentTree>
+	<percentBurn>0.005</percentBurn>
+	<percentEmpty>0.10</percentEmpty>
 </Simulation>

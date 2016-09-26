@@ -17,6 +17,7 @@ public class XMLFactory {
     /**
      * @return if this is a valid XML file for this specific XML object type
      */
+
     public boolean isValidFile (Element root){ return true;}
 
     /**

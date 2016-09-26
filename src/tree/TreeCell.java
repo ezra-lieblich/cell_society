@@ -9,7 +9,6 @@ import cellsociety_team01.Cell;
 public class TreeCell extends Cell{
 	private ArrayList<Cell> neighbors;
 	public boolean nextState;
-	private boolean probCatchboolean;
 	private double probCatch;
 	
 	// True = Burning, false = Tree
@@ -27,13 +26,13 @@ public class TreeCell extends Cell{
 		return "T";
 	}
 	
-	private void nearFire() {
+	private boolean nearFire() {
 		for (Cell c: neighbors) {
 			if (c instanceof BurningCell)  {
-				probCatchboolean = true;
-				break;
+				return true;
 			}
 		}
+		return false;
 	}
 	
 	@Override
@@ -43,7 +42,7 @@ public class TreeCell extends Cell{
 	}
 	
 	private boolean determineNextState() {
-		if (probCatchboolean) {
+		if (nearFire()) {
 			double rand = Math.random();
 			return (rand < probCatch);
 		}

@@ -7,4 +7,5 @@
 	<YGridSize>40</YGridSize>
 	<percentX>0.75</percentX>
 	<percentO>0.15</percentO>
+	<similarPercentage>0.5</similarPercentage>
 </Simulation>
