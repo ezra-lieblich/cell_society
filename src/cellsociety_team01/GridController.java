@@ -23,11 +23,13 @@ import xo.Group2;
 import xo.XOGridLogic;
 import life.*;
 import tree.*;
+import xo.*;
+import views.SquareGridView;
 
 public class GridController {
 	//private 
 	private GridLogic logic;
-	private GridView view;
+	private SquareGridView view;
 	private XmlReader reader;
 	private Toolbar toolbar;
 	private String title;
@@ -53,24 +55,32 @@ public class GridController {
 	}
 	
 	public void parseFile(File file){
-		//System.out.println(file.getAbsolutePath());
-		reader = new XmlReader();
-	    File folder = new File(XML_FILES_LOCATION);
-	    for (File f : folder.listFiles()) {
-	    	if (f.isFile() && f.getName().endsWith(XML_SUFFIX)) {
-	    		try {
-	    			Element root = reader.getRootElement(f.getAbsolutePath());
-	    			Simulation s = factory.getSimulation(root);
-	    			simulationName = root.getAttribute("simulation_name");
-	    			System.out.println(s);
-	    		}
-	    		catch (XMLFactoryException e) {
-	    			System.err.println("Reading file " + f.getPath());
-	      			e.printStackTrace();
-	    		}
-	    	}
-	    }
-    	//assign screenWidth and screenHeight
+	    if (file.isFile() && file.getName().endsWith(XML_SUFFIX)) {
+//	    		try {
+    		reader = new XmlReader();
+			Element root = reader.getRootElement(file);
+			simulationName = root.getAttribute("simulation_name");
+			System.out.println(simulationName);
+			if (simulationName.equals("Game of Life")) {
+				factory = new LifeXMLFactory();
+			}
+			else if (simulationName.equals("Spread of Fire")) {
+				factory = new TreeXMLFactory();
+			}
+			else if (simulationName.equals("WaTor World")) {
+				factory = new WaterXMLFactory();
+			}
+			else if (simulationName.equals("XO Segregation")) {
+				factory = new XOXMLFactory();
+			}
+		}
+//	    			Simulation s = factory.getSimulation(root);
+    		//}
+//	    		catch (XMLFactoryException e) {
+//	    			System.err.println("Reading file " + f.getPath());
+//	      			e.printStackTrace();
+//	    		}
+	//assign screenWidth and screenHeight
 		setupScreenResolution();
 		init(simulationName);
 	}
@@ -103,7 +113,7 @@ public class GridController {
 //		logic = new WaterGridLogic(grid);
 		
 		BorderPane root = new BorderPane();
-		view = new GridView(root, grid, screenWidth, screenHeight);
+		view = new SquareGridView(root, grid, screenWidth, screenHeight);
 		//view = new GridView(root, grid);
 		toolbar = new Toolbar(root, this);
 		createTimeline();
@@ -169,8 +179,7 @@ public class GridController {
 				else if(1<ranGen&&ranGen<=8)
 					temp.setGridIndex(new Fish(r, c), r, c);
 				else
-					temp.setGridIndex(new EmptyCell(r, c), r, c);
-
+					temp.setGridIndex(new water.EmptyCell(r, c), r, c);
 
 			}
 		}
