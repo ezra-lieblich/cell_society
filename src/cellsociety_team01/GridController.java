@@ -24,13 +24,14 @@ import xo.Group2;
 import xo.XOGridLogic;
 import life.*;
 import tree.*;
-
+import views.HexagonalGridView;
 import views.SquareGridView;
+import views.TriangleGridView;
 
 public class GridController {
 	//private 
 	private GridLogic logic;
-	private SquareGridView view;
+	private GridView view;
 	private XmlReader reader;
 	private Toolbar toolbar;
 	private String title;
@@ -119,7 +120,7 @@ public class GridController {
 //		logic = new WaterGridLogic(grid);
 		
 		BorderPane root = new BorderPane();
-		view = new SquareGridView(root, grid, screenWidth, screenHeight);
+		view = new HexagonalGridView(root, grid, screenWidth, screenHeight);
 		//view = new GridView(root, grid);
 		toolbar = new Toolbar(root, this);
 		createTimeline();
@@ -176,7 +177,7 @@ public class GridController {
 
 	// for testing, creates a water grid with random types of cells
 	private BasicFiniteGrid createRandomWaterGrid(int rows, int columns) {
-		BasicFiniteGrid temp = new HexagonalFiniteGrid(rows, columns);
+		BasicFiniteGrid temp = new BasicHexagonalGrid(rows, columns);
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
 				int ranGen = (int) (Math.random() * 10);
