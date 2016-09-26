@@ -114,10 +114,10 @@ public class XmlReader {
 			for (int c = 0; c < columns; c++) {
 				double ranGen = Math.random();
 				if (ranGen<=burn) {
-					temp.setGridIndex(new BurningCell(r, c), r, c);
+					temp.setGridIndex(new tree.BurningCell(r, c), r, c);
 				}
-				if (burn < ranGen && ranGen <= tree) {
-					temp.setGridIndex(new TreeCell(r, c,probCatch), r, c);
+				else if (burn < ranGen && ranGen <= tree) {
+					temp.setGridIndex(new tree.TreeCell(r, c, probCatch), r, c);
 				}
 				else {
 					temp.setGridIndex(new tree.EmptyCell(r, c), r, c);
