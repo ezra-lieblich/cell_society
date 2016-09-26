@@ -12,7 +12,7 @@ import org.xml.sax.SAXException;
 import water.EmptyCell;
 import water.Fish;
 import water.Shark;
-import xo.Empty;
+import xo.Clear;
 import xo.Group1;
 import xo.Group2;
 import grids.BasicFiniteGrid;
@@ -161,6 +161,9 @@ public class XmlReader {
 		return temp;
 	}
 	
+	public double getPercentSimilar() {
+		return Double.parseDouble(factory.getTextValue(root, "similarPercentage"));
+	}
 	private BasicFiniteGrid initiateXO() {
 		String strRows = factory.getTextValue(root, "XGridSize");
 		String strColumns = factory.getTextValue(root, "YGridSize");
@@ -175,13 +178,14 @@ public class XmlReader {
 			for (int c = 0; c < columns; c++) {
 				double ranGen = Math.random();
 				if (ranGen < X) {
+
 					temp.setGridIndex(new Group1(r, c), r, c);
 				}
 				else if (ranGen<X+O ) {
 					temp.setGridIndex(new Group2(r, c), r, c);
 				}
 				else {
-					temp.setGridIndex(new Empty(r, c), r, c);
+					temp.setGridIndex(new Clear(r, c), r, c);
 				}
 			}
 		}

@@ -17,8 +17,8 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import javafx.stage.Stage;
 import water.*;
+import xo.*;
 import water.EmptyCell;
-import xo.Empty;
 import xo.Group1;
 import xo.Group2;
 import xo.XOGridLogic;
@@ -86,11 +86,17 @@ public class GridController {
 			logic = new WaterGridLogic(grid,reader.getFishReproduce(), reader.getSharkDeath(),reader.getSharkReproduce());
 		}
 		else if (simulationName.equals("XO Segregation")) {
-			logic = new XOGridLogic(grid);
+			logic = new XOGridLogic(grid, reader.getPercentSimilar());
 		}
 		
 //		menu.init();
 //		logic = new XOGridLogic(grid);
+
+
+		//System.out.println("init");
+		//grid = createXOGrid(20,20);
+		//logic = new XOGridLogic(grid);
+		
 //		BasicFiniteGrid grid = createRandomWaterGrid(60,60);
 //		logic = new WaterGridLogic(grid);
 		
@@ -146,7 +152,7 @@ public class GridController {
 				int ranGen = (int) (Math.random() * 3);
 				switch (ranGen) {
 				case 0:
-					temp.setGridIndex(new Empty(r, c), r, c);
+					temp.setGridIndex(new Clear(r, c), r, c);
 					break;
 				case 1:
 					temp.setGridIndex(new Group1(r, c), r, c);
@@ -163,15 +169,15 @@ public class GridController {
 	}
 
 	public void startSimulation() {
-		animation.play();;
+		animation.play();
 	}
 
 	public void stopSimulation() {
-		animation.stop();;
+		animation.pause();
 	}
 
 	public void stepSimulation() {
-		animation.stop();
+		animation.pause();
 		this.step();
 	}
 

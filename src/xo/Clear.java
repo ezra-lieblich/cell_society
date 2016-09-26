@@ -8,8 +8,8 @@ import javafx.scene.paint.Color;
  * @author ezra
  *
  */
-public class Empty extends Cell{
-	public Empty(int x, int y){
+public class Clear extends Cell{
+	public Clear(int x, int y){
 		super(x, y);
 		setColor(Color.NAVAJOWHITE);
 	}
