@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Simulation SimulationType="WaTorWorld">
+	<simulation_name>WaTor World</simulation_name>
+	<simulation_title>Test Case 1</simulation_title>
+	<simulation_author>Christopher Lu</simulation_author>
+	<XGridSize>40</XGridSize>
+	<YGridSize>40</YGridSize>
+	<percentFish>.75</percentFish>
+	<percentShark>.15</percentShark>
+</Simulation>

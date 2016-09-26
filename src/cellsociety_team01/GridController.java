@@ -22,6 +22,7 @@ import xo.Group1;
 import xo.Group2;
 import xo.XOGridLogic;
 import life.*;
+import tree.*;
 
 public class GridController {
 	//private 
@@ -38,6 +39,7 @@ public class GridController {
     private static final String XML_FILES_LOCATION = "data/xml/";
     private static final String XML_SUFFIX = ".xml";
     private SimulationXMLFactory factory;
+    private String simulationName;
     
 	public GridController(Stage stage) {
 		this.stage = stage;
@@ -52,11 +54,25 @@ public class GridController {
 	
 	public void parseFile(File file){
 		//System.out.println(file.getAbsolutePath());
-		
-		
+		reader = new XmlReader();
+	    File folder = new File(XML_FILES_LOCATION);
+	    for (File f : folder.listFiles()) {
+	    	if (f.isFile() && f.getName().endsWith(XML_SUFFIX)) {
+	    		try {
+	    			Element root = reader.getRootElement(f.getAbsolutePath());
+	    			Simulation s = factory.getSimulation(root);
+	    			simulationName = root.getAttribute("simulation_name");
+	    			System.out.println(s);
+	    		}
+	    		catch (XMLFactoryException e) {
+	    			System.err.println("Reading file " + f.getPath());
+	      			e.printStackTrace();
+	    		}
+	    	}
+	    }
     	//assign screenWidth and screenHeight
 		setupScreenResolution();
-		init();
+		init(simulationName);
 	}
 	
     private void setupScreenResolution(){
@@ -65,36 +81,24 @@ public class GridController {
     	screenHeight = (int) screenSize.getHeight();
     }
 
-	public void init(BasicGrid grid) {
-      reader = new XmlReader();
-      File folder = new File(XML_FILES_LOCATION);
-      for (File f : folder.listFiles()) {
-      	if (f.isFile() && f.getName().endsWith(XML_SUFFIX)) {
-      		try {
-      			Element root = reader.getRootElement(f.getAbsolutePath());
-      			Simulation s = factory.getSimulation(root);
-      			root.getAttribute("percentAlive");
-      			System.out.println(s);
-      		}
-      		catch (XMLFactoryException e) {
-      			System.err.println("Reading file " + f.getPath());
-      			e.printStackTrace();
-      		}
-      	}
-      }
+	public void init(String simulationName) {
+		BasicFiniteGrid grid = reader.simChooser(simulationName);
+		String simName = reader.getSim();
+		if (simName.equals("Game of Life")) {
+			logic = new  LifeGridLogic(grid);
+		}
+		else if (simName.equals("Spread of Fire")) {
+			logic = new TreeGridLogic(grid);
+		}
+		else if (simName.equals("WaTor World")) {
+			logic = new WaterGridLogic(grid);
+		}
+		else if (simName.equals("XO Segregation")) {
+			logic = new XOGridLogic(grid);
+		}
 		
-		
-		
-		
-		
-	
-		// menu.init();
-		reader = new XmlReader();
-		System.out.println("init");
-		BasicGrid grid = createXOGrid();
-		logic = new XOGridLogic(grid);
-
-		
+//		menu.init();
+//		logic = new XOGridLogic(grid);
 //		BasicFiniteGrid grid = createRandomWaterGrid(60,60);
 //		logic = new WaterGridLogic(grid);
 		

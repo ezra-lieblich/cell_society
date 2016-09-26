@@ -12,7 +12,12 @@ import org.xml.sax.SAXException;
 import water.EmptyCell;
 import water.Fish;
 import water.Shark;
+import xo.Empty;
+import xo.Group1;
+import xo.Group2;
 import grids.BasicFiniteGrid;
+import life.*;
+import tree.*;
 
 import java.io.IOException;
 
@@ -22,8 +27,6 @@ public class XmlReader {
 	// Reset DOCUMENT_BUILDER before every parse
 	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
 	private static Element root;
-	private int rows;
-	private int columns;
 
 	public static Element getRootElement(String xmlFilename) {
 		try {
@@ -46,42 +49,93 @@ public class XmlReader {
 		}
 	}
 	
-	private String getSimName() {
-		String simName = root.getAttribute("simulation_name");
-		return simName;
+	public BasicFiniteGrid simChooser(String simulationName) {
+		if (simulationName.equals("GameOfLife")) {
+			return initiateLife();
+		}
+		if (simulationName.equals("SpreadOfFire")) {
+			return initiateTree();
+		}
+		if (simulationName.equals("WaTorWorld")) {
+			return initiateWaTor();
+		}
+		if (simulationName.equals("XO")) {
+			return initiateXO();
+		}
+		else {
+			return initiateLife();
+		}
 	}
 	
-	private void simChooser() {
-		if (getSimName().equals("GameOfLife")) {
-			initiateLife();
-		}
-		if (getSimName().equals("SpreadOfFire")) {
-			initiateTree();
-		}
-		if (getSimName().equals("WaTorWorld")) {
-			initiateWaTor();
-		}
-		if (getSimName().equals("XO")) {
-			initiateXO();
-		}
+	public String getSim() {
+		String Sim = root.getAttribute("simulation_name");
+		return Sim;
 	}
 	
 	private BasicFiniteGrid initiateLife() {
-		
+		String strRows = root.getAttribute("XGridSize");
+		String strColumns = root.getAttribute("YGridSize");
+		String strAlive = root.getAttribute("percentAlive");
+		int rows = Integer.parseInt(strRows);
+		int columns = Integer.parseInt(strColumns);
+		double alive = Double.parseDouble(strAlive);
+		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < columns; c++) {
+				double ranGen = Math.random();
+				if(ranGen<=alive)
+					temp.setGridIndex(new AliveCell(r, c), r, c);
+				else {
+					temp.setGridIndex(new DeadCell(r, c), r, c);
+				}
+			}
+		}
+		return temp;
 	}
 	
 	private BasicFiniteGrid initiateTree() {
-		
+		String strRows = root.getAttribute("XGridSize");
+		String strColumns = root.getAttribute("YGridSize");
+		String strTree = root.getAttribute("percentTree");
+		String strBurn = root.getAttribute("percentBurn");
+		int rows = Integer.parseInt(strRows);
+		int columns = Integer.parseInt(strColumns);
+		double tree = Double.parseDouble(strTree);
+		double burn = Double.parseDouble(strBurn);
+		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < columns; c++) {
+				double ranGen = Math.random();
+				if (ranGen<=burn) {
+					temp.setGridIndex(new BurningCell(r, c), r, c);
+				}
+				if (burn < ranGen && ranGen <= tree) {
+					temp.setGridIndex(new TreeCell(r, c), r, c);
+				}
+				else {
+					temp.setGridIndex(new tree.EmptyCell(r, c), r, c);
+				}
+			}
+		}
+		return temp;
 	}
 	
 	private BasicFiniteGrid initiateWaTor() {
-		BasicFiniteGrid temp = new ToroidalGrid(rows, columns);
+		String strRows = root.getAttribute("XGridSize");
+		String strColumns = root.getAttribute("YGridSize");
+		String strFish = root.getAttribute("percentFish");
+		String strShark = root.getAttribute("percentShark");
+		int rows = Integer.parseInt(strRows);
+		int columns = Integer.parseInt(strColumns);
+		double fish = Double.parseDouble(strFish);
+		double shark = Double.parseDouble(strShark);
+		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
-				int ranGen = (int) (Math.random() * 10);
-				if(ranGen<=1)
+				double ranGen = Math.random();
+				if(ranGen<=shark)
 					temp.setGridIndex(new Shark(r, c), r, c);
-				else if(1<ranGen&&ranGen<=8)
+				else if(shark<ranGen&&ranGen<=fish)
 					temp.setGridIndex(new Fish(r, c), r, c);
 				else
 					temp.setGridIndex(new EmptyCell(r, c), r, c);
@@ -91,7 +145,30 @@ public class XmlReader {
 	}
 	
 	private BasicFiniteGrid initiateXO() {
-		
+		String strRows = root.getAttribute("XGridSize");
+		String strColumns = root.getAttribute("YGridSize");
+		String strX = root.getAttribute("percentX");
+		String strO = root.getAttribute("percentO");
+		int rows = Integer.parseInt(strRows);
+		int columns = Integer.parseInt(strColumns);
+		double X = Double.parseDouble(strX);
+		double O = Double.parseDouble(strO);
+		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < columns; c++) {
+				double ranGen = Math.random();
+				if (ranGen < X) {
+					temp.setGridIndex(new Empty(r, c), r, c);
+				}
+				if (X <= ranGen && ranGen < O ) {
+					temp.setGridIndex(new Group1(r, c), r, c);
+				}
+				else {
+					temp.setGridIndex(new Group2(r, c), r, c);
+				}
+			}
+		}
+		return temp;
 	}
 	
 }
