@@ -49,19 +49,27 @@ public class XmlReader {
 		}
 	}
 	
-	public void simChooser(String simulationName) {
+	public BasicFiniteGrid simChooser(String simulationName) {
 		if (simulationName.equals("GameOfLife")) {
-			initiateLife();
+			return initiateLife();
 		}
 		if (simulationName.equals("SpreadOfFire")) {
-			initiateTree();
+			return initiateTree();
 		}
 		if (simulationName.equals("WaTorWorld")) {
-			initiateWaTor();
+			return initiateWaTor();
 		}
 		if (simulationName.equals("XO")) {
-			initiateXO();
+			return initiateXO();
 		}
+		else {
+			return initiateLife();
+		}
+	}
+	
+	public String getSim() {
+		String Sim = root.getAttribute("simulation_name");
+		return Sim;
 	}
 	
 	private BasicFiniteGrid initiateLife() {

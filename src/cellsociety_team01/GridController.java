@@ -22,6 +22,7 @@ import xo.Group1;
 import xo.Group2;
 import xo.XOGridLogic;
 import life.*;
+import tree.*;
 
 public class GridController {
 	//private 
@@ -81,15 +82,23 @@ public class GridController {
     }
 
 	public void init(String simulationName) {
-		reader.simChooser(simulationName);
+		BasicFiniteGrid grid = reader.simChooser(simulationName);
+		String simName = reader.getSim();
+		if (simName.equals("Game of Life")) {
+			logic = new  LifeGridLogic(grid);
+		}
+		else if (simName.equals("Spread of Fire")) {
+			logic = new TreeGridLogic(grid);
+		}
+		else if (simName.equals("WaTor World")) {
+			logic = new WaterGridLogic(grid);
+		}
+		else if (simName.equals("XO Segregation")) {
+			logic = new XOGridLogic(grid);
+		}
 		
-// 		menu.init();
-//		reader = new XmlReader();
-//		System.out.println("init");
-//		BasicGrid grid = createXOGrid();
+//		menu.init();
 //		logic = new XOGridLogic(grid);
-
-		
 //		BasicFiniteGrid grid = createRandomWaterGrid(60,60);
 //		logic = new WaterGridLogic(grid);
 		
