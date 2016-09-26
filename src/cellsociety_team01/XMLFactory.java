@@ -13,11 +13,11 @@ import org.w3c.dom.NodeList;
  * @author Rhondu Smithwick
  * @author Robert Duvall
  */
-public abstract class XMLFactory {
+public class XMLFactory {
     /**
      * @return if this is a valid XML file for this specific XML object type
      */
-    protected abstract boolean isValidFile (Element root);
+    public boolean isValidFile (Element root){ return true;}
 
     /**
      * Get the value of an attribute.
@@ -25,7 +25,7 @@ public abstract class XMLFactory {
      * Why might it not be good design to include this and getTextValue in this class?
      * What happens when you need more transformation methods?
      */
-    protected String getAttribute (Element root, String attributeName) {
+    public String getAttribute (Element root, String attributeName) {
         return root.getAttribute(attributeName);
     }
 
@@ -38,7 +38,7 @@ public abstract class XMLFactory {
      * Why might it not be good design to include this and getAttribute in this class?
      * What happens when I need more transformation methods?
      */
-    protected String getTextValue (Element root, String tagName) {
+    public String getTextValue (Element root, String tagName) {
         NodeList nodeList = root.getElementsByTagName(tagName);
         if (nodeList != null && nodeList.getLength() > 0) {
             return nodeList.item(0).getTextContent();

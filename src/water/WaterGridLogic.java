@@ -8,14 +8,17 @@ import grids.BasicFiniteGrid;
 import grids.BasicToroidalGrid;
 
 public class WaterGridLogic extends GridLogic {
-	protected static int TURNS_PER_FISH_REPRODUCE = 2;
-	protected static int TURNS_FOR_SHARK_DEATH = 2;
-	protected static int TURNS_PER_SHARK_REPRODUCE = 10;
+	protected static int TURNS_PER_FISH_REPRODUCE;
+	protected static int TURNS_FOR_SHARK_DEATH;
+	protected static int TURNS_PER_SHARK_REPRODUCE;
 
 	private BasicFiniteGrid grid;
 
-	public WaterGridLogic(BasicFiniteGrid grid) {
+	public WaterGridLogic(BasicFiniteGrid grid,int fishReproduce, int sharkDeath, int sharkReproduce) {
 		this.grid = grid;
+		TURNS_PER_FISH_REPRODUCE = fishReproduce;
+		TURNS_FOR_SHARK_DEATH = sharkDeath;
+		TURNS_PER_SHARK_REPRODUCE = sharkReproduce;
 	}
 
 	@Override

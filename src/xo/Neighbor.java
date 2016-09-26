@@ -7,10 +7,10 @@ import cellsociety_team01.Cell;
 public class Neighbor extends Cell {
 	private boolean isSatisfied;
 	private double similarPercentage;
-	public Neighbor(int x, int y) {
+	public Neighbor(int x, int y, double similarPercentage) {
 		super(x,y);
 		//assume similar percantage is now 50%
-		similarPercentage = .75;
+		this.similarPercentage = similarPercentage;
 	}
 	@Override
 	public void calculateNextState(ArrayList<Cell> neighborList) {

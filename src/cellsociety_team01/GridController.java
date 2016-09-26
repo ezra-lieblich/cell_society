@@ -58,9 +58,13 @@ public class GridController {
 	public void parseFile(File file){
 	    if (file.isFile() && file.getName().endsWith(XML_SUFFIX)) {
 //	    		try {
-    		reader = new XmlReader();
+
 			Element root = reader.getRootElement(file);
-			simulationName = root.getAttribute("simulation_name");
+//			for(int i=0;i<root.getChildNodes().getLength();i++){
+//			System.out.println(root.getChildNodes().item(i).getNodeName());
+//			}
+			XMLFactory tempFactory = new XMLFactory();
+			simulationName = tempFactory.getTextValue(root, "simulation_name");
 			System.out.println(simulationName);
 			if (simulationName.equals("Game of Life")) {
 				factory = new LifeXMLFactory();
@@ -68,12 +72,12 @@ public class GridController {
 			else if (simulationName.equals("Spread of Fire")) {
 				factory = new TreeXMLFactory();
 			}
-			else if (simulationName.equals("WaTor World")) {
-				factory = new WaterXMLFactory();
-			}
-			else if (simulationName.equals("XO Segregation")) {
-				factory = new XOXMLFactory();
-			}
+//			else if (simulationName.equals("WaTor World")) {
+//				factory = new WaterXMLFactory();
+//			}
+//			else if (simulationName.equals("XO Segregation")) {
+//				factory = new XOXMLFactory();
+//			}
 		}
 //	    			Simulation s = factory.getSimulation(root);
     		//}
@@ -93,18 +97,19 @@ public class GridController {
     }
 
 	public void init(String simulationName) {
+		reader = new XmlReader();
 		BasicFiniteGrid grid = reader.simChooser(simulationName);
-		String simName = reader.getSim();
-		if (simName.equals("Game of Life")) {
+		//String simName = reader.getSim();
+		if (simulationName.equals("Game Of Life")) {
 			logic = new  LifeGridLogic(grid);
 		}
-		else if (simName.equals("Spread of Fire")) {
+		else if (simulationName.equals("Spread Of Fire")) {
 			logic = new TreeGridLogic(grid);
 		}
-		else if (simName.equals("WaTor World")) {
-			logic = new WaterGridLogic(grid);
+		else if (simulationName.equals("WaTor World")) {
+			logic = new WaterGridLogic(grid,reader.getFishReproduce(), reader.getSharkDeath(),reader.getSharkReproduce());
 		}
-		else if (simName.equals("XO Segregation")) {
+		else if (simulationName.equals("XO Segregation")) {
 			logic = new XOGridLogic(grid);
 		}
 		

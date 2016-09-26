@@ -28,11 +28,15 @@ public class XmlReader {
 	// Reset DOCUMENT_BUILDER before every parse
 	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
 	private static Element root;
+	private XMLFactory factory = new XMLFactory();
+	
+	public XmlReader(){factory = new XMLFactory();}
 
 	public static Element getRootElement(File xmlFile) {
+		System.out.println(xmlFile.getAbsolutePath());
 		try {
 			DOCUMENT_BUILDER.reset();
-			Document xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);
+			Document xmlDocument = DOCUMENT_BUILDER.parse(xmlFile.getAbsolutePath());
 			root = xmlDocument.getDocumentElement();
 			return root;
 		}
@@ -51,19 +55,20 @@ public class XmlReader {
 	}
 	
 	public BasicFiniteGrid simChooser(String simulationName) {
-		if (simulationName.equals("GameOfLife")) {
+		if (simulationName.equals("Game Of Life")) {
 			return initiateLife();
 		}
-		if (simulationName.equals("SpreadOfFire")) {
+		if (simulationName.equals("Spread Of Fire")) {
 			return initiateTree();
 		}
-		if (simulationName.equals("WaTorWorld")) {
+		if (simulationName.equals("WaTor World")) {
 			return initiateWaTor();
 		}
-		if (simulationName.equals("XO")) {
+		if (simulationName.equals("XO Segregation")) {
 			return initiateXO();
 		}
 		else {
+			System.out.println("not a valid simulation");
 			return initiateLife();
 		}
 	}
@@ -74,9 +79,9 @@ public class XmlReader {
 	}
 	
 	private BasicFiniteGrid initiateLife() {
-		String strRows = root.getAttribute("XGridSize");
-		String strColumns = root.getAttribute("YGridSize");
-		String strAlive = root.getAttribute("percentAlive");
+		String strRows = factory.getTextValue(root, "XGridSize");
+		String strColumns = factory.getTextValue(root, "YGridSize");
+		String strAlive = factory.getTextValue(root, "percentAlive");
 		int rows = Integer.parseInt(strRows);
 		int columns = Integer.parseInt(strColumns);
 		double alive = Double.parseDouble(strAlive);
@@ -95,10 +100,11 @@ public class XmlReader {
 	}
 	
 	private BasicFiniteGrid initiateTree() {
-		String strRows = root.getAttribute("XGridSize");
-		String strColumns = root.getAttribute("YGridSize");
-		String strTree = root.getAttribute("percentTree");
-		String strBurn = root.getAttribute("percentBurn");
+		String strRows = factory.getTextValue(root, "XGridSize");
+		String strColumns = factory.getTextValue(root, "YGridSize");
+		String strTree = factory.getTextValue(root, "percentTree");
+		String strBurn = factory.getTextValue(root, "percentBurn");
+		Double probCatch = Double.parseDouble(factory.getTextValue(root, "probCatch"));
 		int rows = Integer.parseInt(strRows);
 		int columns = Integer.parseInt(strColumns);
 		double tree = Double.parseDouble(strTree);
@@ -111,7 +117,7 @@ public class XmlReader {
 					temp.setGridIndex(new BurningCell(r, c), r, c);
 				}
 				if (burn < ranGen && ranGen <= tree) {
-					temp.setGridIndex(new TreeCell(r, c), r, c);
+					temp.setGridIndex(new TreeCell(r, c,probCatch), r, c);
 				}
 				else {
 					temp.setGridIndex(new tree.EmptyCell(r, c), r, c);
@@ -121,11 +127,21 @@ public class XmlReader {
 		return temp;
 	}
 	
+	public int getFishReproduce(){
+		return Integer.parseInt(factory.getTextValue(root, "fishReproduce"));
+	}
+	public int getSharkDeath(){
+		return Integer.parseInt(factory.getTextValue(root, "sharkDeath"));
+	}
+	public int getSharkReproduce(){
+		return Integer.parseInt(factory.getTextValue(root, "sharkReproduce"));
+	}
+	
 	private BasicFiniteGrid initiateWaTor() {
-		String strRows = root.getAttribute("XGridSize");
-		String strColumns = root.getAttribute("YGridSize");
-		String strFish = root.getAttribute("percentFish");
-		String strShark = root.getAttribute("percentShark");
+		String strRows = factory.getTextValue(root, "XGridSize");
+		String strColumns = factory.getTextValue(root, "YGridSize");
+		String strFish = factory.getTextValue(root, "percentFish");
+		String strShark = factory.getTextValue(root, "percentShark");
 		int rows = Integer.parseInt(strRows);
 		int columns = Integer.parseInt(strColumns);
 		double fish = Double.parseDouble(strFish);
@@ -146,10 +162,10 @@ public class XmlReader {
 	}
 	
 	private BasicFiniteGrid initiateXO() {
-		String strRows = root.getAttribute("XGridSize");
-		String strColumns = root.getAttribute("YGridSize");
-		String strX = root.getAttribute("percentX");
-		String strO = root.getAttribute("percentO");
+		String strRows = factory.getTextValue(root, "XGridSize");
+		String strColumns = factory.getTextValue(root, "YGridSize");
+		String strX = factory.getTextValue(root, "percentX");
+		String strO = factory.getTextValue(root, "percentO");
 		int rows = Integer.parseInt(strRows);
 		int columns = Integer.parseInt(strColumns);
 		double X = Double.parseDouble(strX);
@@ -159,13 +175,13 @@ public class XmlReader {
 			for (int c = 0; c < columns; c++) {
 				double ranGen = Math.random();
 				if (ranGen < X) {
-					temp.setGridIndex(new Empty(r, c), r, c);
-				}
-				if (X <= ranGen && ranGen < O ) {
 					temp.setGridIndex(new Group1(r, c), r, c);
 				}
-				else {
+				else if (ranGen<X+O ) {
 					temp.setGridIndex(new Group2(r, c), r, c);
+				}
+				else {
+					temp.setGridIndex(new Empty(r, c), r, c);
 				}
 			}
 		}

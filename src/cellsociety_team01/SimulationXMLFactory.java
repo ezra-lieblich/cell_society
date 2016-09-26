@@ -37,7 +37,7 @@ public abstract class SimulationXMLFactory extends XMLFactory {
      * @see XMLFactory#isValidFile()
      */
     @Override
-    protected boolean isValidFile (Element root) {
+    public boolean isValidFile (Element root) {
         return Objects.equals(getAttribute(root, "PersonType"), getSimulationType());
     }
 }

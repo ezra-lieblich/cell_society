@@ -10,7 +10,7 @@ import tree.TreeCell;
 import tree.BurningCell;
 
 public class TreeGridLogic extends GridLogic {
-	
+		
 	public TreeGridLogic(BasicFiniteGrid grid) {
 		this.grid = grid;
 	}
