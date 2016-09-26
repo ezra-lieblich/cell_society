@@ -62,7 +62,7 @@ public class GridController {
         
 		// menu.init();
 
-		System.out.println("init");
+		//System.out.println("init");
 		BasicGrid grid = createXOGrid(20,20);
 		logic = new XOGridLogic(grid);
 		
@@ -167,15 +167,15 @@ public class GridController {
 	}
 
 	public void startSimulation() {
-		animation.play();;
+		animation.play();
 	}
 
 	public void stopSimulation() {
-		animation.stop();;
+		animation.pause();
 	}
 
 	public void stepSimulation() {
-		animation.stop();
+		animation.pause();
 		this.step();
 	}
 
