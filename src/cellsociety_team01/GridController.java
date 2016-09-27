@@ -30,7 +30,7 @@ import views.SquareGridView;
 import views.TriangleGridView;
 
 public class GridController {
-	//private 
+	// private
 	private GridLogic logic;
 	private GridView view;
 	private XmlReader reader;
@@ -40,12 +40,13 @@ public class GridController {
 	private Timeline animation;
 	private Stage stage;
 	private Scene mainMenu;
-    private int screenWidth, screenHeight;
-    private static final String XML_FILES_LOCATION = "data/xml/";
-    private static final String XML_SUFFIX = ".xml";
-    private SimulationXMLFactory factory;
-    private String simulationName;
-    
+	private int screenWidth, screenHeight;
+	private static final String XML_FILES_LOCATION = "data/xml/";
+	private static final String XML_SUFFIX = ".xml";
+	private SimulationXMLFactory factory;
+	private String simulationName;
+	private BasicFiniteGrid grid;
+
 	public GridController(Stage stage) {
 		this.stage = stage;
 
@@ -56,65 +57,63 @@ public class GridController {
 		// temporary code
 		title = "Test";
 	}
-	
-	public void parseFile(File file){
-	    if (file.isFile() && file.getName().endsWith(XML_SUFFIX)) {
+
+	public void parseFile(File file) {
+		if (file.isFile() && file.getName().endsWith(XML_SUFFIX)) {
 			Element root = reader.getRootElement(file);
 			XMLFactory tempFactory = new XMLFactory();
 			simulationName = tempFactory.getTextValue(root, "simulation_name");
 		}
 		setupScreenResolution();
-		init(simulationName);
+		setupLogicObject();
+
+		init();
 	}
-	
-    private void setupScreenResolution(){
-    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    	screenWidth = (int) screenSize.getWidth();
-    	screenHeight = (int) screenSize.getHeight();
-    }
 
-	public void init(String simulationName) {
+	private void setupLogicObject() {
 		reader = new XmlReader();
-		BasicFiniteGrid grid = reader.simChooser(simulationName);
-		//String simName = reader.getSim();
+		grid = reader.simChooser(simulationName);
+		// String simName = reader.getSim();
 		if (simulationName.equals("Game Of Life")) {
-			logic = new  LifeGridLogic(grid);
-		}
-		else if (simulationName.equals("Spread Of Fire")) {
+			logic = new LifeGridLogic(grid);
+		} else if (simulationName.equals("Spread Of Fire")) {
 			logic = new TreeGridLogic(grid);
-		}
-		else if (simulationName.equals("WaTor World")) {
-			logic = new WaterGridLogic(grid,reader.getFishReproduce(), reader.getSharkDeath(),reader.getSharkReproduce());
-		}
-		else if (simulationName.equals("XO Segregation")) {
+		} else if (simulationName.equals("WaTor World")) {
+			logic = new WaterGridLogic(grid, reader.getFishReproduce(), reader.getSharkDeath(),
+					reader.getSharkReproduce());
+		} else if (simulationName.equals("XO Segregation")) {
 			logic = new XOGridLogic(grid, reader.getPercentSimilar());
+		} else {
+			// TODO: throw error
+
 		}
-		
-//		menu.init();
-//		logic = new XOGridLogic(grid);
 
+	}
 
-		//System.out.println("init");
-		//grid = createXOGrid(20,20);
-		//logic = new XOGridLogic(grid);
-		
-//		BasicFiniteGrid grid = createRandomWaterGrid(60,60);
-//		logic = new WaterGridLogic(grid);
-		
+	private void setupScreenResolution() {
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		screenWidth = (int) screenSize.getWidth();
+		screenHeight = (int) screenSize.getHeight();
+	}
+
+	public void init() {
+
 		BorderPane root = new BorderPane();
-		view = new TriangleGridView(root, grid, screenWidth, screenHeight);
-		//view = new GridView(root, grid);
+		setupView(root);
 		toolbar = new Toolbar(root, this);
 		createTimeline();
 		stage.setScene(scene = new Scene(root, screenWidth, screenHeight, Color.WHITE));
-		//display the view initially before starting simulation
+		// display the view initially before starting simulation
 		view.step();
-     }
+	}
+
+	private void setupView(BorderPane root) {
+		view = new TriangleGridView(root, grid, screenWidth, screenHeight);
+	}
 
 	private void createTimeline() {
 		int MILLISECOND_DELAY = 500;
-		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
-                e -> this.step());
+		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> this.step());
 		animation = new Timeline();
 		animation.setCycleCount(Timeline.INDEFINITE);
 		animation.getKeyFrames().add(frame);
@@ -129,22 +128,22 @@ public class GridController {
 		return title;
 	}
 
-//	// for testing, creates a water grid with random types of cells
-//	private BasicFiniteGrid createRandomWaterGrid(int rows, int columns) {
-//		BasicFiniteGrid temp = new HexagonalFiniteGrid(rows, columns);
-//		for (int r = 0; r < rows; r++) {
-//			for (int c = 0; c < columns; c++) {
-//				int ranGen = (int) (Math.random() * 10);
-//				if(ranGen<=1)
-//					temp.setGridIndex(new Shark(r, c), r, c);
-//				else if(1<ranGen&&ranGen<=8)
-//					temp.setGridIndex(new Fish(r, c), r, c);
-//				else
-//					temp.setGridIndex(new water.EmptyCell(r, c), r, c);
-//			}
-//		}
-//		return temp;
-//	}
+	// // for testing, creates a water grid with random types of cells
+	// private BasicFiniteGrid createRandomWaterGrid(int rows, int columns) {
+	// BasicFiniteGrid temp = new HexagonalFiniteGrid(rows, columns);
+	// for (int r = 0; r < rows; r++) {
+	// for (int c = 0; c < columns; c++) {
+	// int ranGen = (int) (Math.random() * 10);
+	// if(ranGen<=1)
+	// temp.setGridIndex(new Shark(r, c), r, c);
+	// else if(1<ranGen&&ranGen<=8)
+	// temp.setGridIndex(new Fish(r, c), r, c);
+	// else
+	// temp.setGridIndex(new water.EmptyCell(r, c), r, c);
+	// }
+	// }
+	// return temp;
+	// }
 
 	private BasicFiniteGrid createXOGrid(int rows, int columns) {
 		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
@@ -188,10 +187,11 @@ public class GridController {
 	}
 
 	public void resetSimulation() {
-		// Controller will tell grid to reset itself to the original implementation
-		//need to set original grid to back to 
+		// Controller will tell grid to reset itself to the original
+		// implementation
+		// need to set original grid to back to
 		// grid.resetGrid();
-		
+
 	}
 
 	public void changeSimulation() {
