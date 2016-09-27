@@ -3,6 +3,7 @@ package views;
 import cellsociety_team01.GridView;
 import grids.BasicFiniteGrid;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -44,6 +45,7 @@ public class SquareGridView extends GridView{
 			for (int c = 0; c < grid.getColumns(); c++) {
 				Rectangle temp = new Rectangle(c * pixelWidth, r * pixelWidth, pixelWidth, pixelWidth);
 				temp.setFill(grid.getGridIndex(r, c).getColor());
+				temp.setStroke(Color.BLACK);
 				gridView.getChildren().add(temp);
 			}
 		}

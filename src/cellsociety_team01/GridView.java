@@ -32,8 +32,8 @@ public abstract class GridView {
 	 *            We need the grid so GridView can read it and update the View.
 	 */
 	public GridView(BorderPane root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
-		gridSizeX = screenWidth * 9 / 10;
-		gridSizeY = screenHeight * 8 / 10;
+		gridSizeX = screenWidth * 4 / 10;
+		gridSizeY = screenHeight * 4 / 10;
 		this.root = root;
 		this.grid = grid;
 		setupPixelSize();
@@ -46,7 +46,7 @@ public abstract class GridView {
 	public void step() {
 		gridView = new Group();
 		BorderPane.setAlignment(gridView, Pos.CENTER_LEFT);
-		root.setCenter(gridView);
+		root.setRight(gridView);
 		visualizeGrid();
 	}
 

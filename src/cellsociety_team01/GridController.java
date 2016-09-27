@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
+import java.util.ArrayList;
 
 import org.w3c.dom.Element;
 import grids.BasicFiniteGrid;
@@ -24,15 +25,17 @@ import xo.Group2;
 import xo.XOGridLogic;
 import life.*;
 import tree.*;
-
+import views.HexagonalGridView;
 import views.SquareGridView;
+import views.TriangleGridView;
 
 public class GridController {
 	//private 
 	private GridLogic logic;
-	private SquareGridView view;
+	private GridView view;
 	private XmlReader reader;
 	private Toolbar toolbar;
+	private CellGraph graph;
 	private String title;
 	private Scene scene;
 	private Timeline animation;
@@ -125,9 +128,10 @@ public class GridController {
 //		logic = new WaterGridLogic(grid);
 		
 		BorderPane root = new BorderPane();
-		view = new SquareGridView(root, grid, screenWidth, screenHeight);
+		view = new HexagonalGridView(root, grid, screenWidth, screenHeight);
 		//view = new GridView(root, grid);
 		toolbar = new Toolbar(root, this);
+		//graph = new CellGraph(root, new ArrayList<Number>());
 		createTimeline();
 		stage.setScene(scene = new Scene(root, screenWidth, screenHeight, Color.WHITE));
 		//display the view initially before starting simulation
@@ -165,6 +169,7 @@ public class GridController {
 		// break;
 		// }
 		view.step();
+		//graph.updateGraph();
 		logic.step();
 		
 	}

@@ -1,5 +1,7 @@
 package views;
 
+import java.awt.Color;
+
 import cellsociety_team01.GridView;
 import grids.BasicFiniteGrid;
 import javafx.scene.layout.BorderPane;
@@ -13,8 +15,8 @@ import javafx.scene.shape.Polygon;
  */
 public class TriangleGridView extends GridView {
 	
-	private double triangleHeightMultiplier = Math.sqrt(3) / 2;
-	private double triangleWidthMultiplier = 0.5;
+	private static final double triangleHeightMultiplier = Math.sqrt(3) / 2;
+	private static final double triangleWidthMultiplier = 0.5;
 
 	public TriangleGridView(BorderPane root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
 		super(root, grid, screenWidth, screenHeight);
@@ -40,6 +42,7 @@ public class TriangleGridView extends GridView {
 				}
 				polygon.getPoints().addAll(rootPoint);
 				polygon.setFill(grid.getGridIndex(r, c).getColor());
+				//polygon.setStroke(Color.BLACK);
 				gridView.getChildren().add(polygon);
 			}
 		}
