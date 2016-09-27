@@ -13,8 +13,8 @@ import javafx.scene.shape.Polygon;
  */
 public class HexagonalGridView extends GridView {
 
-	private double hexHeightMultiplier = Math.sqrt(3);
-	private double hexWidthMultiplier = 1.5;
+	private static final double HEX_HEIGHT_MULTIPLIER = Math.sqrt(3);
+	private static final double HEX_WIDTH_MULTIPLIER = 1.5;
 
 	public HexagonalGridView(BorderPane root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
 		super(root, grid, screenWidth, screenHeight);
@@ -26,18 +26,18 @@ public class HexagonalGridView extends GridView {
 			for (int c = 0; c < grid.getColumns(); c++) {
 				Polygon polygon = new Polygon();
 				Double[] rootPoint;
-				double currIterWidth = c*pixelWidth*hexWidthMultiplier;
+				double currIterWidth = c*pixelWidth*HEX_WIDTH_MULTIPLIER;
 				double offset = 0;
 				if(c%2==1){
-				 offset = pixelWidth*hexHeightMultiplier/2;
+				 offset = pixelWidth*HEX_HEIGHT_MULTIPLIER/2;
 				}
 					rootPoint = new Double[]{
-							currIterWidth-pixelWidth/2,r*pixelWidth*hexHeightMultiplier-offset,
-							currIterWidth-pixelWidth,(r+0.5)*pixelWidth*hexHeightMultiplier-offset,
-							currIterWidth-pixelWidth/2,(r+1)*pixelWidth*hexHeightMultiplier-offset,
-							currIterWidth+pixelWidth/2,(r+1)*pixelWidth*hexHeightMultiplier-offset,
-							currIterWidth+pixelWidth,(r+0.5)*pixelWidth*hexHeightMultiplier-offset,
-							currIterWidth+pixelWidth/2,r*pixelWidth*hexHeightMultiplier-offset,
+							currIterWidth-pixelWidth/2,r*pixelWidth*HEX_HEIGHT_MULTIPLIER-offset,
+							currIterWidth-pixelWidth,(r+0.5)*pixelWidth*HEX_HEIGHT_MULTIPLIER-offset,
+							currIterWidth-pixelWidth/2,(r+1)*pixelWidth*HEX_HEIGHT_MULTIPLIER-offset,
+							currIterWidth+pixelWidth/2,(r+1)*pixelWidth*HEX_HEIGHT_MULTIPLIER-offset,
+							currIterWidth+pixelWidth,(r+0.5)*pixelWidth*HEX_HEIGHT_MULTIPLIER-offset,
+							currIterWidth+pixelWidth/2,r*pixelWidth*HEX_HEIGHT_MULTIPLIER-offset,
 							
 							};
 
@@ -54,8 +54,8 @@ public class HexagonalGridView extends GridView {
 	@Override
 	protected void setupPixelSize() {
 
-		double minPixels = Math.min(gridSizeX * hexHeightMultiplier / grid.getRows(),
-				gridSizeY * hexWidthMultiplier / grid.getColumns());
+		double minPixels = Math.min(gridSizeX / HEX_HEIGHT_MULTIPLIER / grid.getRows(),
+				gridSizeY / HEX_WIDTH_MULTIPLIER / grid.getColumns());
 		pixelWidth = minPixels;
 	}
 

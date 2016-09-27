@@ -9,20 +9,21 @@ import cellsociety_team01.Cell;
 public class BurningCell extends Cell{
 	private boolean nextState;
 	
-	// False = Burning, true = Empty.
+	// False = empty.
 	
-	// Initializes Burning cell to the x and y coordinates, sets color to green.
+	// Initializes Burning cell to the x and y coordinates, sets color to red.
 	public BurningCell(int x, int y) {
 		super.init(x, y);
 		color = Color.RED;
 	}
 	
-	// String "T" represents a tree cell.
+	// String "B" represents a burning cell.
 	@Override
 	public String toString(){
 		return "B";
 	}
 	
+	// The tree can only burn for one round. After one round, it turns into empty cell.
 	@Override
 	public void calculateNextState(ArrayList<Cell> neighborList) {
 		nextState = false;

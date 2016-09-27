@@ -57,7 +57,7 @@ public class TreeGridLogic extends GridLogic {
 			return;
 		}
 		if (cell instanceof EmptyCell) {
-			return;
+			updateEmptyCell((EmptyCell) cell);
 		}
 	}
 	
@@ -72,10 +72,13 @@ public class TreeGridLogic extends GridLogic {
 		}
 	}
 	
-	// If cell is a burning cell and next state is true, the cell becomes empty. Otherwise, it continues burnin.
+	// If cell is a burning cell its next state is empty.
 	private void updateBurningCell(BurningCell burn) {
 		setEmptyGridIndex(burn.getCoordsX(), burn.getCoordsY());
-		
+	}
+	
+	private void updateEmptyCell(EmptyCell empty) {
+		setEmptyGridIndex(empty.getCoordsX(), empty.getCoordsY());
 	}
 	
 	// set methods for all classes

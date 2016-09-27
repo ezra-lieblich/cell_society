@@ -1,6 +1,7 @@
 package xo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import cellsociety_team01.Cell;
 import cellsociety_team01.GridLogic;
@@ -13,12 +14,17 @@ public class XOGridLogic extends GridLogic{
 	public XOGridLogic(BasicFiniteGrid grid, double percent_similar) {
 		this.grid = grid;
 		XOGridLogic.percentSimilar = percent_similar;
+		cellSizes = new HashMap<String, Integer>();
+		cellSizes.put(Group1.class.getName(), 0);
+		cellSizes.put(Group2.class.getName(), 0);
+
 	}
 	/**
 	 * Calculates the next state of each cell and then updates the grid
 	 * by moving unsatisfied cells to random empty cells
 	 */
 	public void step() {
+		cellSizes.clear();
 		upsetNeighbors = new ArrayList<Neighbor>();
 		availableSpaces = new ArrayList<Cell>();
 		for(int r = 0; r < grid.getRows(); r++){
@@ -39,6 +45,11 @@ public class XOGridLogic extends GridLogic{
 		cell.calculateNextState(grid.getNeighbors(row, col));
 		if (cell instanceof Neighbor){
 			Neighbor person = (Neighbor) cell;
+			String name = person.getClass().getName();
+			if (!cellSizes.containsKey(name)) {
+				cellSizes.put(name, 0);
+			}
+			cellSizes.put(name, cellSizes.get(name) + 1);
 			if (!person.Satisfied()) 
 				upsetNeighbors.add(person);
 		}
