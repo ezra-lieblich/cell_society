@@ -102,7 +102,7 @@ public class GridController {
 //		logic = new WaterGridLogic(grid);
 		
 		BorderPane root = new BorderPane();
-		view = new HexagonalGridView(root, grid, screenWidth, screenHeight);
+		view = new TriangleGridView(root, grid, screenWidth, screenHeight);
 		//view = new GridView(root, grid);
 		toolbar = new Toolbar(root, this);
 		createTimeline();
