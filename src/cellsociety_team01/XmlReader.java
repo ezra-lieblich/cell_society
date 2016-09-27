@@ -16,6 +16,7 @@ import xo.Clear;
 import xo.Group1;
 import xo.Group2;
 import grids.BasicFiniteGrid;
+import grids.HexagonalFiniteGrid;
 import life.*;
 import tree.*;
 
@@ -138,15 +139,15 @@ public class XmlReader {
 	}
 	
 	private BasicFiniteGrid initiateWaTor() {
-		String strRows = factory.getTextValue(root, "XGridSize");
-		String strColumns = factory.getTextValue(root, "YGridSize");
+		String strColumns = factory.getTextValue(root, "XGridSize");
+		String strRows = factory.getTextValue(root, "YGridSize");
 		String strFish = factory.getTextValue(root, "percentFish");
 		String strShark = factory.getTextValue(root, "percentShark");
 		int rows = Integer.parseInt(strRows);
 		int columns = Integer.parseInt(strColumns);
 		double fish = Double.parseDouble(strFish);
 		double shark = Double.parseDouble(strShark);
-		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
+		BasicFiniteGrid temp = new HexagonalFiniteGrid(rows, columns);
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
 				double ranGen = Math.random();

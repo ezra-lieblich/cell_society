@@ -51,7 +51,7 @@ public class BasicFiniteGrid {
 	}
 
 	boolean validIndex(int x, int y) {
-		return (x >= 0 && x < getRows()) && (y >= 0 && y < getColumns());
+		return (x >= 0 && x < getColumns()) && (y >= 0 && y < getRows());
 	}
 	
 	public int getColumns(){

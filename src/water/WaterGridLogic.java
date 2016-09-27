@@ -36,14 +36,14 @@ public class WaterGridLogic extends GridLogic {
 		// check state
 		for (int r = 0; r < grid.getRows(); r++) {
 			for (int c = 0; c < grid.getColumns(); c++) {
-				checkState(grid.getGridIndex(r, c), grid.getNeighbors(r, c));
+				checkState(grid.getGridIndex(c, r), grid.getNeighbors(c, r));
 			}
 		}
 
 		// update grid based on states
 		for (int r = 0; r < grid.getRows(); r++) {
 			for (int c = 0; c < grid.getColumns(); c++) {
-				updateGrid(grid.getGridIndex(r, c));
+				updateGrid(grid.getGridIndex(c, r));
 			}
 		}
 
@@ -68,7 +68,7 @@ public class WaterGridLogic extends GridLogic {
 
 	private void updateFish(Fish fish) {
 		Cell nextLocation = fish.getNextLocation();
-		if (nextLocation == null)
+		if (nextLocation == null || (nextLocation.getCoordsX()==fish.getCoordsX()&&nextLocation.getCoordsY()==fish.getCoordsY()))
 			return;
 
 		// resolve conflicts
@@ -98,7 +98,7 @@ public class WaterGridLogic extends GridLogic {
 
 		Cell nextLocation = shark.getNextLocation();
 
-		if (nextLocation == null)
+		if (nextLocation == null || (nextLocation.getCoordsX()==shark.getCoordsX()&&nextLocation.getCoordsY()==shark.getCoordsY()))
 			return;
 
 		// resolve conflicts

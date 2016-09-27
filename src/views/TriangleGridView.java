@@ -57,7 +57,7 @@ public class TriangleGridView extends GridView {
 	@Override
 	protected void setupPixelSize() {
 		// equalateral triangle has height multiplier of sqrt(3)/2
-		double minPixels = Math.min(gridSizeX* TRIANGLE_HEIGHT_MULTIPLIER/ grid.getRows(), gridSizeY *TRIANGLE_WIDTH_MULTIPLIER/ grid.getColumns());
+		double minPixels = Math.min(gridHeight* TRIANGLE_HEIGHT_MULTIPLIER/ grid.getRows(), gridWidth *TRIANGLE_WIDTH_MULTIPLIER/ grid.getColumns());
 		pixelWidth = minPixels;
 	}
 

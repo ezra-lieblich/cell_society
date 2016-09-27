@@ -129,22 +129,22 @@ public class GridController {
 		return title;
 	}
 
-	// for testing, creates a water grid with random types of cells
-	private BasicFiniteGrid createRandomWaterGrid(int rows, int columns) {
-		BasicFiniteGrid temp = new BasicHexagonalGrid(rows, columns);
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < columns; c++) {
-				int ranGen = (int) (Math.random() * 10);
-				if(ranGen<=1)
-					temp.setGridIndex(new Shark(r, c), r, c);
-				else if(1<ranGen&&ranGen<=8)
-					temp.setGridIndex(new Fish(r, c), r, c);
-				else
-					temp.setGridIndex(new water.EmptyCell(r, c), r, c);
-			}
-		}
-		return temp;
-	}
+//	// for testing, creates a water grid with random types of cells
+//	private BasicFiniteGrid createRandomWaterGrid(int rows, int columns) {
+//		BasicFiniteGrid temp = new HexagonalFiniteGrid(rows, columns);
+//		for (int r = 0; r < rows; r++) {
+//			for (int c = 0; c < columns; c++) {
+//				int ranGen = (int) (Math.random() * 10);
+//				if(ranGen<=1)
+//					temp.setGridIndex(new Shark(r, c), r, c);
+//				else if(1<ranGen&&ranGen<=8)
+//					temp.setGridIndex(new Fish(r, c), r, c);
+//				else
+//					temp.setGridIndex(new water.EmptyCell(r, c), r, c);
+//			}
+//		}
+//		return temp;
+//	}
 
 	private BasicFiniteGrid createXOGrid(int rows, int columns) {
 		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);

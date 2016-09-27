@@ -42,7 +42,7 @@ public class HexagonalGridView extends GridView {
 							};
 
 				polygon.getPoints().addAll(rootPoint);
-				polygon.setFill(grid.getGridIndex(r, c).getColor());
+				polygon.setFill(grid.getGridIndex(c, r).getColor());
 				gridView.getChildren().add(polygon);
 			}
 		}
@@ -54,8 +54,8 @@ public class HexagonalGridView extends GridView {
 	@Override
 	protected void setupPixelSize() {
 
-		double minPixels = Math.min(gridSizeX / HEX_HEIGHT_MULTIPLIER / grid.getRows(),
-				gridSizeY / HEX_WIDTH_MULTIPLIER / grid.getColumns());
+		double minPixels = Math.min(gridHeight / HEX_HEIGHT_MULTIPLIER / grid.getRows(),
+				gridWidth / HEX_WIDTH_MULTIPLIER / grid.getColumns());
 		pixelWidth = minPixels;
 	}
 

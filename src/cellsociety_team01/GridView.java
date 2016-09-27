@@ -19,7 +19,7 @@ public abstract class GridView {
 	protected BorderPane root;
 	protected BasicFiniteGrid grid;
 
-	protected double gridSizeX, gridSizeY;
+	protected double gridWidth, gridHeight;
 	protected Group gridView;
 	protected double pixelWidth;
 
@@ -32,8 +32,8 @@ public abstract class GridView {
 	 *            We need the grid so GridView can read it and update the View.
 	 */
 	public GridView(BorderPane root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
-		gridSizeX = screenWidth * 9 / 10;
-		gridSizeY = screenHeight * 8 / 10;
+		gridWidth = screenWidth * 9 / 10;
+		gridHeight = screenHeight * 8 / 10;
 		this.root = root;
 		this.grid = grid;
 		setupPixelSize();
