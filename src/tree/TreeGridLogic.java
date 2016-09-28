@@ -1,6 +1,7 @@
 package tree;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import cellsociety_team01.Cell;
 import cellsociety_team01.GridLogic;
@@ -13,11 +14,14 @@ public class TreeGridLogic extends GridLogic {
 		
 	public TreeGridLogic(BasicFiniteGrid grid) {
 		this.grid = grid;
+		cellSizes = new HashMap<String, Integer>();
+		cellSizes.put(BurningCell.class.getName(), 0);
+		cellSizes.put(TreeCell.class.getName(), 0);
 	}
 
 	@Override
 	public void step() {
-		
+		cellSizes.clear();
 		// test print
 //		for (int r = 0; r < grid.getRows(); r++) {
 //			for (int c = 0; c < grid.getColumns(); c++) {
@@ -49,11 +53,15 @@ public class TreeGridLogic extends GridLogic {
 	
 	private void updateGrid(Cell cell) {
 		if (cell instanceof TreeCell) {
-			updateTreeCell((TreeCell) cell);
+			TreeCell tree = (TreeCell) cell;
+			updateTreeCell(tree);
+			updateCellSizes(tree.getClass().getName());
 			return;
 		}
 		if (cell instanceof BurningCell) {
-			updateBurningCell((BurningCell) cell);
+			BurningCell burn = (BurningCell) cell;
+			updateBurningCell(burn);
+			updateCellSizes(burn.getClass().getName());
 			return;
 		}
 		if (cell instanceof EmptyCell) {

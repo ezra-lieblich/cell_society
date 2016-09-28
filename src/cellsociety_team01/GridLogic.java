@@ -8,7 +8,7 @@ import grids.BasicFiniteGrid;
 
 public class GridLogic {
 	protected BasicFiniteGrid grid;
-	protected HashMap<String, Integer> cellSizes;
+	protected Map<String, Integer> cellSizes;
 	
 	public GridLogic(){}
 	
@@ -20,5 +20,12 @@ public class GridLogic {
 	}
 	public Map<String, Integer> getCells() {
 		return Collections.unmodifiableMap(cellSizes);
+	}
+	
+	protected void updateCellSizes(String name) {
+		if (!cellSizes.containsKey(name)) {
+			cellSizes.put(name, 0);
+		}
+		cellSizes.put(name, cellSizes.get(name) + 1);
 	}
 }

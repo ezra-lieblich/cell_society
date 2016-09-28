@@ -15,6 +15,7 @@ import grids.HexagonalToroidalGrid;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import javafx.stage.Stage;
@@ -94,10 +95,12 @@ public class GridController {
 		}
 
 		BorderPane root = new BorderPane();
-		view = new HexagonalGridView(root, grid, screenWidth, screenHeight);
+		VBox vbox = new VBox(5);
+		root.setLeft(vbox);
+		graph = new CellGraph(vbox, logic.getCells());
+		view = new HexagonalGridView(vbox, grid, screenWidth, screenHeight);
 		//view = new GridView(root, grid);
 		toolbar = new Toolbar(root, this);
-		graph = new CellGraph(root, logic.getCells());
 		createTimeline();
 		stage.setScene(scene = new Scene(root, screenWidth, screenHeight, Color.WHITE));
 		//display the view initially before starting simulation

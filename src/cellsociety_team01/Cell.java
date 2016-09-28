@@ -6,7 +6,7 @@ import java.util.List;
 import javafx.scene.paint.Color;
 
 public class Cell {
-	private ArrayList<Cell> neighbors;
+	private List<Cell> neighbors;
 	protected Color color;
 	private int XPosition;
 	private int YPosition;

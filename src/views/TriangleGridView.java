@@ -5,6 +5,7 @@ package views;
 import cellsociety_team01.GridView;
 import grids.BasicFiniteGrid;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 
@@ -19,7 +20,7 @@ public class TriangleGridView extends GridView {
 	private static final double TRIANGLE_HEIGHT_MULTIPLIER = Math.sqrt(3) / 2.0;
 	private static final double TRIANGLE_WIDTH_MULTIPLIER = 0.5;
 
-	public TriangleGridView(BorderPane root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
+	public TriangleGridView(VBox root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
 		super(root, grid, screenWidth, screenHeight);
 	}
 

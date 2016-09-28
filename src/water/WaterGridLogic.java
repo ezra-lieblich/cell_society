@@ -1,6 +1,7 @@
 package water;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import cellsociety_team01.Cell;
 import cellsociety_team01.GridLogic;
@@ -19,11 +20,14 @@ public class WaterGridLogic extends GridLogic {
 		TURNS_PER_FISH_REPRODUCE = fishReproduce;
 		TURNS_FOR_SHARK_DEATH = sharkDeath;
 		TURNS_PER_SHARK_REPRODUCE = sharkReproduce;
+		cellSizes = new HashMap<String, Integer>();
+		cellSizes.put(Fish.class.getName(), 0);
+		cellSizes.put(Shark.class.getName(), 0);
 	}
 
 	@Override
 	public void step() {
-
+		cellSizes.clear();
 		// // test print
 		// for (int r = 0; r < grid.getRows(); r++) {
 		// for (int c = 0; c < grid.getColumns(); c++) {
@@ -57,14 +61,19 @@ public class WaterGridLogic extends GridLogic {
 		if (cell instanceof EmptyCell)
 			return;
 		if (cell instanceof Fish) {
-			updateFish((Fish) cell);
+			Fish fish = (Fish) cell;
+			updateFish(fish);
+			updateCellSizes(fish.getClass().getName());
 			return;
 		}
 		if (cell instanceof Shark) {
-			updateShark((Shark) cell);
+			Shark shark = (Shark) cell;
+			updateShark(shark);
+			updateCellSizes(shark.getClass().getName());
 			return;
 		}
 	}
+
 
 	private void updateFish(Fish fish) {
 		Cell nextLocation = fish.getNextLocation();

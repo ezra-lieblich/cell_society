@@ -11,6 +11,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 /**
  * Toolbar is called on by the GridController when a simulation is chosen. It allows
  * the user to start, stop, and step through the simulation. It also allows the user

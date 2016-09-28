@@ -3,6 +3,7 @@ package views;
 import cellsociety_team01.GridView;
 import grids.BasicFiniteGrid;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -24,7 +25,7 @@ public class SquareGridView extends GridView{
 	 * @param grid
 	 *            We need the grid so GridView can read it and update the View.
 	 */
-	public SquareGridView(BorderPane root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
+	public SquareGridView(VBox root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
 		super(root,grid,screenWidth,screenHeight);
 	}
 

@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import grids.BasicFiniteGrid;
 import javafx.scene.Group;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -16,7 +17,7 @@ import javafx.scene.shape.Rectangle;
  */
 public abstract class GridView {
 
-	protected BorderPane root;
+	protected VBox root;
 	protected BasicFiniteGrid grid;
 
 	protected double gridSizeX, gridSizeY;
@@ -31,12 +32,14 @@ public abstract class GridView {
 	 * @param grid
 	 *            We need the grid so GridView can read it and update the View.
 	 */
-	public GridView(BorderPane root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
+	public GridView(VBox root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
+		gridView = new Group();
 		gridSizeX = screenWidth * 4 / 10;
-		gridSizeY = screenHeight * 4 / 10;
+		gridSizeY = screenHeight * 3 / 10;
 		this.root = root;
 		this.grid = grid;
 		setupPixelSize();
+		this.root.getChildren().add(gridView);
 	}
 
 	/**
@@ -44,9 +47,9 @@ public abstract class GridView {
 	 * view
 	 */
 	public void step() {
-		gridView = new Group();
+		gridView.getChildren().clear();
 		BorderPane.setAlignment(gridView, Pos.CENTER_LEFT);
-		root.setRight(gridView);
+		//root.setRight(gridView);
 		visualizeGrid();
 	}
 

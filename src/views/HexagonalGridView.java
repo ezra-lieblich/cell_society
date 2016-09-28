@@ -3,6 +3,7 @@ package views;
 import cellsociety_team01.GridView;
 import grids.BasicFiniteGrid;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Polygon;
 
 /**
@@ -16,7 +17,7 @@ public class HexagonalGridView extends GridView {
 	private static final double HEX_HEIGHT_MULTIPLIER = Math.sqrt(3);
 	private static final double HEX_WIDTH_MULTIPLIER = 1.5;
 
-	public HexagonalGridView(BorderPane root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
+	public HexagonalGridView(VBox root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
 		super(root, grid, screenWidth, screenHeight);
 	}
 
