@@ -12,11 +12,12 @@ public class LifeGridLogic extends GridLogic {
 	
 	public LifeGridLogic(BasicFiniteGrid grid) {
 		this.grid = grid;
+		cellSizes.put(AliveCell.class.getName(), 0);
 	}
 
 	@Override
 	public void step() {
-		
+		cellSizes.clear();
 		// test print
 //		for (int r = 0; r < grid.getRows(); r++) {
 //			for (int c = 0; c < grid.getColumns(); c++) {
@@ -52,7 +53,9 @@ public class LifeGridLogic extends GridLogic {
 			return;
 		}
 		if (cell instanceof AliveCell) {
-			updateAliveCell((AliveCell) cell);
+			AliveCell alive = (AliveCell) cell;
+			updateAliveCell(alive);
+			updateCellSizes(alive.getClass().getName());
 			return;
 		}
 	}
