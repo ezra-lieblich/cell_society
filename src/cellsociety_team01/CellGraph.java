@@ -56,7 +56,7 @@ public class CellGraph {
 			graph.getData().add(series);
 		}
 		graph.setTitle("Cell Graph");
-		graph.setPrefSize(400, 400);
+		graph.setPrefSize(300, 300);
 		group.getChildren().add(graph);
 		//root.setRight(group);
 		root.getChildren().add(group);

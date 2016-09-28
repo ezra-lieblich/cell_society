@@ -1,6 +1,7 @@
 package life;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import cellsociety_team01.Cell;
 import cellsociety_team01.GridLogic;
@@ -12,6 +13,7 @@ public class LifeGridLogic extends GridLogic {
 	
 	public LifeGridLogic(BasicFiniteGrid grid) {
 		this.grid = grid;
+		cellSizes = new HashMap<String, Integer>();
 		cellSizes.put(AliveCell.class.getName(), 0);
 	}
 

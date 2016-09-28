@@ -57,7 +57,7 @@ public class SquareGridView extends GridView{
 	 */
 	@Override
 	protected void setupPixelSize() {
-		double minPixels = Math.min(gridSizeX / grid.getColumns(), gridSizeY / grid.getRows());
+		double minPixels = Math.min(gridWidth / grid.getColumns(), gridHeight / grid.getRows());
 		pixelWidth = minPixels;
 	}
 }

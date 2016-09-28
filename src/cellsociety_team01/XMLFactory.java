@@ -42,6 +42,7 @@ public class XMLFactory {
     public String getTextValue (Element root, String tagName) {
         NodeList nodeList = root.getElementsByTagName(tagName);
         if (nodeList != null && nodeList.getLength() > 0) {
+        	String a = nodeList.item(0).getTextContent();
             return nodeList.item(0).getTextContent();
         }
         else {

@@ -20,7 +20,7 @@ public abstract class GridView {
 	protected VBox root;
 	protected BasicFiniteGrid grid;
 
-	protected double gridSizeX, gridSizeY;
+	protected double gridWidth, gridHeight;
 	protected Group gridView;
 	protected double pixelWidth;
 
@@ -34,8 +34,8 @@ public abstract class GridView {
 	 */
 	public GridView(VBox root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
 		gridView = new Group();
-		gridSizeX = screenWidth * 4 / 10;
-		gridSizeY = screenHeight * 3 / 10;
+		gridWidth = 400;
+		gridHeight = 400;
 		this.root = root;
 		this.grid = grid;
 		setupPixelSize();
