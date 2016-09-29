@@ -10,10 +10,4 @@ public class EmptyCell extends Cell {
 		super.init(x, y);
 		super.setColor(Color.BLUE);
 	}
-	
-	@Override
-	public String toString(){
-		return "E";
-	}
-
 }

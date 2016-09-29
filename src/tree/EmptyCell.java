@@ -10,12 +10,5 @@ public class EmptyCell extends Cell{
 		super.init(x, y);
 		super.setColor(Color.YELLOW);
 	}
-	
-	// String "E" represents a cell that is empty.
-	@Override
-	public String toString(){
-		return "E";
-	}
-		
 }
 

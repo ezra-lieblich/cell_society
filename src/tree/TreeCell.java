@@ -20,12 +20,6 @@ public class TreeCell extends Cell{
 		this.probCatch = probCatch;
 	}
 	
-	// String "T" represents a tree cell.
-	@Override
-	public String toString(){
-		return "T";
-	}
-	
 	private boolean nearFire() {
 		for (Cell c: neighbors) {
 			if (c instanceof BurningCell)  {
