@@ -5,6 +5,6 @@
 	<simulation_author>Christopher Lu</simulation_author>
 	<XGridSize>40</XGridSize>
 	<YGridSize>40</YGridSize>
-	<percentAlive>.01</percentAlive>
+	<percentAlive>.15</percentAlive>
 	<percentDead>.65</percentDead>
 </Simulation>

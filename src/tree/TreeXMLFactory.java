@@ -1,7 +1,9 @@
 package tree;
 import cellsociety_team01.Simulation;
 import cellsociety_team01.SimulationXMLFactory;
+import cellsociety_team01.XMLFactory;
 import cellsociety_team01.XMLFactoryException;
+import grids.BasicFiniteGrid;
 import tree.TreeXML;
 import org.w3c.dom.Element;
 
@@ -12,7 +14,7 @@ import org.w3c.dom.Element;
  */
 public class TreeXMLFactory extends SimulationXMLFactory {
     private static final String XML_TAG_NAME = "GameOfLife";
-
+    private XMLFactory factory = new XMLFactory();
 
     /**
      * Create factory capable of generating TreeXML objects.
@@ -25,20 +27,31 @@ public class TreeXMLFactory extends SimulationXMLFactory {
      * @see SimulationXMLFactory#getSimulation()
      */
     @Override
-    public Simulation getSimulation (Element root) throws XMLFactoryException {
-        if (! isValidFile(root)) {
-            throw new XMLFactoryException("XML file does not represent a %s", getSimulationType());
-        }
-        // BUGBUG: hard coding tagNames is a bad idea
-        String simulationName = getTextValue(root, "simulation_name");
-        String simulationTitle = getTextValue(root, "simulation_title");
-        String simulationAuthor = getTextValue(root, "simulation_author");
-        String xGridSize = getTextValue(root, "XGridSize");
-        String yGridSize = getTextValue(root, "YGridSize");
-        String Tree = getTextValue(root, "percentTree");
-        String Burn = getTextValue(root, "percentBurn");
-        String Empty = getTextValue(root, "percentEmpty");
-        String probCatch = getTextValue(root, "probCatch");
-        return new TreeXML(simulationName, simulationTitle, simulationAuthor, xGridSize, yGridSize, Tree, Burn, Empty, probCatch);
+    public BasicFiniteGrid makeGrid (Element root) {
+    	String strRows = factory.getTextValue(root, "XGridSize");
+		String strColumns = factory.getTextValue(root, "YGridSize");
+		String strTree = factory.getTextValue(root, "percentTree");
+		String strBurn = factory.getTextValue(root, "percentBurn");
+		Double probCatch = Double.parseDouble(factory.getTextValue(root, "probCatch"));
+		int rows = Integer.parseInt(strRows);
+		int columns = Integer.parseInt(strColumns);
+		double tree = Double.parseDouble(strTree);
+		double burn = Double.parseDouble(strBurn);
+		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < columns; c++) {
+				double ranGen = Math.random();
+				if (ranGen<=burn) {
+					temp.setGridIndex(new tree.BurningCell(r, c), r, c);
+				}
+				else if (burn < ranGen && ranGen <= tree) {
+					temp.setGridIndex(new tree.TreeCell(r, c, probCatch), r, c);
+				}
+				else {
+					temp.setGridIndex(new tree.EmptyCell(r, c), r, c);
+				}
+			}
+		}
+		return temp;
     }
 }

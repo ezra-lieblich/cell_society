@@ -1,6 +1,8 @@
 package cellsociety_team01;
 
 import cellsociety_team01.Simulation;
+import grids.BasicFiniteGrid;
+
 import org.w3c.dom.Element;
 import java.util.Objects;
 
@@ -31,7 +33,7 @@ public abstract class SimulationXMLFactory extends XMLFactory {
     /**
      * Get the actual Simulation contained in this XML File.
      */
-    public abstract Simulation getSimulation (Element root) throws XMLFactoryException;
+    public abstract BasicFiniteGrid makeGrid (Element root) throws XMLFactoryException;
 
     /**
      * @see XMLFactory#isValidFile()

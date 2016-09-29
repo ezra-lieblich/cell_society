@@ -80,23 +80,8 @@ public class XmlReader {
 	}
 	
 	private BasicFiniteGrid initiateLife() {
-		String strRows = factory.getTextValue(root, "XGridSize");
-		String strColumns = factory.getTextValue(root, "YGridSize");
-		String strAlive = factory.getTextValue(root, "percentAlive");
-		int rows = Integer.parseInt(strRows);
-		int columns = Integer.parseInt(strColumns);
-		double alive = Double.parseDouble(strAlive);
-		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < columns; c++) {
-				double ranGen = Math.random();
-				if(ranGen<=alive)
-					temp.setGridIndex(new AliveCell(r, c), r, c);
-				else {
-					temp.setGridIndex(new DeadCell(r, c), r, c);
-				}
-			}
-		}
+		LifeXMLFactory makeLife = new LifeXMLFactory();
+		BasicFiniteGrid temp = makeLife.makeGrid(root);
 		return temp;
 	}
 	
