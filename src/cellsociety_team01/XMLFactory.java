@@ -1,5 +1,7 @@
 package cellsociety_team01;
 
+import java.util.Objects;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -14,11 +16,24 @@ import org.w3c.dom.NodeList;
  * @author Robert Duvall
  */
 public class XMLFactory {
+	private String mySimulationType;
     /**
      * @return if this is a valid XML file for this specific XML object type
      */
+	 protected XMLFactory (String simulationType) {
+	        mySimulationType = simulationType;
+	    }
 
-    public boolean isValidFile (Element root){ return true;}
+    /**
+     * @return the type of Simulation this file represents
+     */
+    public String getSimulationType () {
+        return mySimulationType;
+    }
+
+    public boolean isValidFile (Element root){
+    	return Objects.equals(getAttribute(root, "PersonType"), getSimulationType());
+    }
 
     /**
      * Get the value of an attribute.
