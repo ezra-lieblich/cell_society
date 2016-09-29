@@ -132,7 +132,7 @@ public class XmlReader {
 		int columns = Integer.parseInt(strColumns);
 		double fish = Double.parseDouble(strFish);
 		double shark = Double.parseDouble(strShark);
-		BasicFiniteGrid temp = new HexagonalFiniteGrid(rows, columns);
+		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
 				double ranGen = Math.random();

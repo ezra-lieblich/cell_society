@@ -15,7 +15,7 @@ public class Fish extends Cell {
 	public Fish(int x, int y) {
 		super.init(x, y);
 		currentReproduceTurn = 0;
-		color = Color.GREENYELLOW;
+		super.setColor(Color.GREENYELLOW);
 	}
 
 	@Override
@@ -47,14 +47,7 @@ public class Fish extends Cell {
 			return null;
 		//move to random cell;
 		return temp.get((int) (Math.random() * temp.size()));
-	}
-	
-	@Override
-	public String toString(){
-		return "F";
-	}
-	
-	
+	}	
 	
 	//getters
 	public Cell getNextLocation() {

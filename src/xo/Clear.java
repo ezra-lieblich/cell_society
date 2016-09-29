@@ -11,6 +11,6 @@ import javafx.scene.paint.Color;
 public class Clear extends Cell{
 	public Clear(int x, int y){
 		super(x, y);
-		setColor(Color.NAVAJOWHITE);
+		super.setColor(Color.NAVAJOWHITE);
 	}
 }

@@ -13,7 +13,7 @@ public class DeadCell extends Cell {
 
 	public DeadCell(int x, int y) {
 		super.init(x, y);
-		color = Color.RED;
+		super.setColor(Color.RED);
 	}
 
 	@Override

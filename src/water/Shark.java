@@ -21,7 +21,7 @@ public class Shark extends Cell {
 		super.init(x, y);
 		currentReproduceTurn = 0;
 		turnsNoFish = 0;
-		color = Color.ORANGE;
+		super.setColor(Color.ORANGE);
 	}
 
 	@Override
@@ -74,14 +74,7 @@ public class Shark extends Cell {
 		// move to random cell;
 		return tempEmpty.get((int) (Math.random() * tempEmpty.size()));
 	}
-	
-	@Override
-	public String toString(){
-		return "S";
-	}
-	
-	
-	
+		
 
 	//getters
 	public Cell getNextLocation() {

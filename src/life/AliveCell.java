@@ -13,7 +13,7 @@ public class AliveCell extends Cell{
 	// Initializes alive cell to the x and y coordinates, sets color to green.
 	public AliveCell(int x, int y) {
 		super.init(x, y);
-		color = Color.GREEN;
+		super.setColor(Color.GREEN);
 	}
 	
 	// String "A" represents an alive cell.

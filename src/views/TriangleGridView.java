@@ -18,7 +18,7 @@ import javafx.scene.shape.Rectangle;
 public class TriangleGridView extends GridView {
 	
 	private static final double TRIANGLE_HEIGHT_MULTIPLIER = Math.sqrt(3) / 2.0;
-	private static final double TRIANGLE_WIDTH_MULTIPLIER = 0.5;
+	private static final double TRIANGLE_WIDTH_MULTIPLIER = 1;
 
 	public TriangleGridView(VBox root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
 		super(root, grid, screenWidth, screenHeight);
@@ -59,7 +59,7 @@ public class TriangleGridView extends GridView {
 	@Override
 	protected void setupPixelSize() {
 		// equalateral triangle has height multiplier of sqrt(3)/2
-		double minPixels = Math.min(gridHeight* TRIANGLE_HEIGHT_MULTIPLIER/ grid.getRows(), gridWidth *TRIANGLE_WIDTH_MULTIPLIER/ grid.getColumns());
+		double minPixels = Math.min(gridHeight/ TRIANGLE_HEIGHT_MULTIPLIER/ grid.getRows(), gridWidth /TRIANGLE_WIDTH_MULTIPLIER/ grid.getColumns());
 		pixelWidth = minPixels;
 	}
 

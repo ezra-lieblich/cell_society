@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 
 public class Cell {
 	private List<Cell> neighbors;
-	protected Color color;
+	private Color color;
 	private int XPosition;
 	private int YPosition;
 	
