@@ -15,7 +15,7 @@ public class Fish extends Cell {
 	public Fish(int x, int y) {
 		super.init(x, y);
 		currentReproduceTurn = 0;
-		color = Color.GREENYELLOW;
+		super.setColor(Color.GREENYELLOW);
 	}
 
 	@Override

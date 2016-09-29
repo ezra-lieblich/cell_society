@@ -21,7 +21,7 @@ public class Shark extends Cell {
 		super.init(x, y);
 		currentReproduceTurn = 0;
 		turnsNoFish = 0;
-		color = Color.ORANGE;
+		super.setColor(Color.ORANGE);
 	}
 
 	@Override
