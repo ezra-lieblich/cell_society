@@ -54,7 +54,9 @@ public class GridController {
 		mainMenu = menu.init();
 		stage.setScene(mainMenu);
 		stage.show();
+		setupScreenResolution();
 		// temporary code
+		//TODO: get title from xml
 		title = "Test";
 	}
 
@@ -64,15 +66,14 @@ public class GridController {
 			XMLFactory tempFactory = new XMLFactory();
 			simulationName = tempFactory.getTextValue(root, "simulation_name");
 		}
-		setupScreenResolution();
+		reader = new XmlReader();
+		grid = reader.simChooser(simulationName);
 		setupLogicObject();
 
 		init();
 	}
 
 	private void setupLogicObject() {
-		reader = new XmlReader();
-		grid = reader.simChooser(simulationName);
 		// String simName = reader.getSim();
 		if (simulationName.equals("Game Of Life")) {
 			logic = new LifeGridLogic(grid);
@@ -108,6 +109,7 @@ public class GridController {
 	}
 
 	private void setupView(BorderPane root) {
+		//TODO: parse type of shapes in grid
 		view = new TriangleGridView(root, grid, screenWidth, screenHeight);
 	}
 
