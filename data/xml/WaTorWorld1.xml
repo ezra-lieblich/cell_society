@@ -5,6 +5,8 @@
 	<simulation_author>Christopher Lu</simulation_author>
 	<rows>40</rows>
 	<columns>40</columns>
+	<shape>squ</shape>
+	<bounds>toroidal</bounds>
 	<percentFish>.75</percentFish>
 	<percentShark>.15</percentShark>
 	<fishReproduce>2</fishReproduce>

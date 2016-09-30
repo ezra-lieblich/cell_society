@@ -35,6 +35,8 @@ public class XmlReader {
 	private String Sim;
 	private int rows;
 	private int columns;
+	private String shape;
+	private String bounds;
 	public XmlReader()	{
 		
 	}
@@ -92,8 +94,18 @@ public class XmlReader {
 	}
 	
 	public int getYSize() {
-		columns =Integer.parseInt(getTextValue(root, "columns"));
+		columns = Integer.parseInt(getTextValue(root, "columns"));
 		return columns;
+	}
+	
+	public String getShape() {
+		shape = getTextValue(root, "shape");
+		return shape;
+	}
+	
+	public String getBounds() {
+		bounds = getTextValue(root, "bounds");
+		return bounds;
 	}
 	
 	private void makeFactories() {
@@ -112,13 +124,13 @@ public class XmlReader {
 	}
 	
 	private void makeLife() {
-		LifeFactory life= new LifeFactory(rows, columns);
+		LifeFactory life= new LifeFactory(shape, bounds, rows, columns);
 		Double Alive = Double.parseDouble(getTextValue(root, "percentAlive"));
 		return life.getGrid(Alive);
 	}
 	
 	private void makeFire() {
-		FireFactory fire = new FireFactory(rows, columns);
+		FireFactory fire = new FireFactory(shape, bounds, rows, columns);
 		Double Tree = Double.parseDouble(getTextValue(root, "percentTree"));
 		Double Burn = Double.parseDouble(getTextValue(root, "percentBurn"));
 		Double probCatch = Double.parseDouble(getTextValue(root, "probCatch"));
@@ -126,7 +138,7 @@ public class XmlReader {
 	}
 	
 	private void makeWaTor() {
-		WaTorFactory wator = new WaTorFactory(rows, columns);
+		WaTorFactory wator = new WaTorFactory(shape, bounds, rows, columns);
 		Double Fish = Double.parseDouble(getTextValue(root, "percentFish"));
 		Double Shark = Double.parseDouble(getTextValue(root, "percentShark"));
 		int fishRep = Integer.parseInt(getTextValue(root, "fishReproduce"));
@@ -136,31 +148,12 @@ public class XmlReader {
 	}
 	
 	private void makeXO() {
-		XOFactory xo = new XOFactory(rows, columns);
+		XOFactory xo = new XOFactory(shape, bounds, rows, columns);
 		Double perX = Double.parseDouble(getTextValue(root, "percentX"));
 		Double perO = Double.parseDouble(getTextValue(root, "percentO"));
 		Double perSim = Double.parseDouble(getTextValue(root, "similarPercentage"));
 		return xo.getGrid(perX, perO, perSim);
 	}
-	
-//	public BasicFiniteGrid simChooser(String simulationName) {
-//		if (simulationName.equals("Game Of Life")) {
-//			return initiateLife();
-//		}
-//		if (simulationName.equals("Spread Of Fire")) {
-//			return initiateTree();
-//		}
-//		if (simulationName.equals("WaTor World")) {
-//			return initiateWaTor();
-//		}
-//		if (simulationName.equals("XO Segregation")) {
-//			return initiateXO();
-//		}
-//		else {
-//			System.out.println("not a valid simulation");
-//			return initiateLife();
-//		}
-//	}
 	
 //	private BasicFiniteGrid initiateLife() {
 //		LifeXMLFactory makeLife = new LifeXMLFactory();
@@ -291,18 +284,6 @@ public class XmlReader {
 //			}
 //		}
 //		return temp;
-//	}
-//
-//	public int getFishReproduce() {
-//		return Integer.parseInt(factory.getTextValue(root, "fishReproduce"));
-//	}
-//
-//	public int getSharkDeath() {
-//		return Integer.parseInt(factory.getTextValue(root, "sharkDeath"));
-//	}
-//
-//	public int getSharkReproduce() {
-//		return Integer.parseInt(factory.getTextValue(root, "sharkReproduce"));
 //	}
 //
 //	private BasicFiniteGrid initiateWaTor() {
