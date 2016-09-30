@@ -3,9 +3,8 @@
 	<simulation_name>XO Segregation</simulation_name>
 	<simulation_title>Test Case 1</simulation_title>
 	<simulation_author>Christopher Lu</simulation_author>
-
-	<XGridSize>40</XGridSize>
-	<YGridSize>40</YGridSize>
+	<rows>40</rows>
+	<columns>40</columns>
 	<percentX>0.35</percentX>
 	<percentO>0.35</percentO>
 	<similarPercentage>0.5</similarPercentage>
