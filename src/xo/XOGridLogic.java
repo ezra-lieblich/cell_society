@@ -10,10 +10,8 @@ import grids.BasicFiniteGrid;
 public class XOGridLogic extends GridLogic{
 	private List<Neighbor> upsetNeighbors;
 	private List<Cell> availableSpaces;
-	protected static double percentSimilar;
-	public XOGridLogic(BasicFiniteGrid grid, double percent_similar) {
+	public XOGridLogic(BasicFiniteGrid grid) {
 		this.grid = grid;
-		XOGridLogic.percentSimilar = percent_similar;
 		cellSizes = new HashMap<String, Integer>();
 		cellSizes.put(Group1.class.getName(), 0);
 		cellSizes.put(Group2.class.getName(), 0);

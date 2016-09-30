@@ -16,9 +16,14 @@ public class Shark extends Cell {
 	private boolean isReproducing;
 	private boolean isDead;
 	
+	private int turnsPerSharkDeath;
+	private int turnsPerSharkReproduce;
+	
 
-	public Shark(int x, int y) {
+	public Shark(int x, int y, int death, int reproduce) {
 		super.init(x, y);
+		turnsPerSharkDeath = death;
+		turnsPerSharkReproduce = reproduce;
 		currentReproduceTurn = 0;
 		turnsNoFish = 0;
 		super.setColor(Color.ORANGE);
@@ -35,12 +40,12 @@ public class Shark extends Cell {
 	}
 
 	private boolean checkDeath() {
-		return turnsNoFish >= WaterGridLogic.TURNS_FOR_SHARK_DEATH;
+		return turnsNoFish >= turnsPerSharkDeath;
 	}
 
 	private boolean handleTurn() {
 		currentReproduceTurn++;
-		if (currentReproduceTurn == WaterGridLogic.TURNS_PER_SHARK_REPRODUCE) {
+		if (currentReproduceTurn == turnsPerSharkReproduce) {
 			currentReproduceTurn = 0;
 			return true;
 		}

@@ -8,6 +8,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 import org.w3c.dom.Element;
+
+import factories.XOGridFactory;
 import grids.BasicFiniteGrid;
 import grids.BasicToroidalGrid;
 import grids.HexagonalFiniteGrid;
@@ -22,10 +24,6 @@ import javafx.stage.Stage;
 import water.*;
 import xo.*;
 import water.EmptyCell;
-import xo.Group1;
-import xo.Group2;
-import xo.XOGridLogic;
-import xo.XOXMLFactory;
 import life.*;
 import tree.*;
 import views.HexagonalGridView;

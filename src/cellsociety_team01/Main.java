@@ -15,9 +15,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import cellsociety_team01.XmlReader;
-import cellsociety_team01.SimulationXMLFactory;
+import factories.LifeGridFactory;
 import cellsociety_team01.XMLFactoryException;
-import life.LifeXMLFactory;
 
 /**
  * This is the main program, it is basically boilerplate to create

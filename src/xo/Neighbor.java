@@ -6,8 +6,10 @@ import cellsociety_team01.Cell;
 
 public class Neighbor extends Cell {
 	private boolean isSatisfied;
-	public Neighbor(int x, int y) {
+	private double percentSimilar;
+	public Neighbor(int x, int y, double p) {
 		super(x,y);
+		percentSimilar = p;
 	}
 	@Override
 	public void calculateNextState(ArrayList<Cell> neighborList) {
@@ -27,6 +29,6 @@ public class Neighbor extends Cell {
 				}
 			}
 		}
-		return ((double) similar_neighbors/total_neighbors) >= XOGridLogic.percentSimilar;
+		return ((double) similar_neighbors/total_neighbors) >= percentSimilar;
 	}
 }
