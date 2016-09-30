@@ -51,5 +51,3 @@ public class TreeCell extends Cell{
 	}
 	
 }
-
-

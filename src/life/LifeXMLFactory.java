@@ -12,7 +12,7 @@ import org.w3c.dom.Element;
  *
  * @author Christopher Lu
  */
-public class LifeXMLFactory extends SimulationXMLFactory {
+public class LifeXMLFactory extends XMLFactory {
     private static final String XML_TAG_NAME = "GameOfLife";
 	private XMLFactory factory = new XMLFactory();
 
