@@ -24,24 +24,32 @@ import java.io.File;
 import java.io.IOException;
 
 public class XmlReader {
-	// Width of grid array, height of grid array, type of sim, data in each cell of the grid
+	// Width of grid array, height of grid array, type of sim, data in each cell
+	// of the grid
 	private BasicFiniteGrid grid;
 	// Reset DOCUMENT_BUILDER before every parse
 	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
 	private static Element root;
-	private XMLFactory factory = new XMLFactory();
-	
-	public XmlReader(){factory = new XMLFactory();}
+	private XMLFactory factory;
 
-	public static Element getRootElement(File xmlFile) {
+	public XmlReader() {
+		factory = new XMLFactory();
+	}
+
+	public BasicFiniteGrid createGrid() {
+		Element root = reader.getRootElement(file);
+		XMLFactory tempFactory = new XMLFactory();
+		simulationName = tempFactory.getTextValue(root, "simulation_name");
+	}
+
+	public Element getRootElement(File xmlFile) {
 		System.out.println(xmlFile.getAbsolutePath());
 		try {
 			DOCUMENT_BUILDER.reset();
 			Document xmlDocument = DOCUMENT_BUILDER.parse(xmlFile.getAbsolutePath());
 			root = xmlDocument.getDocumentElement();
 			return root;
-		}
-		catch (SAXException | IOException e) {
+		} catch (SAXException | IOException e) {
 			throw new XMLParserException(e);
 		}
 	}
@@ -49,13 +57,13 @@ public class XmlReader {
 	private static DocumentBuilder getDocumentBuilder() {
 		try {
 			return DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		}
-		catch (ParserConfigurationException e) {
+		} catch (ParserConfigurationException e) {
 			throw new XMLParserException(e);
 		}
 	}
-	
+
 	public BasicFiniteGrid simChooser(String simulationName) {
+
 		if (simulationName.equals("Game Of Life")) {
 			return initiateLife();
 		}
@@ -67,24 +75,23 @@ public class XmlReader {
 		}
 		if (simulationName.equals("XO Segregation")) {
 			return initiateXO();
-		}
-		else {
+		} else {
 			System.out.println("not a valid simulation");
 			return initiateLife();
 		}
 	}
-	
+
 	public String getSim() {
 		String Sim = root.getAttribute("simulation_name");
 		return Sim;
 	}
-	
+
 	private BasicFiniteGrid initiateLife() {
 		LifeXMLFactory makeLife = new LifeXMLFactory();
 		BasicFiniteGrid temp = makeLife.makeGrid(root);
 		return temp;
 	}
-	
+
 	private BasicFiniteGrid initiateTree() {
 		String strRows = factory.getTextValue(root, "XGridSize");
 		String strColumns = factory.getTextValue(root, "YGridSize");
@@ -99,30 +106,30 @@ public class XmlReader {
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
 				double ranGen = Math.random();
-				if (ranGen<=burn) {
+				if (ranGen <= burn) {
 					temp.setGridIndex(new tree.BurningCell(r, c), r, c);
-				}
-				else if (burn < ranGen && ranGen <= tree) {
+				} else if (burn < ranGen && ranGen <= tree) {
 					temp.setGridIndex(new tree.TreeCell(r, c, probCatch), r, c);
-				}
-				else {
+				} else {
 					temp.setGridIndex(new tree.EmptyCell(r, c), r, c);
 				}
 			}
 		}
 		return temp;
 	}
-	
-	public int getFishReproduce(){
+
+	public int getFishReproduce() {
 		return Integer.parseInt(factory.getTextValue(root, "fishReproduce"));
 	}
-	public int getSharkDeath(){
+
+	public int getSharkDeath() {
 		return Integer.parseInt(factory.getTextValue(root, "sharkDeath"));
 	}
-	public int getSharkReproduce(){
+
+	public int getSharkReproduce() {
 		return Integer.parseInt(factory.getTextValue(root, "sharkReproduce"));
 	}
-	
+
 	private BasicFiniteGrid initiateWaTor() {
 		String strColumns = factory.getTextValue(root, "XGridSize");
 		String strRows = factory.getTextValue(root, "YGridSize");
@@ -136,9 +143,9 @@ public class XmlReader {
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < columns; c++) {
 				double ranGen = Math.random();
-				if(ranGen<=shark)
+				if (ranGen <= shark)
 					temp.setGridIndex(new Shark(r, c), r, c);
-				else if(shark<ranGen&&ranGen<=fish)
+				else if (shark < ranGen && ranGen <= fish)
 					temp.setGridIndex(new Fish(r, c), r, c);
 				else
 					temp.setGridIndex(new EmptyCell(r, c), r, c);
@@ -146,10 +153,11 @@ public class XmlReader {
 		}
 		return temp;
 	}
-	
+
 	public double getPercentSimilar() {
 		return Double.parseDouble(factory.getTextValue(root, "similarPercentage"));
 	}
+
 	private BasicFiniteGrid initiateXO() {
 		String strRows = factory.getTextValue(root, "XGridSize");
 		String strColumns = factory.getTextValue(root, "YGridSize");
@@ -166,16 +174,14 @@ public class XmlReader {
 				if (ranGen < X) {
 
 					temp.setGridIndex(new Group1(r, c), r, c);
-				}
-				else if (ranGen<X+O ) {
+				} else if (ranGen < X + O) {
 					temp.setGridIndex(new Group2(r, c), r, c);
-				}
-				else {
+				} else {
 					temp.setGridIndex(new Clear(r, c), r, c);
 				}
 			}
 		}
 		return temp;
 	}
-	
+
 }

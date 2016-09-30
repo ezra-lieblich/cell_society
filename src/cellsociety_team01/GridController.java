@@ -66,15 +66,14 @@ public class GridController {
 
 	public void parseFile(File file) {
 		if (file.isFile() && file.getName().endsWith(XML_SUFFIX)) {
-			Element root = reader.getRootElement(file);
-			XMLFactory tempFactory = new XMLFactory();
-			simulationName = tempFactory.getTextValue(root, "simulation_name");
-		}
-		reader = new XmlReader();
-		grid = reader.simChooser(simulationName);
-		setupLogicObject();
+			reader = new XmlReader(file);
+			grid = reader.simChooser();
+			setupLogicObject();
 
-		init();
+			init();
+		}
+		//TODO: throw exception if not
+
 	}
 
 	private void setupLogicObject() {
@@ -115,10 +114,10 @@ public class GridController {
 		view.step();
 	}
 
-	private void setupView(BorderPane root) {
-		//TODO: parse type of shapes in grid
-		view = new TriangleGridView(root, grid, screenWidth, screenHeight);
-	}
+//	private void setupView(BorderPane root) {
+//		//TODO: parse type of shapes in grid
+//		view = new TriangleGridView(root, grid, screenWidth, screenHeight);
+//	}
 
 	private void createTimeline() {
 		int MILLISECOND_DELAY = 500;
