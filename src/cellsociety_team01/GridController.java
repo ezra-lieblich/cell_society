@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.w3c.dom.Element;
 import grids.BasicFiniteGrid;
@@ -27,6 +28,8 @@ import xo.Group2;
 import xo.XOGridLogic;
 import xo.XOXMLFactory;
 import life.*;
+import sliders.SliderProperties;
+import sliders.XOSliders;
 import tree.*;
 import views.HexagonalGridView;
 import views.SquareGridView;
@@ -62,6 +65,7 @@ public class GridController {
 		// temporary code
 		//TODO: get title from xml
 		title = "Test";
+		//Controller should create initial scene with  BorderPane Root and HBox for views and create scene but not set it
 	}
 
 	public void parseFile(File file) {
@@ -117,6 +121,7 @@ public class GridController {
 		graph = new CellGraph(vbox, logic.getCells());
 		view = new HexagonalGridView(vbox, grid, screenWidth, screenHeight);
 		toolbar = new Toolbar(root, this);
+		SliderProperties slider = new XOSliders(vbox, this);
 		return root;
 	}
 
@@ -187,8 +192,9 @@ public class GridController {
 	}
 
 	public void stepSimulation() {
-		animation.pause();
-		this.step();
+		//animation.pause();
+		//this.step();
+		graph.setupPlots(logic.getCells());
 	}
 
 	public void updateSpeed(double value) {
@@ -196,12 +202,14 @@ public class GridController {
 		animation.setRate(new_rate);
 	}
 
-	public void resetSimulation() {
+	public void resetSimulation(Map<String, Double> values) {
 		// Controller will tell grid to reset itself to the original
 		// implementation
 		// need to set original grid to back to
-		// grid.resetGrid();
-
+		// g.resetGrid();
+		//Need to call 		graph.setupPlots();
+		animation.pause();
+		graph.resetGraph();
 	}
 
 	public void changeSimulation() {

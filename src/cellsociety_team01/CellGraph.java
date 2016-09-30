@@ -31,13 +31,12 @@ public class CellGraph {
 	
 	public CellGraph(VBox root, Map<String, Integer> cell_lengths) {
 		this.root = root;
-		this.cellSizes = cell_lengths;
-		setupGraph();
-		stepNumber = 0;
-		root.getChildren().add(graph);
+		setupGraph(cell_lengths);
+		this.stepNumber = 0;
+		this.root.getChildren().add(graph);
 	}
 	
-	private void setupGraph() {
+	private void setupGraph(Map<String, Integer> cell_lengths) {
 		x_axis = new NumberAxis(0, MAX_DATA_POINTS, MAX_DATA_POINTS/10);
 		x_axis.setForceZeroInRange(false);
         x_axis.setAutoRanging(false);
@@ -46,8 +45,20 @@ public class CellGraph {
 		NumberAxis y_axis = new NumberAxis();
 		y_axis.setForceZeroInRange(false);
         y_axis.setAutoRanging(true);
-
 		graph = new LineChart<Number, Number>(x_axis, y_axis);
+        setupPlots(cell_lengths);
+		graph.setTitle("Cell Graph");
+		graph.setPrefSize(300, 300);
+		group.getChildren().add(graph);
+		//root.setRight(group);
+		root.getChildren().add(group);
+	}
+	/**
+	 * public because have to reset plots we have to redo data. Also needs to take in
+	 * in CellSizes again in case the simulation has changed
+	 */
+	public void setupPlots(Map<String, Integer> cell_lengths) {
+		cellSizes = cell_lengths;
 		cellPlots = new HashMap<String, XYChart.Series<Number, Number>>();
 		for (String name : cellSizes.keySet()) {
 			XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
@@ -55,13 +66,7 @@ public class CellGraph {
 			cellPlots.put(name, series);
 			graph.getData().add(series);
 		}
-		graph.setTitle("Cell Graph");
-		graph.setPrefSize(300, 300);
-		group.getChildren().add(graph);
-		//root.setRight(group);
-		root.getChildren().add(group);
 	}
-	
 	public void updateGraph() {
 		for (String name : cellSizes.keySet()) {
 			cellPlots.get(name).getData().add(new XYChart.Data<Number, Number>(stepNumber, cellSizes.get(name)));
@@ -72,6 +77,10 @@ public class CellGraph {
 			}
 		}
 		stepNumber++;
+	}
+	public void resetGraph() {
+		graph.getData().clear();
+		stepNumber = 0;
 	}
 	
 }

@@ -38,9 +38,10 @@ public class Toolbar {
 		this.root = root;
 		this.controller = controller;
 		this.myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "View");
-		toolbar = new HBox(20);
-		this.root.setBottom(toolbar);
+		this.toolbar = new HBox(20);
 		setupButtons();
+		this.root.setCenter(toolbar);
+		BorderPane.setAlignment(toolbar, Pos.BOTTOM_CENTER);
 	}
 	
 	/**
@@ -52,7 +53,7 @@ public class Toolbar {
 		makeButton(myResources.getString("StopButton"), event -> controller.stopSimulation());
 		makeButton(myResources.getString("StepButton"), event -> controller.stepSimulation());
 		makeSlider();
-		makeButton(myResources.getString("ResetButton"), event -> controller.resetSimulation());
+		//makeButton(myResources.getString("ResetButton"), event -> controller.resetSimulation());
 		makeButton(myResources.getString("ChangeButton"), event -> controller.changeSimulation());
 		BorderPane.setAlignment(toolbar, Pos.BOTTOM_RIGHT);
 	}

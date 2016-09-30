@@ -38,7 +38,7 @@ public class MainMenu {
 		root.setCenter(createText());
 		
 		Button b = createButton("Choose File");
-		root.setAlignment(b, Pos.BASELINE_CENTER);
+		BorderPane.setAlignment(b, Pos.BASELINE_CENTER);
 		root.setBottom(b);
 		return scene;
 	}
