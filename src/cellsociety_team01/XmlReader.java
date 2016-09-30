@@ -74,29 +74,29 @@ public class XmlReader {
 		}
 	}
 
-//	// Returns name of simulation
-//	public String getSim() {
-//		return sim;
-//	}
+	// // Returns name of simulation
+	// public String getSim() {
+	// return sim;
+	// }
 
-	public int rows() {
-		rows = Integer.parseInt(getTextValue(root, "rows"));
-		return rows;
-	}
-
-	public int getYSize() {
-		columns = Integer.parseInt(getTextValue(root, "columns"));
-		return columns;
-	}
-
-//	public String getShape() {
-//		return shape;
+//	public int rows() {
+//		
+//		return rows;
 //	}
 //
-//	public String getBounds() {
-//		return bounds;
+//	public int getYSize() {
+//		
+//		return columns;
 //	}
-	public String getSim(){
+
+	// public String getShape() {
+	// return shape;
+	// }
+	//
+	// public String getBounds() {
+	// return bounds;
+	// }
+	public String getSim() {
 		return getTextValue(root, "simulation_name");
 	}
 
@@ -104,6 +104,8 @@ public class XmlReader {
 		sim = getTextValue(root, "simulation_name");
 		shape = getTextValue(root, "shape");
 		bounds = getTextValue(root, "bounds");
+		rows = Integer.parseInt(getTextValue(root, "rows"));
+		columns = Integer.parseInt(getTextValue(root, "columns"));
 
 		if (sim.equals("Game Of Life")) {
 			return makeLife();
@@ -121,23 +123,27 @@ public class XmlReader {
 	}
 
 	// Detects incorrectly formatted data.
-	private void intDoubleParseErrors(String input) throws XMLParserException {
-//		try {
-//			Integer.parseInt(input);
-//		} catch (RuntimeException e) {
-//			throw new XMLParserException("" + input + " in XML file needs to be a numerical value.", e);
-//		}
+	private void doubleParseErrors(String input) throws XMLParserException {
+
 		try {
 			Double.parseDouble(input);
 		} catch (RuntimeException e) {
-			throw new XMLParserException("" + input + " in XML file needs to be a numerical value.", e);
+			throw new XMLParserException("" + input + " in XML file needs to be a double.", e);
+		}
+	}
+
+	private void intParseErrors(String input) throws XMLParserException {
+		try {
+			Integer.parseInt(input);
+		} catch (RuntimeException e) {
+			throw new XMLParserException("" + input + " in XML file needs to be an integer.", e);
 		}
 	}
 
 	private BasicFiniteGrid makeLife() {
 		factory = new LifeGridFactory(shape, bounds, rows, columns);
 		String strAlive = getTextValue(root, "percentAlive");
-		intDoubleParseErrors(strAlive);
+		doubleParseErrors(strAlive);
 		Double Alive = Double.parseDouble(strAlive);
 		return ((LifeGridFactory) factory).makeGrid(Alive);
 	}
@@ -145,13 +151,13 @@ public class XmlReader {
 	private BasicFiniteGrid makeFire() {
 		factory = new TreeGridFactory(shape, bounds, rows, columns);
 		String strTree = getTextValue(root, "percentTree");
-		intDoubleParseErrors(strTree);
+		doubleParseErrors(strTree);
 
 		String strBurn = getTextValue(root, "percentBurn");
-		intDoubleParseErrors(strBurn);
+		doubleParseErrors(strBurn);
 
 		String strProb = getTextValue(root, "probCatch");
-		intDoubleParseErrors(strProb);
+		doubleParseErrors(strProb);
 
 		Double Tree = Double.parseDouble(strTree);
 		Double Burn = Double.parseDouble(strBurn);
@@ -174,19 +180,19 @@ public class XmlReader {
 	private BasicFiniteGrid makeWaTor() {
 		factory = new WaterGridFactory(shape, bounds, rows, columns);
 		String strFish = getTextValue(root, "percentFish");
-		intDoubleParseErrors(strFish);
+		doubleParseErrors(strFish);
 
 		String strShark = getTextValue(root, "percentShark");
-		intDoubleParseErrors(strShark);
+		doubleParseErrors(strShark);
 
 		String strFishRep = getTextValue(root, "fishReproduce");
-		intDoubleParseErrors(strFishRep);
+		intParseErrors(strFishRep);
 
 		String strSharkDea = getTextValue(root, "sharkDeath");
-		intDoubleParseErrors(strSharkDea);
+		intParseErrors(strSharkDea);
 
 		String strSharkRep = getTextValue(root, "sharkReproduce");
-		intDoubleParseErrors(strSharkRep);
+		intParseErrors(strSharkRep);
 
 		Double Fish = Double.parseDouble(strFish);
 		Double Shark = Double.parseDouble(strShark);
@@ -195,7 +201,7 @@ public class XmlReader {
 		int sharkRep = Integer.parseInt(strSharkRep);
 		return ((WaterGridFactory) factory).makeGrid(Fish, Shark, fishRep, sharkDea, sharkRep);
 	}
-	
+
 	public double getPercentSimilar() {
 		return Double.parseDouble(getTextValue(root, "similarPercentage"));
 	}
@@ -203,13 +209,13 @@ public class XmlReader {
 	private BasicFiniteGrid makeXO() {
 		factory = new XOGridFactory(shape, bounds, rows, columns);
 		String strPerX = getTextValue(root, "percentX");
-		intDoubleParseErrors(strPerX);
+		doubleParseErrors(strPerX);
 
 		String strPerO = getTextValue(root, "percentO");
-		intDoubleParseErrors(strPerO);
+		doubleParseErrors(strPerO);
 
 		String strPerSim = getTextValue(root, "similarPercentage");
-		intDoubleParseErrors(strPerSim);
+		doubleParseErrors(strPerSim);
 
 		Double perX = Double.parseDouble(getTextValue(root, "percentX"));
 		Double perO = Double.parseDouble(getTextValue(root, "percentO"));
