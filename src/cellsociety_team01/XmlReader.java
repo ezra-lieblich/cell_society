@@ -113,26 +113,34 @@ public class XmlReader {
 	
 	private void makeLife() {
 		LifeFactory life= new LifeFactory(rows, columns);
-		String strAlive = getTextValue(root, "percentAlive");
-		return life.getGrid(strAlive);
+		Double Alive = Double.parseDouble(getTextValue(root, "percentAlive"));
+		return life.getGrid(Alive);
 	}
 	
 	private void makeFire() {
 		FireFactory fire = new FireFactory(rows, columns);
-		Double strTree = Double.parseDouble(getTextValue(root, "percentTree"));
-		Double strBurn = Double.parseDouble(getTextValue(root, "percentBurn"));
+		Double Tree = Double.parseDouble(getTextValue(root, "percentTree"));
+		Double Burn = Double.parseDouble(getTextValue(root, "percentBurn"));
 		Double probCatch = Double.parseDouble(getTextValue(root, "probCatch"));
-		return fire.getGrid(strTree, strBurn, probCatch);
+		return fire.getGrid(Tree, Burn, probCatch);
 	}
 	
 	private void makeWaTor() {
-		Double strFish = Double.parseDouble(getTextValue(root, "percentFish"));
-		Double strShark = Double.parseDouble(getTextValue(root, "percentShark"));
+		WaTorFactory wator = new WaTorFactory(rows, columns);
+		Double Fish = Double.parseDouble(getTextValue(root, "percentFish"));
+		Double Shark = Double.parseDouble(getTextValue(root, "percentShark"));
+		int fishRep = Integer.parseInt(getTextValue(root, "fishReproduce"));
+		int sharkDea = Integer.parseInt(getTextValue(root, "sharkDeath"));
+		int sharkRep = Integer.parseInt(getTextValue(root, "sharkReproduce"));
+		return wator.getGrid(Fish, Shark, fishRep, sharkDea, sharkRep);
 	}
 	
 	private void makeXO() {
-		Double strX = Double.parseDouble(getTextValue(root, "percentX"));
-		Double strO = Double.parseDouble(getTextValue(root, "percentO"));
+		XOFactory xo = new XOFactory(rows, columns);
+		Double perX = Double.parseDouble(getTextValue(root, "percentX"));
+		Double perO = Double.parseDouble(getTextValue(root, "percentO"));
+		Double perSim = Double.parseDouble(getTextValue(root, "similarPercentage"));
+		return xo.getGrid(perX, perO, perSim);
 	}
 	
 //	public BasicFiniteGrid simChooser(String simulationName) {
