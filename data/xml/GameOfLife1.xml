@@ -3,8 +3,8 @@
 	<simulation_name>Game Of Life</simulation_name>
 	<simulation_title>Test Case 1</simulation_title>
 	<simulation_author>Christopher Lu</simulation_author>
-	<XGridSize>40</XGridSize>
-	<YGridSize>40</YGridSize>
+	<rows>40</rows>
+	<columns>40</columns>
 	<percentAlive>.15</percentAlive>
 	<percentDead>.65</percentDead>
 </Simulation>

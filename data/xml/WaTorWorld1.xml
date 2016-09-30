@@ -3,8 +3,8 @@
 	<simulation_name>WaTor World</simulation_name>
 	<simulation_title>Test Case 1</simulation_title>
 	<simulation_author>Christopher Lu</simulation_author>
-	<XGridSize>40</XGridSize>
-	<YGridSize>40</YGridSize>
+	<rows>40</rows>
+	<columns>40</columns>
 	<percentFish>.75</percentFish>
 	<percentShark>.15</percentShark>
 	<fishReproduce>2</fishReproduce>
