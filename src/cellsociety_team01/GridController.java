@@ -105,7 +105,7 @@ public class GridController {
 		VBox vbox = new VBox(5);
 		root.setLeft(vbox);
 		graph = new CellGraph(vbox, logic.getCells());
-		view = new HexagonalGridView(vbox, grid, screenWidth, screenHeight);
+		view = new SquareGridView(vbox, grid, screenWidth, screenHeight);
 		toolbar = new Toolbar(root, this);
 		createTimeline();
 		stage.setScene(scene = new Scene(root, screenWidth, screenHeight, Color.WHITE));

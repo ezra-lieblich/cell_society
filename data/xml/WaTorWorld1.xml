@@ -12,5 +12,4 @@
 	<fishReproduce>2</fishReproduce>
 	<sharkDeath>2</sharkDeath>
 	<sharkReproduce>10</sharkReproduce>
-	<gridType>hexagonal</gridType>
 </Simulation>
