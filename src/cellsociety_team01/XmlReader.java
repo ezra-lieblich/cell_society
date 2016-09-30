@@ -33,6 +33,8 @@ public class XmlReader {
 	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
 	private static Element root;
 	private String Sim;
+	private int rows;
+	private int columns;
 	public XmlReader()	{
 		
 	}
@@ -84,47 +86,51 @@ public class XmlReader {
 		return Sim;
 	}
 	
-	public int getXSize() {
-		int xSize = Integer.parseInt(getTextValue(root, "XGridSize"));
-		return xSize;
+	public int rows() {
+		rows = Integer.parseInt(getTextValue(root, "rows"));
+		return rows;
 	}
 	
 	public int getYSize() {
-		int ySize =Integer.parseInt(getTextValue(root, "YGridSize"));
-		return ySize;
+		columns =Integer.parseInt(getTextValue(root, "columns"));
+		return columns;
 	}
 	
-	private void parseSpecific() {
+	private void makeFactories() {
 		if (Sim.equals("Game Of Life")) {
-			parseLife();
+			makeLife();
 		}
 		else if (Sim.equals("Spread of Fire")) {
-			parseFire();
+			makeFire();
 		}
 		else if (Sim.equals("WaTor World")) {
-			parseWaTor();
+			makeWaTor();
 		}
 		else if (Sim.equalsIgnoreCase("XO Segregation")) {
-			parseXO();
+			makeXO();
 		}
 	}
 	
-	private void parseLife() {
+	private void makeLife() {
+		LifeFactory life= new LifeFactory(rows, columns);
 		String strAlive = getTextValue(root, "percentAlive");
+		return life.getGrid(strAlive);
 	}
 	
-	private void parseFire() {
+	private void makeFire() {
+		FireFactory fire = new FireFactory(rows, columns);
 		Double strTree = Double.parseDouble(getTextValue(root, "percentTree"));
 		Double strBurn = Double.parseDouble(getTextValue(root, "percentBurn"));
 		Double probCatch = Double.parseDouble(getTextValue(root, "probCatch"));
+		return fire.getGrid(strTree, strBurn, probCatch);
 	}
 	
-	private void parseWaTor() {
+	private void makeWaTor() {
 		Double strFish = Double.parseDouble(getTextValue(root, "percentFish"));
 		Double strShark = Double.parseDouble(getTextValue(root, "percentShark"));
 	}
 	
-	private void parseXO() {
+	private void makeXO() {
 		Double strX = Double.parseDouble(getTextValue(root, "percentX"));
 		Double strO = Double.parseDouble(getTextValue(root, "percentO"));
 	}
