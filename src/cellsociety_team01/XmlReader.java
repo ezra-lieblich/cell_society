@@ -10,6 +10,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import factories.*;
 import water.EmptyCell;
 import water.Fish;
 import water.Shark;
@@ -38,7 +39,15 @@ public class XmlReader {
 		
 	}
 
+	/**
+	 * Throws XMLParserException if file is not XML File.
+	 * @param xmlFile
+	 * @return
+	 */
 	public Element getRootElement(File xmlFile) {
+		if (xmlFile.isFile() && !(xmlFile.getName().endsWith(".xml"))) {
+			throw new XMLParserException("" + xmlFile.getName() + " is not an xml file");
+		}
 		try {
 			DOCUMENT_BUILDER.reset();
 			Document xmlDocument = DOCUMENT_BUILDER.parse(xmlFile.getAbsolutePath());
@@ -47,6 +56,7 @@ public class XmlReader {
 		} catch (SAXException | IOException e) {
 			throw new XMLParserException(e);
 		}
+		
 	}
 
 	private static DocumentBuilder getDocumentBuilder() {
@@ -60,6 +70,7 @@ public class XmlReader {
 	 /**
      * Get the text value of a node.
      * Assumes you want the textValue of the first node with this tagName.
+     * Throws XMLParserException if XML file is empty.
      */
     public String getTextValue (Element root, String tagName) {
         NodeList nodeList = root.getElementsByTagName(tagName);
@@ -68,7 +79,7 @@ public class XmlReader {
             return a;
         }
         else {
-            return "";
+            throw new XMLParserException("XML file has no data for parameter " + tagName);
         }
     }
 	
@@ -113,201 +124,84 @@ public class XmlReader {
 		}
 	}
 	
+	// Detects incorrectly formatted data.
+	private void intDoubleParseErrors(String input) throws XMLParserException {
+		try {
+			Integer.parseInt(input);
+		} catch (RuntimeException e) {
+			throw new XMLParserException(""  + input + " in XML file needs to be a numerical value." , e);	
+		}
+		try {
+			Double.parseDouble(input);
+		} catch (RuntimeException e) {
+			throw new XMLParserException(""  + input + " in XML file needs to be a numerical value." , e);	
+		}
+	}
+	
 	private void makeLife() {
-		LifeFactory life= new LifeFactory(shape, bounds, rows, columns);
-		Double Alive = Double.parseDouble(getTextValue(root, "percentAlive"));
-		return life.makeGrid(Alive);
+		LifeGridFactory life= new LifeGridFactory(shape, bounds, rows, columns);
+		String strAlive = getTextValue(root, "percentAlive");
+		intDoubleParseErrors(strAlive);
+		Double Alive = Double.parseDouble(strAlive);
+		life.makeGrid(Alive);
 	}
 	
 	private void makeFire() {
-		FireFactory fire = new FireFactory(shape, bounds, rows, columns);
-		Double Tree = Double.parseDouble(getTextValue(root, "percentTree"));
-		Double Burn = Double.parseDouble(getTextValue(root, "percentBurn"));
-		Double probCatch = Double.parseDouble(getTextValue(root, "probCatch"));
-		return fire.makeGrid(Tree, Burn, probCatch);
+		TreeGridFactory tree = new TreeGridFactory(shape, bounds, rows, columns);
+		String strTree = getTextValue(root, "percentTree");
+		intDoubleParseErrors(strTree);
+		
+		String strBurn = getTextValue(root, "percentBurn");		
+		intDoubleParseErrors(strBurn);
+		
+		String strProb = getTextValue(root, "probCatch");
+		intDoubleParseErrors(strProb);
+		
+		Double Tree = Double.parseDouble(strTree);
+		Double Burn = Double.parseDouble(strBurn);
+		Double probCatch = Double.parseDouble(strProb);
+		tree.makeGrid(Tree, Burn, probCatch);
 	}
 	
 	private void makeWaTor() {
-		WaTorFactory wator = new WaTorFactory(shape, bounds, rows, columns);
-		Double Fish = Double.parseDouble(getTextValue(root, "percentFish"));
-		Double Shark = Double.parseDouble(getTextValue(root, "percentShark"));
-		int fishRep = Integer.parseInt(getTextValue(root, "fishReproduce"));
-		int sharkDea = Integer.parseInt(getTextValue(root, "sharkDeath"));
-		int sharkRep = Integer.parseInt(getTextValue(root, "sharkReproduce"));
-		return wator.makeGrid(Fish, Shark, fishRep, sharkDea, sharkRep);
+		WaterGridFactory wator = new WaterGridFactory(shape, bounds, rows, columns);
+		String strFish = getTextValue(root, "percentFish");
+		intDoubleParseErrors(strFish);
+		
+		String strShark = getTextValue(root, "percentShark");
+		intDoubleParseErrors(strShark);
+		
+		String strFishRep = getTextValue(root, "fishReproduce");
+		intDoubleParseErrors(strFishRep);
+		
+		String strSharkDea = getTextValue(root, "sharkDeath");
+		intDoubleParseErrors(strSharkDea);
+		
+		String strSharkRep = getTextValue(root, "sharkReproduce");
+		intDoubleParseErrors(strSharkRep);
+		
+		Double Fish = Double.parseDouble(strFish);
+		Double Shark = Double.parseDouble(strShark);
+		int fishRep = Integer.parseInt(strFishRep);
+		int sharkDea = Integer.parseInt(strSharkDea);
+		int sharkRep = Integer.parseInt(strSharkRep);
+		wator.makeGrid(Fish, Shark, fishRep, sharkDea, sharkRep);
 	}
 	
 	private void makeXO() {
-		XOFactory xo = new XOFactory(shape, bounds, rows, columns);
+		XOGridFactory xo = new XOGridFactory(shape, bounds, rows, columns);
+		String strPerX = getTextValue(root, "percentX");
+		intDoubleParseErrors(strPerX);
+		
+		String strPerO = getTextValue(root, "percentO");
+		intDoubleParseErrors(strPerO);
+		
+		String strPerSim = getTextValue(root, "similarPercentage");
+		intDoubleParseErrors(strPerSim);
+		
 		Double perX = Double.parseDouble(getTextValue(root, "percentX"));
 		Double perO = Double.parseDouble(getTextValue(root, "percentO"));
 		Double perSim = Double.parseDouble(getTextValue(root, "similarPercentage"));
-		return xo.makeGrid(perX, perO, perSim);
+		xo.makeGrid(perX, perO, perSim);
 	}
-	
-//	private BasicFiniteGrid initiateLife() {
-//		LifeXMLFactory makeLife = new LifeXMLFactory();
-//		BasicFiniteGrid temp = makeLife.makeGrid(root);
-//		return temp;
-//	}
-//	
-//	private BasicFiniteGrid initiateTree() {
-//		String strRows = factory.getTextValue(root, "XGridSize");
-//		String strColumns = factory.getTextValue(root, "YGridSize");
-//		String strTree = factory.getTextValue(root, "percentTree");
-//		String strBurn = factory.getTextValue(root, "percentBurn");
-//		Double probCatch = Double.parseDouble(factory.getTextValue(root, "probCatch"));
-//		int rows = Integer.parseInt(strRows);
-//		int columns = Integer.parseInt(strColumns);
-//		double tree = Double.parseDouble(strTree);
-//		double burn = Double.parseDouble(strBurn);
-//		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
-//		for (int r = 0; r < rows; r++) {
-//			for (int c = 0; c < columns; c++) {
-//				double ranGen = Math.random();
-//				if (ranGen<=burn) {
-//					temp.setGridIndex(new tree.BurningCell(r, c), r, c);
-//				}
-//				else if (burn < ranGen && ranGen <= tree) {
-//					temp.setGridIndex(new tree.TreeCell(r, c, probCatch), r, c);
-//				}
-//				else {
-//					temp.setGridIndex(new tree.EmptyCell(r, c), r, c);
-//				}
-//			}
-//		}
-//		return temp;
-//	}
-//	
-//	
-//	private BasicFiniteGrid initiateWaTor() {
-//		String strColumns = factory.getTextValue(root, "XGridSize");
-//		String strRows = factory.getTextValue(root, "YGridSize");
-//		String strFish = factory.getTextValue(root, "percentFish");
-//		String strShark = factory.getTextValue(root, "percentShark");
-//		int rows = Integer.parseInt(strRows);
-//		int columns = Integer.parseInt(strColumns);
-//		double fish = Double.parseDouble(strFish);
-//		double shark = Double.parseDouble(strShark);
-//		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
-//		for (int r = 0; r < rows; r++) {
-//			for (int c = 0; c < columns; c++) {
-//				double ranGen = Math.random();
-//				if(ranGen<=shark)
-//					temp.setGridIndex(new Shark(r, c), r, c);
-//				else if(shark<ranGen&&ranGen<=fish)
-//					temp.setGridIndex(new Fish(r, c), r, c);
-//				else
-//					temp.setGridIndex(new EmptyCell(r, c), r, c);
-//			}
-//		}
-//		return temp;
-//	}
-//	
-//	public double getPercentSimilar() {
-//		return Double.parseDouble(factory.getTextValue(root, "similarPercentage"));
-//	}
-//	private BasicFiniteGrid initiateXO() {
-//		String strRows = factory.getTextValue(root, "XGridSize");
-//		String strColumns = factory.getTextValue(root, "YGridSize");
-//		String strX = factory.getTextValue(root, "percentX");
-//		String strO = factory.getTextValue(root, "percentO");
-//		int rows = Integer.parseInt(strRows);
-//		int columns = Integer.parseInt(strColumns);
-//		double X = Double.parseDouble(strX);
-//		double O = Double.parseDouble(strO);
-//		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
-//		for (int r = 0; r < rows; r++) {
-//			for (int c = 0; c < columns; c++) {
-//				double ranGen = Math.random();
-//				if (ranGen < X) {
-//
-//					temp.setGridIndex(new Group1(r, c), r, c);
-//				}
-//				else if (ranGen<X+O ) {
-//					temp.setGridIndex(new Group2(r, c), r, c);
-//				}
-//				else {
-//					temp.setGridIndex(new Clear(r, c), r, c);
-//				}
-//			}
-//		}
-//		return temp;
-//	}
-//
-//	private BasicFiniteGrid initiateTree() {
-//		String strRows = factory.getTextValue(root, "XGridSize");
-//		String strColumns = factory.getTextValue(root, "YGridSize");
-//		String strTree = factory.getTextValue(root, "percentTree");
-//		String strBurn = factory.getTextValue(root, "percentBurn");
-//		Double probCatch = Double.parseDouble(factory.getTextValue(root, "probCatch"));
-//		int rows = Integer.parseInt(strRows);
-//		int columns = Integer.parseInt(strColumns);
-//		double tree = Double.parseDouble(strTree);
-//		double burn = Double.parseDouble(strBurn);
-//		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
-//		for (int r = 0; r < rows; r++) {
-//			for (int c = 0; c < columns; c++) {
-//				double ranGen = Math.random();
-//				if (ranGen <= burn) {
-//					temp.setGridIndex(new tree.BurningCell(r, c), r, c);
-//				} else if (burn < ranGen && ranGen <= tree) {
-//					temp.setGridIndex(new tree.TreeCell(r, c, probCatch), r, c);
-//				} else {
-//					temp.setGridIndex(new tree.EmptyCell(r, c), r, c);
-//				}
-//			}
-//		}
-//		return temp;
-//	}
-//
-//	private BasicFiniteGrid initiateWaTor() {
-//		String strColumns = factory.getTextValue(root, "XGridSize");
-//		String strRows = factory.getTextValue(root, "YGridSize");
-//		String strFish = factory.getTextValue(root, "percentFish");
-//		String strShark = factory.getTextValue(root, "percentShark");
-//		int rows = Integer.parseInt(strRows);
-//		int columns = Integer.parseInt(strColumns);
-//		double fish = Double.parseDouble(strFish);
-//		double shark = Double.parseDouble(strShark);
-//		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
-//		for (int r = 0; r < rows; r++) {
-//			for (int c = 0; c < columns; c++) {
-//				double ranGen = Math.random();
-//				if (ranGen <= shark)
-//					temp.setGridIndex(new Shark(r, c), r, c);
-//				else if (shark < ranGen && ranGen <= fish)
-//					temp.setGridIndex(new Fish(r, c), r, c);
-//				else
-//					temp.setGridIndex(new EmptyCell(r, c), r, c);
-//			}
-//		}
-//		return temp;
-//	}
-//
-//	private BasicFiniteGrid initiateXO() {
-//		String strRows = factory.getTextValue(root, "XGridSize");
-//		String strColumns = factory.getTextValue(root, "YGridSize");
-//		String strX = factory.getTextValue(root, "percentX");
-//		String strO = factory.getTextValue(root, "percentO");
-//		int rows = Integer.parseInt(strRows);
-//		int columns = Integer.parseInt(strColumns);
-//		double X = Double.parseDouble(strX);
-//		double O = Double.parseDouble(strO);
-//		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
-//		for (int r = 0; r < rows; r++) {
-//			for (int c = 0; c < columns; c++) {
-//				double ranGen = Math.random();
-//				if (ranGen < X) {
-//
-//					temp.setGridIndex(new Group1(r, c), r, c);
-//				} else if (ranGen < X + O) {
-//					temp.setGridIndex(new Group2(r, c), r, c);
-//				} else {
-//					temp.setGridIndex(new Clear(r, c), r, c);
-//				}
-//			}
-//		}
-//		return temp;
-//	}
 }
