@@ -29,7 +29,7 @@ public class XOGridFactory extends GridFactory {
 					setGridIndex(new Clear(c,r), r, c);
 			}
 		}
-		return super.getGrid();
+		return getGrid();
 	}
 
 }

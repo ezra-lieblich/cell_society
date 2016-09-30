@@ -45,7 +45,7 @@ public class GridController {
 	private int screenWidth, screenHeight;
 	private static final String XML_FILES_LOCATION = "data/xml/";
 	private static final String XML_SUFFIX = ".xml";
-	private SimulationXMLFactory factory;
+	private GridFactory factory;
 	private String simulationName;
 	private BasicFiniteGrid grid;
 
@@ -64,8 +64,9 @@ public class GridController {
 
 	public void parseFile(File file) {
 		if (file.isFile() && file.getName().endsWith(XML_SUFFIX)) {
-			reader = new XmlReader(file);
-			grid = reader.simChooser();
+			reader = new XmlReader(factory);
+			reader.getRootElement(file);
+			grid = reader.makeGrid();
 			setupLogicObject();
 
 			init();
@@ -75,7 +76,7 @@ public class GridController {
 	}
 
 	private void setupLogicObject() {
-		// String simName = reader.getSim();
+		String simulationName = reader.getSim();
 		if (simulationName.equals("Game Of Life")) {
 			logic = new LifeGridLogic(grid);
 		} else if (simulationName.equals("Spread Of Fire")) {
@@ -152,28 +153,28 @@ public class GridController {
 	// return temp;
 	// }
 
-	private BasicFiniteGrid createXOGrid(int rows, int columns) {
-		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < columns; c++) {
-				int ranGen = (int) (Math.random() * 3);
-				switch (ranGen) {
-				case 0:
-					temp.setGridIndex(new Clear(r, c), r, c);
-					break;
-				case 1:
-					temp.setGridIndex(new Group1(r, c), r, c);
-					break;
-				case 2:
-					temp.setGridIndex(new Group2(r, c), r, c);
-					break;
-				default:
-					break;
-				}
-			}
-		}
-		return temp;
-	}
+//	private BasicFiniteGrid createXOGrid(int rows, int columns) {
+//		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
+//		for (int r = 0; r < rows; r++) {
+//			for (int c = 0; c < columns; c++) {
+//				int ranGen = (int) (Math.random() * 3);
+//				switch (ranGen) {
+//				case 0:
+//					temp.setGridIndex(new Clear(r, c), r, c);
+//					break;
+//				case 1:
+//					temp.setGridIndex(new Group1(r, c), r, c);
+//					break;
+//				case 2:
+//					temp.setGridIndex(new Group2(r, c), r, c);
+//					break;
+//				default:
+//					break;
+//				}
+//			}
+//		}
+//		return temp;
+//	}
 
 	public void startSimulation() {
 		animation.play();

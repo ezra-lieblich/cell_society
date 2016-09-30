@@ -43,5 +43,6 @@ public class GridFactory {
 	protected BasicFiniteGrid getGrid(){
 		return grid;
 	}
+	
 
 }
