@@ -7,7 +7,6 @@ public class EmptyCell extends Cell {
 	
 
 	public EmptyCell(int x, int y) {
-		super.init(x, y);
-		super.setColor(Color.BLUE);
+		super(x, y, Color.BLUE);
 	}
 }

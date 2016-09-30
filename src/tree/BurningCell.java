@@ -13,8 +13,7 @@ public class BurningCell extends Cell{
 	
 	// Initializes Burning cell to the x and y coordinates, sets color to red.
 	public BurningCell(int x, int y) {
-		super.init(x, y);
-		 super.setColor(Color.RED);
+		super(x, y, Color.RED);
 	}
 	
 	// The tree can only burn for one round. After one round, it turns into empty cell.

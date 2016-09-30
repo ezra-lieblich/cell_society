@@ -14,25 +14,16 @@ public class Cell {
 	
 	public Cell(){}
 	
-	public Cell(int x, int y){
-		init(x,y);
-	}
-	
-	public void init(int x, int y){
+	public Cell(int x, int y, Color c){
 		XPosition = x;
 		YPosition = y;
+		color = c;
 	}
+	
 	
 	// Calculates the next state of individual cell (0, 1, 2? for the three states?)
 	public void calculateNextState(ArrayList<Cell> neighborList) {
 		neighbors = neighborList;
-	}
-	
-	//Sets the color of the cell.
-	//Should be protected so children can set color
-	protected void setColor(Color newColor)
-	{
-		color = newColor;
 	}
 	
 	// Sets the x position of the cell.

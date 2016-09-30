@@ -103,21 +103,21 @@ public class GridController {
 
 	public void init() {
 
-		BorderPane root = new BorderPane();
-		VBox vbox = new VBox(5);
-		root.setLeft(vbox);
-		graph = new CellGraph(vbox, logic.getCells());
-		view = new HexagonalGridView(vbox, grid, screenWidth, screenHeight);
-		toolbar = new Toolbar(root, this);
+		BorderPane root = setupView(grid);
 		createTimeline();
 		stage.setScene(scene = new Scene(root, screenWidth, screenHeight, Color.WHITE));
 		// display the view initially before starting simulation
 		view.step();
 	}
 
-	private void setupView(BorderPane root) {
-		//TODO: parse type of shapes in grid
-		view = new TriangleGridView(root, grid, screenWidth, screenHeight);
+	private BorderPane setupView(BasicFiniteGrid grid) {
+		BorderPane root = new BorderPane();
+		VBox vbox = new VBox(5);
+		root.setLeft(vbox);
+		graph = new CellGraph(vbox, logic.getCells());
+		view = new HexagonalGridView(vbox, grid, screenWidth, screenHeight);
+		toolbar = new Toolbar(root, this);
+		return root;
 	}
 
 	private void createTimeline() {

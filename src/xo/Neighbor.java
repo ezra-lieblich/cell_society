@@ -3,11 +3,12 @@ package xo;
 import java.util.ArrayList;
 
 import cellsociety_team01.Cell;
+import javafx.scene.paint.Color;
 
 public class Neighbor extends Cell {
 	private boolean isSatisfied;
-	public Neighbor(int x, int y) {
-		super(x,y);
+	public Neighbor(int x, int y, Color color) {
+		super(x,y, color);
 	}
 	@Override
 	public void calculateNextState(ArrayList<Cell> neighborList) {

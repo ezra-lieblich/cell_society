@@ -18,10 +18,9 @@ public class Shark extends Cell {
 	
 
 	public Shark(int x, int y) {
-		super.init(x, y);
+		super(x, y, Color.ORANGE);
 		currentReproduceTurn = 0;
 		turnsNoFish = 0;
-		super.setColor(Color.ORANGE);
 	}
 
 	@Override
