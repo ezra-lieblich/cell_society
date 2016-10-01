@@ -5,12 +5,20 @@ import grids.*;
 public class GridFactory {
 	private int rows;
 	private int columns;
-	private BasicFiniteGrid grid;
+	private BasicFiniteGrid grid; 
+	private String bounds;
+	private String cellShape;
 
-	public GridFactory(String cellShape, String bounds, int r, int c) {
+	public GridFactory(String ce, String b, int r, int c) {
 		rows = r;
 		columns = c;
+		bounds = b;
+		cellShape = ce;
 		setGridType(cellShape, bounds);
+	}
+	
+	public String getCellShape(){
+		return cellShape;
 	}
 	
 	protected int getRows(){

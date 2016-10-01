@@ -58,20 +58,21 @@ public class GridController {
 		stage.show();
 		setupScreenResolution();
 		// temporary code
-		//TODO: get title from xml
+		// TODO: get title from xml
 		title = "Test";
 	}
 
 	public void parseFile(File file) {
 		if (file.isFile() && file.getName().endsWith(XML_SUFFIX)) {
-			reader = new XmlReader(factory);
+			reader = new XmlReader();
 			reader.getRootElement(file);
 			grid = reader.makeGrid();
+			factory = reader.getGridFactory();
 			setupLogicObject();
 
 			init();
 		}
-		//TODO: throw exception if not
+		// TODO: throw exception if not
 
 	}
 
@@ -93,6 +94,17 @@ public class GridController {
 
 	}
 
+	private void setupViewObject(VBox vbox) {
+		
+		String cellShape = factory.getCellShape();
+		if (cellShape.equals("squ"))
+			view = new SquareGridView(vbox, grid, screenWidth, screenHeight);
+		else if (cellShape.equals("hex"))
+			view = new HexagonalGridView(vbox, grid, screenWidth, screenHeight);
+		else if (cellShape.equals("tri"))
+			view = new TriangleGridView(vbox, grid, screenWidth, screenHeight);
+	}
+
 	private void setupScreenResolution() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		screenWidth = (int) screenSize.getWidth();
@@ -105,7 +117,7 @@ public class GridController {
 		VBox vbox = new VBox(5);
 		root.setLeft(vbox);
 		graph = new CellGraph(vbox, logic.getCells());
-		view = new SquareGridView(vbox, grid, screenWidth, screenHeight);
+		setupViewObject(vbox);
 		toolbar = new Toolbar(root, this);
 		createTimeline();
 		stage.setScene(scene = new Scene(root, screenWidth, screenHeight, Color.WHITE));
@@ -113,10 +125,10 @@ public class GridController {
 		view.step();
 	}
 
-//	private void setupView(BorderPane root) {
-//		//TODO: parse type of shapes in grid
-//		view = new TriangleGridView(root, grid, screenWidth, screenHeight);
-//	}
+	// private void setupView(BorderPane root) {
+	// //TODO: parse type of shapes in grid
+	// view = new TriangleGridView(root, grid, screenWidth, screenHeight);
+	// }
 
 	private void createTimeline() {
 		int MILLISECOND_DELAY = 500;
@@ -153,28 +165,28 @@ public class GridController {
 	// return temp;
 	// }
 
-//	private BasicFiniteGrid createXOGrid(int rows, int columns) {
-//		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
-//		for (int r = 0; r < rows; r++) {
-//			for (int c = 0; c < columns; c++) {
-//				int ranGen = (int) (Math.random() * 3);
-//				switch (ranGen) {
-//				case 0:
-//					temp.setGridIndex(new Clear(r, c), r, c);
-//					break;
-//				case 1:
-//					temp.setGridIndex(new Group1(r, c), r, c);
-//					break;
-//				case 2:
-//					temp.setGridIndex(new Group2(r, c), r, c);
-//					break;
-//				default:
-//					break;
-//				}
-//			}
-//		}
-//		return temp;
-//	}
+	// private BasicFiniteGrid createXOGrid(int rows, int columns) {
+	// BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
+	// for (int r = 0; r < rows; r++) {
+	// for (int c = 0; c < columns; c++) {
+	// int ranGen = (int) (Math.random() * 3);
+	// switch (ranGen) {
+	// case 0:
+	// temp.setGridIndex(new Clear(r, c), r, c);
+	// break;
+	// case 1:
+	// temp.setGridIndex(new Group1(r, c), r, c);
+	// break;
+	// case 2:
+	// temp.setGridIndex(new Group2(r, c), r, c);
+	// break;
+	// default:
+	// break;
+	// }
+	// }
+	// }
+	// return temp;
+	// }
 
 	public void startSimulation() {
 		animation.play();

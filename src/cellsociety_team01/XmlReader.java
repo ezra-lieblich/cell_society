@@ -28,8 +28,7 @@ public class XmlReader {
 	private String bounds;
 	private GridFactory factory;
 
-	public XmlReader(GridFactory f) {
-		factory = f;
+	public XmlReader() {
 	}
 
 	/**
@@ -50,6 +49,10 @@ public class XmlReader {
 			throw new XMLParserException(e);
 		}
 
+	}
+	
+	public GridFactory getGridFactory(){
+		return factory;
 	}
 
 	private static DocumentBuilder getDocumentBuilder() {
@@ -106,7 +109,6 @@ public class XmlReader {
 		bounds = getTextValue(root, "bounds");
 		rows = Integer.parseInt(getTextValue(root, "rows"));
 		columns = Integer.parseInt(getTextValue(root, "columns"));
-
 		if (sim.equals("Game Of Life")) {
 			return makeLife();
 		} else if (sim.equals("Spread of Fire")) {
