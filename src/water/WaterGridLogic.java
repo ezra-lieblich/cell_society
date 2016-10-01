@@ -9,20 +9,20 @@ import grids.BasicFiniteGrid;
 import grids.BasicToroidalGrid;
 
 public class WaterGridLogic extends GridLogic {
-	protected static int TURNS_PER_FISH_REPRODUCE;
-	protected static int TURNS_FOR_SHARK_DEATH;
-	protected static int TURNS_PER_SHARK_REPRODUCE;
 
 	private BasicFiniteGrid grid;
+	private int fishReproduce;
+	private int sharkDeath;
+	private int sharkReproduce;
 
-	public WaterGridLogic(BasicFiniteGrid grid,int fishReproduce, int sharkDeath, int sharkReproduce) {
+	public WaterGridLogic(BasicFiniteGrid grid, int fishReproduce, int sharkDeath, int sharkReproduce) {
 		this.grid = grid;
-		TURNS_PER_FISH_REPRODUCE = fishReproduce;
-		TURNS_FOR_SHARK_DEATH = sharkDeath;
-		TURNS_PER_SHARK_REPRODUCE = sharkReproduce;
 		cellSizes = new HashMap<String, Integer>();
 		cellSizes.put(Fish.class.getName(), 0);
 		cellSizes.put(Shark.class.getName(), 0);
+		this.fishReproduce = fishReproduce;
+		this.sharkDeath = sharkDeath;
+		this.sharkReproduce = sharkReproduce;
 	}
 
 	@Override
@@ -74,10 +74,10 @@ public class WaterGridLogic extends GridLogic {
 		}
 	}
 
-
 	private void updateFish(Fish fish) {
 		Cell nextLocation = fish.getNextLocation();
-		if (nextLocation == null || (nextLocation.getCoordsX()==fish.getCoordsX()&&nextLocation.getCoordsY()==fish.getCoordsY()))
+		if (nextLocation == null
+				|| (nextLocation.getCoordsX() == fish.getCoordsX() && nextLocation.getCoordsY() == fish.getCoordsY()))
 			return;
 
 		// resolve conflicts
@@ -95,19 +95,21 @@ public class WaterGridLogic extends GridLogic {
 				nextLocation.getCoordsY());
 
 		if (fish.isReproducing()) {
-			grid.setGridIndex(new Fish(fishX, fishY), fishX, fishY);
+			grid.setGridIndex(new Fish(fishX, fishY, fishReproduce), fishX, fishY);
 		}
 	}
 
 	private void updateShark(Shark shark) {
 		if (shark.isDead()) {
-			grid.setGridIndex(new EmptyCell(shark.getCoordsX(), shark.getCoordsY()), shark.getCoordsX(), shark.getCoordsY());
+			grid.setGridIndex(new EmptyCell(shark.getCoordsX(), shark.getCoordsY()), shark.getCoordsX(),
+					shark.getCoordsY());
 			return;
 		}
 
 		Cell nextLocation = shark.getNextLocation();
 
-		if (nextLocation == null || (nextLocation.getCoordsX()==shark.getCoordsX()&&nextLocation.getCoordsY()==shark.getCoordsY()))
+		if (nextLocation == null
+				|| (nextLocation.getCoordsX() == shark.getCoordsX() && nextLocation.getCoordsY() == shark.getCoordsY()))
 			return;
 
 		// resolve conflicts
@@ -124,7 +126,7 @@ public class WaterGridLogic extends GridLogic {
 				nextLocation.getCoordsY());
 
 		if (shark.isReproducing()) {
-			grid.setGridIndex(new Shark(sharkX, sharkY), sharkX, sharkY);
+			grid.setGridIndex(new Shark(sharkX, sharkY, sharkDeath, sharkReproduce), sharkX, sharkY);
 		}
 
 	}

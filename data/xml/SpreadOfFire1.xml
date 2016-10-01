@@ -3,8 +3,10 @@
 	<simulation_name>Spread Of Fire</simulation_name>
 	<simulation_title>Test Case 1</simulation_title>
 	<simulation_author>Christopher Lu</simulation_author>
-	<XGridSize>20</XGridSize>
-	<YGridSize>20</YGridSize>
+	<rows>30</rows>
+	<columns>30</columns>
+	<shape>tri</shape>
+	<bounds>finite</bounds>
 	<probCatch>0.5</probCatch>
 	<percentTree>0.895</percentTree>
 	<percentBurn>0.005</percentBurn>
