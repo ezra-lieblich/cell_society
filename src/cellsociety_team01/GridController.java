@@ -203,9 +203,9 @@ public class GridController {
 	}
 
 	public void stepSimulation() {
-		//animation.pause();
-		//this.step();
-		graph.setupPlots(logic.getCells());
+		animation.pause();
+		this.step();
+		//graph.setupPlots(logic.getCells());
 	}
 
 	public void updateSpeed(double value) {
