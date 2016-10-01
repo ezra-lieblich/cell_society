@@ -11,9 +11,12 @@ public class Fish extends Cell {
 	private Cell nextLocation;
 
 	private boolean isReproducing;
+	private int turnsPerFishReproduce;
 
-	public Fish(int x, int y) {
+
+	public Fish(int x, int y, int reproduce) {
 		super(x, y, Color.GREENYELLOW);
+		turnsPerFishReproduce = reproduce;
 		currentReproduceTurn = 0;
 	}
 
@@ -28,7 +31,7 @@ public class Fish extends Cell {
 
 	private boolean handleTurn() {
 		currentReproduceTurn++;
-		if (currentReproduceTurn == WaterGridLogic.TURNS_PER_FISH_REPRODUCE) {
+		if (currentReproduceTurn == turnsPerFishReproduce) {
 			currentReproduceTurn = 0;
 			return true;
 		}

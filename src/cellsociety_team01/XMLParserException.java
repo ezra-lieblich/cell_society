@@ -9,8 +9,11 @@ package cellsociety_team01;
 public class XMLParserException extends RuntimeException {
     // for serialization
     private static final long serialVersionUID = 1L;
-
-
+    
+    public XMLParserException(String message) {
+    	super(String.format(message));
+    }
+    
     /**
      * Create an exception based on an issue in our code.
      */

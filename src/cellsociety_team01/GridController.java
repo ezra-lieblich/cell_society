@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.w3c.dom.Element;
+
+import factories.XOGridFactory;
 import grids.BasicFiniteGrid;
 import grids.BasicToroidalGrid;
 import grids.HexagonalFiniteGrid;
@@ -23,10 +25,6 @@ import javafx.stage.Stage;
 import water.*;
 import xo.*;
 import water.EmptyCell;
-import xo.Group1;
-import xo.Group2;
-import xo.XOGridLogic;
-import xo.XOXMLFactory;
 import life.*;
 import sliders.SliderProperties;
 import sliders.XOSliders;
@@ -50,7 +48,7 @@ public class GridController {
 	private int screenWidth, screenHeight;
 	private static final String XML_FILES_LOCATION = "data/xml/";
 	private static final String XML_SUFFIX = ".xml";
-	private SimulationXMLFactory factory;
+	private GridFactory factory;
 	private String simulationName;
 	private BasicFiniteGrid grid;
 
@@ -63,26 +61,27 @@ public class GridController {
 		stage.show();
 		setupScreenResolution();
 		// temporary code
-		//TODO: get title from xml
+		// TODO: get title from xml
 		title = "Test";
 		//Controller should create initial scene with  BorderPane Root and HBox for views and create scene but not set it
 	}
 
 	public void parseFile(File file) {
 		if (file.isFile() && file.getName().endsWith(XML_SUFFIX)) {
-			Element root = reader.getRootElement(file);
-			XMLFactory tempFactory = new XMLFactory();
-			simulationName = tempFactory.getTextValue(root, "simulation_name");
-		}
-		reader = new XmlReader();
-		grid = reader.simChooser(simulationName);
-		setupLogicObject();
+			reader = new XmlReader();
+			reader.getRootElement(file);
+			grid = reader.makeGrid();
+			factory = reader.getGridFactory();
+			setupLogicObject();
 
-		init();
+			init();
+		}
+		// TODO: throw exception if not
+
 	}
 
 	private void setupLogicObject() {
-		// String simName = reader.getSim();
+		String simulationName = reader.getSim();
 		if (simulationName.equals("Game Of Life")) {
 			logic = new LifeGridLogic(grid);
 		} else if (simulationName.equals("Spread Of Fire")) {
@@ -99,6 +98,17 @@ public class GridController {
 
 	}
 
+	private void setupViewObject(VBox vbox) {
+		
+		String cellShape = factory.getCellShape();
+		if (cellShape.equals("squ"))
+			view = new SquareGridView(vbox, grid, screenWidth, screenHeight);
+		else if (cellShape.equals("hex"))
+			view = new HexagonalGridView(vbox, grid, screenWidth, screenHeight);
+		else if (cellShape.equals("tri"))
+			view = new TriangleGridView(vbox, grid, screenWidth, screenHeight);
+	}
+
 	private void setupScreenResolution() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		screenWidth = (int) screenSize.getWidth();
@@ -108,6 +118,7 @@ public class GridController {
 	public void init() {
 
 		BorderPane root = setupView(grid);
+
 		createTimeline();
 		stage.setScene(scene = new Scene(root, screenWidth, screenHeight, Color.WHITE));
 		// display the view initially before starting simulation
@@ -160,28 +171,28 @@ public class GridController {
 	// return temp;
 	// }
 
-	private BasicFiniteGrid createXOGrid(int rows, int columns) {
-		BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
-		for (int r = 0; r < rows; r++) {
-			for (int c = 0; c < columns; c++) {
-				int ranGen = (int) (Math.random() * 3);
-				switch (ranGen) {
-				case 0:
-					temp.setGridIndex(new Clear(r, c), r, c);
-					break;
-				case 1:
-					temp.setGridIndex(new Group1(r, c), r, c);
-					break;
-				case 2:
-					temp.setGridIndex(new Group2(r, c), r, c);
-					break;
-				default:
-					break;
-				}
-			}
-		}
-		return temp;
-	}
+	// private BasicFiniteGrid createXOGrid(int rows, int columns) {
+	// BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
+	// for (int r = 0; r < rows; r++) {
+	// for (int c = 0; c < columns; c++) {
+	// int ranGen = (int) (Math.random() * 3);
+	// switch (ranGen) {
+	// case 0:
+	// temp.setGridIndex(new Clear(r, c), r, c);
+	// break;
+	// case 1:
+	// temp.setGridIndex(new Group1(r, c), r, c);
+	// break;
+	// case 2:
+	// temp.setGridIndex(new Group2(r, c), r, c);
+	// break;
+	// default:
+	// break;
+	// }
+	// }
+	// }
+	// return temp;
+	// }
 
 	public void startSimulation() {
 		animation.play();

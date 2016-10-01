@@ -3,12 +3,13 @@
 	<simulation_name>WaTor World</simulation_name>
 	<simulation_title>Test Case 1</simulation_title>
 	<simulation_author>Christopher Lu</simulation_author>
-	<XGridSize>40</XGridSize>
-	<YGridSize>40</YGridSize>
-	<percentFish>.75</percentFish>
-	<percentShark>.15</percentShark>
+	<rows>40</rows>
+	<columns>40</columns>
+	<shape>squ</shape>
+	<bounds>toroidal</bounds>
+	<percentFish>0.75</percentFish>
+	<percentShark>0.15</percentShark>
 	<fishReproduce>2</fishReproduce>
 	<sharkDeath>2</sharkDeath>
 	<sharkReproduce>10</sharkReproduce>
-	<gridType>hexagonal</gridType>
 </Simulation>

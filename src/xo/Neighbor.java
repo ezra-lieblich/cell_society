@@ -7,8 +7,10 @@ import javafx.scene.paint.Color;
 
 public class Neighbor extends Cell {
 	private boolean isSatisfied;
-	public Neighbor(int x, int y, Color color) {
+	private double percentSimilar;
+	public Neighbor(int x, int y, double p, Color color) {
 		super(x,y, color);
+		percentSimilar = p;
 	}
 	@Override
 	public void calculateNextState(ArrayList<Cell> neighborList) {
@@ -28,6 +30,6 @@ public class Neighbor extends Cell {
 				}
 			}
 		}
-		return ((double) similar_neighbors/total_neighbors) >= XOGridLogic.percentSimilar;
+		return ((double) similar_neighbors/total_neighbors) >= percentSimilar;
 	}
 }
