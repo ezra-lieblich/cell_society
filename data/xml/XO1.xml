@@ -5,7 +5,7 @@
 	<simulation_author>Christopher Lu</simulation_author>
 	<rows>40</rows>
 	<columns>40</columns>
-	<shape>hex</shape>
+	<shape>tri</shape>
 	<bounds>toroidal</bounds>
 	<percentX>0.35</percentX>
 	<percentO>0.35</percentO>

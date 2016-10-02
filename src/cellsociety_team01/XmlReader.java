@@ -111,7 +111,7 @@ public class XmlReader {
 		columns = Integer.parseInt(getTextValue(root, "columns"));
 		if (sim.equals("Game Of Life")) {
 			return makeLife();
-		} else if (sim.equals("Spread of Fire")) {
+		} else if (sim.equals("Spread Of Fire")) {
 			return makeFire();
 		} else if (sim.equals("WaTor World")) {
 			return makeWaTor();

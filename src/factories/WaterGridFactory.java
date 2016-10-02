@@ -19,6 +19,10 @@ public class WaterGridFactory extends GridFactory {
 
 	public BasicFiniteGrid makeGrid(double percentFish, double percentShark, int fishReproduce, int sharkDeath,
 			int sharkReproduce) {
+		if (checkPercentError(percentFish + percentShark)) {
+			percentFish = Math.random() * .5;
+			percentShark = Math.random() * .5;
+		}
 		for (int r = 0; r < getRows(); r++) {
 			for (int c = 0; c < getColumns(); c++) {
 				double ranGen = Math.random();
