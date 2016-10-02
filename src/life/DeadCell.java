@@ -12,8 +12,7 @@ public class DeadCell extends Cell {
 	// Dead Cell is false. Alive Cell is true.
 
 	public DeadCell(int x, int y) {
-		super.init(x, y);
-		super.setColor(Color.RED);
+		super(x, y, Color.RED);
 	}
 
 	@Override

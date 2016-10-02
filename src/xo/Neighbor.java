@@ -3,12 +3,13 @@ package xo;
 import java.util.ArrayList;
 
 import cellsociety_team01.Cell;
+import javafx.scene.paint.Color;
 
 public class Neighbor extends Cell {
 	private boolean isSatisfied;
 	private double percentSimilar;
-	public Neighbor(int x, int y, double p) {
-		super(x,y);
+	public Neighbor(int x, int y, double p, Color color) {
+		super(x,y, color);
 		percentSimilar = p;
 	}
 	@Override

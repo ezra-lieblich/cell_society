@@ -20,13 +20,13 @@ public class Shark extends Cell {
 	private int turnsPerSharkReproduce;
 	
 
+
 	public Shark(int x, int y, int death, int reproduce) {
-		super.init(x, y);
+		super(x, y, Color.ORANGE);		
 		turnsPerSharkDeath = death;
 		turnsPerSharkReproduce = reproduce;
 		currentReproduceTurn = 0;
 		turnsNoFish = 0;
-		super.setColor(Color.ORANGE);
 	}
 
 	@Override

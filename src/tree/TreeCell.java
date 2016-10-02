@@ -15,8 +15,7 @@ public class TreeCell extends Cell{
 	
 	// Initializes Tree cell to the x and y coordinates, sets color to green.
 	public TreeCell(int x, int y, double probCatch) {
-		super.init(x, y);
-		super.setColor(Color.GREEN);
+		super(x, y, Color.GREEN);
 		this.probCatch = probCatch;
 	}
 	

@@ -13,11 +13,11 @@ public class Fish extends Cell {
 	private boolean isReproducing;
 	private int turnsPerFishReproduce;
 
+
 	public Fish(int x, int y, int reproduce) {
-		super.init(x, y);
+		super(x, y, Color.GREENYELLOW);
 		turnsPerFishReproduce = reproduce;
 		currentReproduceTurn = 0;
-		super.setColor(Color.GREENYELLOW);
 	}
 
 	@Override

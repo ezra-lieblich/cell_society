@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.w3c.dom.Element;
 
@@ -25,6 +26,8 @@ import water.*;
 import xo.*;
 import water.EmptyCell;
 import life.*;
+import sliders.SliderProperties;
+import sliders.XOSliders;
 import tree.*;
 import views.HexagonalGridView;
 import views.SquareGridView;
@@ -60,6 +63,7 @@ public class GridController {
 		// temporary code
 		// TODO: get title from xml
 		title = "Test";
+		//Controller should create initial scene with  BorderPane Root and HBox for views and create scene but not set it
 	}
 
 	public void parseFile(File file) {
@@ -113,22 +117,24 @@ public class GridController {
 
 	public void init() {
 
-		BorderPane root = new BorderPane();
-		VBox vbox = new VBox(5);
-		root.setLeft(vbox);
-		graph = new CellGraph(vbox, logic.getCells());
-		setupViewObject(vbox);
-		toolbar = new Toolbar(root, this);
+		BorderPane root = setupView(grid);
+
 		createTimeline();
 		stage.setScene(scene = new Scene(root, screenWidth, screenHeight, Color.WHITE));
 		// display the view initially before starting simulation
 		view.step();
 	}
 
-	// private void setupView(BorderPane root) {
-	// //TODO: parse type of shapes in grid
-	// view = new TriangleGridView(root, grid, screenWidth, screenHeight);
-	// }
+	private BorderPane setupView(BasicFiniteGrid grid) {
+		BorderPane root = new BorderPane();
+		VBox vbox = new VBox(5);
+		root.setLeft(vbox);
+		graph = new CellGraph(vbox, logic.getCells());
+		view = new HexagonalGridView(vbox, grid, screenWidth, screenHeight);
+		toolbar = new Toolbar(root, this);
+		SliderProperties slider = new XOSliders(vbox, this);
+		return root;
+	}
 
 	private void createTimeline() {
 		int MILLISECOND_DELAY = 500;
@@ -199,6 +205,7 @@ public class GridController {
 	public void stepSimulation() {
 		animation.pause();
 		this.step();
+		//graph.setupPlots(logic.getCells());
 	}
 
 	public void updateSpeed(double value) {
@@ -206,12 +213,14 @@ public class GridController {
 		animation.setRate(new_rate);
 	}
 
-	public void resetSimulation() {
+	public void resetSimulation(Map<String, Double> values) {
 		// Controller will tell grid to reset itself to the original
 		// implementation
 		// need to set original grid to back to
-		// grid.resetGrid();
-
+		// g.resetGrid();
+		//Need to call 		graph.setupPlots();
+		animation.pause();
+		graph.resetGraph();
 	}
 
 	public void changeSimulation() {
