@@ -3,11 +3,12 @@ package tree;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cellsociety_team01.Cell;
 
 public class TreeCell extends Cell{
-	private ArrayList<Cell> neighbors;
+	private List<Cell> neighbors;
 	public boolean nextState;
 	private double probCatch;
 	
@@ -29,7 +30,7 @@ public class TreeCell extends Cell{
 	}
 	
 	@Override
-	public void calculateNextState(ArrayList<Cell> neighborList) {
+	public void calculateNextState(List<Cell> neighborList) {
 		neighbors = neighborList;
 		nextState = determineNextState();
 	}

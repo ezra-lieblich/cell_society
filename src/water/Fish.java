@@ -1,13 +1,14 @@
 package water;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cellsociety_team01.Cell;
 import javafx.scene.paint.Color;
 
 public class Fish extends Cell {
 	private int currentReproduceTurn;
-	private ArrayList<Cell> neighbors;
+	private List<Cell> neighbors;
 	private Cell nextLocation;
 
 	private boolean isReproducing;
@@ -21,7 +22,7 @@ public class Fish extends Cell {
 	}
 
 	@Override
-	public void calculateNextState(ArrayList<Cell> neighborList) {
+	public void calculateNextState(List<Cell> neighborList) {
 		neighbors = neighborList;
 
 		isReproducing = handleTurn();

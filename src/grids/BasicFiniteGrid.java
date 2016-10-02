@@ -1,6 +1,7 @@
 package grids;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cellsociety_team01.Cell;
 import water.EmptyCell;
@@ -28,7 +29,7 @@ public class BasicFiniteGrid {
 		grid[x][y] = cell;
 	}
 
-	public ArrayList<Cell> getNeighbors(int x, int y) {
+	public List<Cell> getNeighbors(int x, int y) {
 		neighbors = new ArrayList<Cell>();
 		for (int i = x - 1; i <= x + 1; i++) {
 			for (int j = y - 1; j <= y + 1; j++) {

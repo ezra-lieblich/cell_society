@@ -1,12 +1,13 @@
 package life;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cellsociety_team01.Cell;
 import javafx.scene.paint.Color;
 
 public class DeadCell extends Cell {
-	private ArrayList<Cell> neighbors;
+	private List<Cell> neighbors;
 	public boolean nextState;
 
 	// Dead Cell is false. Alive Cell is true.
@@ -21,7 +22,7 @@ public class DeadCell extends Cell {
 	}
 
 	@Override
-	public void calculateNextState(ArrayList<Cell> neighborList) {
+	public void calculateNextState(List<Cell> neighborList) {
 		neighbors = neighborList;
 		nextState = determineNextState();
 	}

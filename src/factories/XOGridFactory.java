@@ -18,6 +18,10 @@ public class XOGridFactory extends GridFactory {
 	}
 
 	public BasicFiniteGrid makeGrid(double percentX, double percentO, double similarPercentage) {
+		if (checkPercentError(percentX + percentO)) {
+			percentX = Math.random() * .5;
+			percentO = Math.random() * .5;
+		}
 		for (int r = 0; r < getRows(); r++) {
 			for (int c = 0; c < getColumns(); c++) {
 				double ranGen = Math.random();

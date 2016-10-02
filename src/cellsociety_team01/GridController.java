@@ -130,7 +130,7 @@ public class GridController {
 		VBox vbox = new VBox(5);
 		root.setLeft(vbox);
 		graph = new CellGraph(vbox, logic.getCells());
-		view = new HexagonalGridView(vbox, grid, screenWidth, screenHeight);
+		setupViewObject(vbox);
 		toolbar = new Toolbar(root, this);
 		SliderProperties slider = new XOSliders(vbox, this);
 		return root;
@@ -221,6 +221,7 @@ public class GridController {
 		//Need to call 		graph.setupPlots();
 		animation.pause();
 		graph.resetGraph();
+		((XOGridFactory)factory).makeGrid(0, 0, 0);
 	}
 
 	public void changeSimulation() {

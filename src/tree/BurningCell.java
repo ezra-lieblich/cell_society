@@ -3,6 +3,7 @@ package tree;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cellsociety_team01.Cell;
 
@@ -18,7 +19,7 @@ public class BurningCell extends Cell{
 	
 	// The tree can only burn for one round. After one round, it turns into empty cell.
 	@Override
-	public void calculateNextState(ArrayList<Cell> neighborList) {
+	public void calculateNextState(List<Cell> neighborList) {
 		nextState = false;
 	}
 	

@@ -52,5 +52,15 @@ public class GridFactory {
 		return grid;
 	}
 	
+	/**
+	 * Checks if user or XML accidently set total percentages over 1. Respective children handle
+	 * error handling
+	 * @param totalPercent Total percent of all Cells
+	 * @return
+	 */
+	protected boolean checkPercentError(double totalPercent) {
+		return totalPercent > 1.00;
+	}
+	
 
 }

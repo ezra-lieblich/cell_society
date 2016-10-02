@@ -18,6 +18,10 @@ public class TreeGridFactory extends GridFactory {
 	}
 
 	public BasicFiniteGrid makeGrid(double percentTree, double percentBurn, double probCatch) {
+		if (checkPercentError(percentTree + percentBurn)) {
+			percentTree = Math.random() * .5;
+			percentBurn = Math.random() *.5;
+		}
 		for (int r = 0; r < getRows(); r++) {
 			for (int c = 0; c < getColumns(); c++) {
 				double ranGen = Math.random();

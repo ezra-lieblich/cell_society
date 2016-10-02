@@ -2,6 +2,7 @@ package water;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import cellsociety_team01.Cell;
 import cellsociety_team01.GridLogic;
@@ -53,7 +54,7 @@ public class WaterGridLogic extends GridLogic {
 
 	}
 
-	private void checkState(Cell cell, ArrayList<Cell> neighbors) {
+	private void checkState(Cell cell, List<Cell> neighbors) {
 		cell.calculateNextState(neighbors);
 	}
 

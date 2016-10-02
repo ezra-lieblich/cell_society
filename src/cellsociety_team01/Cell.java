@@ -22,7 +22,7 @@ public class Cell {
 	
 	
 	// Calculates the next state of individual cell (0, 1, 2? for the three states?)
-	public void calculateNextState(ArrayList<Cell> neighborList) {
+	public void calculateNextState(List<Cell> neighborList) {
 		neighbors = neighborList;
 	}
 	
