@@ -27,6 +27,7 @@ import xo.*;
 import water.EmptyCell;
 import life.*;
 import sliders.SliderProperties;
+import sliders.WaterSliders;
 import sliders.XOSliders;
 import tree.*;
 import views.HexagonalGridView;
@@ -132,7 +133,7 @@ public class GridController {
 		graph = new CellGraph(vbox, logic.getCells());
 		setupViewObject(vbox);
 		toolbar = new Toolbar(root, this);
-		SliderProperties slider = new XOSliders(vbox, this);
+		SliderProperties slider = new WaterSliders(vbox, this);
 		return root;
 	}
 
@@ -221,7 +222,8 @@ public class GridController {
 		//Need to call 		graph.setupPlots();
 		animation.pause();
 		graph.resetGraph();
-		((XOGridFactory)factory).makeGrid(0, 0, 0);
+		// ((factory.getClass()));
+		//((XOGridFactory)factory).makeGrid(0, 0, 0);
 	}
 
 	public void changeSimulation() {

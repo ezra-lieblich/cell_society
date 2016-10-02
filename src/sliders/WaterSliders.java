@@ -7,6 +7,7 @@ public class WaterSliders extends SliderProperties{
 	public WaterSliders(Pane root, GridController control) {
 		super(root, control);
 		createSliders();
+		createSpinners();
 		//createTextBox
 	}
 	
@@ -14,4 +15,11 @@ public class WaterSliders extends SliderProperties{
 		super.addSlider(0, 1, "%Fish");
 		super.addSlider(0, 1, "%Shark");
 	}
+	
+	private void createSpinners() {
+		super.addSpinner("Fish Reproduce");
+		super.addSpinner("Shark Death");
+		super.addSpinner("Shark Reproduce");
+	}
+	 
 }

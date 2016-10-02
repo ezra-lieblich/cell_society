@@ -10,6 +10,9 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -54,9 +57,27 @@ public abstract class SliderProperties {
 			//value rounded to hundredths place
 			double value = Math.round(slider.getValue() *100.0) / 100.0;
 			cell_percentage.setText(Double.toString(value));
-			propertyValues.put(slider_name, value);
+			updatePropertyFile(slider_name, value);
 			System.out.println(propertyValues);
 		});
+		box.getChildren().add(result);
+	}
+	
+	protected void addSpinner(String name) {
+		HBox result = new HBox(2);
+		result.getChildren().add(new Label(name));
+		Spinner<Double> spinner = new Spinner<Double>();
+		SpinnerValueFactory.DoubleSpinnerValueFactory spinnerValue = 
+				new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 4);
+		spinnerValue.setAmountToStepBy(1);
+		spinner.setValueFactory(spinnerValue);
+		updatePropertyFile(name, spinnerValue.getValue());
+		spinner.setOnMouseReleased(e -> {
+			double value = spinnerValue.getValue();
+			updatePropertyFile(name, value);
+			System.out.println(propertyValues);
+		});
+		result.getChildren().add(spinner);
 		box.getChildren().add(result);
 	}
 
