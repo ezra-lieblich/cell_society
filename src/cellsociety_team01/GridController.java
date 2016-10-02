@@ -214,7 +214,7 @@ public class GridController {
 		animation.setRate(new_rate);
 	}
 
-	public void resetSimulation(Map<String, Double> values) {
+	public void resetSimulation(Map<String, String> values) {
 		// Controller will tell grid to reset itself to the original
 		// implementation
 		// need to set original grid to back to

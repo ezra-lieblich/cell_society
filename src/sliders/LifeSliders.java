@@ -13,6 +13,9 @@ public class LifeSliders extends SliderProperties{
 		createSliders();
 	}
 	
+	/**
+	 * Adds a slider that controls the percent alive
+	 */
 	protected void createSliders() {
 		super.addSlider(0, 1, "%Alive");
 	}

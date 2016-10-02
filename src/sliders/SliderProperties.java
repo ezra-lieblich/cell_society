@@ -28,7 +28,7 @@ public abstract class SliderProperties {
     protected ResourceBundle myResources;
     private GridController controller;
     //Map of all the properties that the sliders have. Passed to controller when reset
-    private Map<String, Double> propertyValues;
+    private Map<String, String> propertyValues;
 
     /**
      * Creates a VBox to handle place all the elements. 
@@ -39,7 +39,7 @@ public abstract class SliderProperties {
 	public SliderProperties(Pane root, GridController control) {
 		controller = control;
 		box = new VBox();
-		propertyValues = new HashMap<String, Double>();
+		propertyValues = new HashMap<String, String>();
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "View");
 		addButton(myResources.getString("ResetButton"), event -> controller.resetSimulation(propertyValues));
 		root.getChildren().add(box);
@@ -113,7 +113,7 @@ public abstract class SliderProperties {
 	 * @param value
 	 */
 	private void updatePropertyFile(String slider_name, double value) {
-		propertyValues.put(slider_name, value);
+		propertyValues.put(slider_name, Double.toString(value));
 	}
 	
 	/**
