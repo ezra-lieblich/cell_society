@@ -44,6 +44,24 @@ public class GridFactory {
 		}
 	}
 	
+	// Detects incorrectly formatted data.
+	protected double doubleParseErrors(String input) throws XMLParserException {
+
+		try {
+			return Double.parseDouble(input);
+		} catch (RuntimeException e) {
+			throw new XMLParserException("" + input + " in XML file needs to be a double.", e);
+		}
+	}
+
+	protected int intParseErrors(String input) throws XMLParserException {
+		try {
+			return Integer.parseInt(input);
+		} catch (RuntimeException e) {
+			throw new XMLParserException("" + input + " in XML file needs to be an integer.", e);
+		}
+	}
+	
 	protected void setGridIndex(Cell cell, int row, int column){
 		grid.setGridIndex(cell, column, row);
 	}

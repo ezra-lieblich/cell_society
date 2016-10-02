@@ -1,5 +1,7 @@
 package factories;
 
+import java.util.Map;
+
 import cellsociety_team01.GridFactory;
 import grids.BasicFiniteGrid;
 import tree.BurningCell;
@@ -17,7 +19,11 @@ public class TreeGridFactory extends GridFactory {
 		super(cellShape, bounds, r, c);
 	}
 
-	public BasicFiniteGrid makeGrid(double percentTree, double percentBurn, double probCatch) {
+
+	public BasicFiniteGrid makeGrid(Map<String,String> map) {
+		double percentTree = doubleParseErrors(map.get("percentTree"));
+		double percentBurn = doubleParseErrors(map.get("percentBurn"));
+		double probCatch = doubleParseErrors(map.get("probCatch"));
 		if (checkPercentError(percentTree + percentBurn)) {
 			percentTree = Math.random() * .5;
 			percentBurn = Math.random() *.5;

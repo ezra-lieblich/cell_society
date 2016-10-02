@@ -1,5 +1,7 @@
 package factories;
 
+import java.util.Map;
+
 import cellsociety_team01.GridFactory;
 import grids.BasicFiniteGrid;
 import xo.Clear;
@@ -17,7 +19,11 @@ public class XOGridFactory extends GridFactory {
 		super(cellShape, bounds, r, c);
 	}
 
-	public BasicFiniteGrid makeGrid(double percentX, double percentO, double similarPercentage) {
+
+	public BasicFiniteGrid makeGrid(Map<String,String> map) {
+		double percentX = doubleParseErrors(map.get("percentX"));
+		double percentO = doubleParseErrors(map.get("percentO"));
+		double similarPercentage = doubleParseErrors(map.get("similarPercentage"));
 		if (checkPercentError(percentX + percentO)) {
 			percentX = Math.random() * .5;
 			percentO = Math.random() * .5;
