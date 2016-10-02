@@ -29,6 +29,11 @@ public class CellGraph {
 	private int stepNumber;
 	private NumberAxis x_axis;
 	
+	/**
+	 * 
+	 * @param root Adds to VBox with the other elements of simulation
+	 * @param cell_lengths Taken from controller, the amount of each type of cell
+	 */
 	public CellGraph(VBox root, Map<String, Integer> cell_lengths) {
 		this.root = root;
 		setupGraph(cell_lengths);
@@ -36,11 +41,14 @@ public class CellGraph {
 		this.root.getChildren().add(graph);
 	}
 	
+	/**
+	 * Creates the graph and sets up the axis.
+	 * @param cell_lengths
+	 */
 	private void setupGraph(Map<String, Integer> cell_lengths) {
 		x_axis = new NumberAxis(0, MAX_DATA_POINTS, MAX_DATA_POINTS/10);
 		x_axis.setForceZeroInRange(false);
         x_axis.setAutoRanging(false);
-
 		Group group = new Group();
 		NumberAxis y_axis = new NumberAxis();
 		y_axis.setForceZeroInRange(false);
@@ -67,17 +75,25 @@ public class CellGraph {
 			graph.getData().add(series);
 		}
 	}
+	
+	/**
+	 * Updates the graph after every step. Also called when we restart a graph
+	 */
 	public void updateGraph() {
 		for (String name : cellSizes.keySet()) {
 			cellPlots.get(name).getData().add(new XYChart.Data<Number, Number>(stepNumber, cellSizes.get(name)));
+			//Updates the bounds if it goes past the X Axis
 			if (cellPlots.get(name).getData().size() > MAX_DATA_POINTS) {
-				//cellPlots.get(name).getData().remove(0);
 				x_axis.setLowerBound(stepNumber - MAX_DATA_POINTS);
 				x_axis.setUpperBound(stepNumber - 1);
 			}
 		}
 		stepNumber++;
 	}
+	
+	/**
+	 * called by controller when the user resets the simulation
+	 */
 	public void resetGraph() {
 		graph.getData().clear();
 		stepNumber = 0;

@@ -33,12 +33,6 @@ public class SquareGridView extends GridView{
 	 * Loops through each Cell in grid and adds it to the root to change the
 	 * view
 	 */
-//	public void step() {
-//		gridView = new Group();
-//		BorderPane.setAlignment(gridView, Pos.CENTER_LEFT);
-//		root.setCenter(gridView);
-//		createSquareGrid();
-//	}
 
 	@Override
 	protected void visualizeGrid() {
