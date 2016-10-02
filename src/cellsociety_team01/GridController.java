@@ -222,8 +222,6 @@ public class GridController {
 		//Need to call 		graph.setupPlots();
 		animation.pause();
 		graph.resetGraph();
-		// ((factory.getClass()));
-		//((XOGridFactory)factory).makeGrid(0, 0, 0);
 	}
 
 	public void changeSimulation() {

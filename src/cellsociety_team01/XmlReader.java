@@ -15,6 +15,7 @@ import grids.BasicFiniteGrid;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class XmlReader {
@@ -124,47 +125,22 @@ public class XmlReader {
 		}
 	}
 
-	// Detects incorrectly formatted data.
-	private void doubleParseErrors(String input) throws XMLParserException {
 
-		try {
-			Double.parseDouble(input);
-		} catch (RuntimeException e) {
-			throw new XMLParserException("" + input + " in XML file needs to be a double.", e);
-		}
-	}
-
-	private void intParseErrors(String input) throws XMLParserException {
-		try {
-			Integer.parseInt(input);
-		} catch (RuntimeException e) {
-			throw new XMLParserException("" + input + " in XML file needs to be an integer.", e);
-		}
-	}
 
 	private BasicFiniteGrid makeLife() {
 		factory = new LifeGridFactory(shape, bounds, rows, columns);
-		String strAlive = getTextValue(root, "percentAlive");
-		doubleParseErrors(strAlive);
-		Double Alive = Double.parseDouble(strAlive);
-		return ((LifeGridFactory) factory).makeGrid(Alive);
+		HashMap<String,String> map = new HashMap<String, String>();
+		map.put("percentAlive", getTextValue(root, "percentAlive"));
+		return ((LifeGridFactory) factory).makeGrid(map);
 	}
 
 	private BasicFiniteGrid makeFire() {
 		factory = new TreeGridFactory(shape, bounds, rows, columns);
-		String strTree = getTextValue(root, "percentTree");
-		doubleParseErrors(strTree);
-
-		String strBurn = getTextValue(root, "percentBurn");
-		doubleParseErrors(strBurn);
-
-		String strProb = getTextValue(root, "probCatch");
-		doubleParseErrors(strProb);
-
-		Double Tree = Double.parseDouble(strTree);
-		Double Burn = Double.parseDouble(strBurn);
-		Double probCatch = Double.parseDouble(strProb);
-		return ((TreeGridFactory) factory).makeGrid(Tree, Burn, probCatch);
+		HashMap<String,String> map = new HashMap<String, String>();
+		map.put("percentTree", getTextValue(root, "percentTree"));
+		map.put("percentBurn", getTextValue(root, "percentBurn"));
+		map.put("probCatch", getTextValue(root, "probCatch"));
+		return ((TreeGridFactory) factory).makeGrid(map);
 	}
 
 	public int getFishReproduce() {
@@ -181,27 +157,13 @@ public class XmlReader {
 
 	private BasicFiniteGrid makeWaTor() {
 		factory = new WaterGridFactory(shape, bounds, rows, columns);
-		String strFish = getTextValue(root, "percentFish");
-		doubleParseErrors(strFish);
-
-		String strShark = getTextValue(root, "percentShark");
-		doubleParseErrors(strShark);
-
-		String strFishRep = getTextValue(root, "fishReproduce");
-		intParseErrors(strFishRep);
-
-		String strSharkDea = getTextValue(root, "sharkDeath");
-		intParseErrors(strSharkDea);
-
-		String strSharkRep = getTextValue(root, "sharkReproduce");
-		intParseErrors(strSharkRep);
-
-		Double Fish = Double.parseDouble(strFish);
-		Double Shark = Double.parseDouble(strShark);
-		int fishRep = Integer.parseInt(strFishRep);
-		int sharkDea = Integer.parseInt(strSharkDea);
-		int sharkRep = Integer.parseInt(strSharkRep);
-		return ((WaterGridFactory) factory).makeGrid(Fish, Shark, fishRep, sharkDea, sharkRep);
+		HashMap<String,String> map = new HashMap<String, String>();
+		map.put("percentFish", getTextValue(root, "percentFish"));
+		map.put("percentShark", getTextValue(root, "percentShark"));
+		map.put("fishReproduce", getTextValue(root, "fishReproduce"));
+		map.put("sharkDeath", getTextValue(root, "sharkDeath"));
+		map.put("sharkReproduce", getTextValue(root, "sharkReproduce"));
+		return ((WaterGridFactory) factory).makeGrid(map);
 	}
 
 	public double getPercentSimilar() {
@@ -210,18 +172,10 @@ public class XmlReader {
 
 	private BasicFiniteGrid makeXO() {
 		factory = new XOGridFactory(shape, bounds, rows, columns);
-		String strPerX = getTextValue(root, "percentX");
-		doubleParseErrors(strPerX);
-
-		String strPerO = getTextValue(root, "percentO");
-		doubleParseErrors(strPerO);
-
-		String strPerSim = getTextValue(root, "similarPercentage");
-		doubleParseErrors(strPerSim);
-
-		Double perX = Double.parseDouble(getTextValue(root, "percentX"));
-		Double perO = Double.parseDouble(getTextValue(root, "percentO"));
-		Double perSim = Double.parseDouble(getTextValue(root, "similarPercentage"));
-		return ((XOGridFactory) factory).makeGrid(perX, perO, perSim);
+		HashMap<String,String> map = new HashMap<String, String>();
+		map.put("percentX", getTextValue(root, "percentX"));
+		map.put("percentO", getTextValue(root, "percentO"));
+		map.put("similarPercentage", getTextValue(root, "similarPercentage"));
+		return ((XOGridFactory) factory).makeGrid(map);
 	}
 }
