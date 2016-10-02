@@ -1,5 +1,7 @@
 package factories;
 
+import java.util.Map;
+
 import cellsociety_team01.GridFactory;
 import grids.BasicFiniteGrid;
 import water.EmptyCell;
@@ -17,8 +19,12 @@ public class WaterGridFactory extends GridFactory {
 		super(cellShape, bounds, r, c);
 	}
 
-	public BasicFiniteGrid makeGrid(double percentFish, double percentShark, int fishReproduce, int sharkDeath,
-			int sharkReproduce) {
+	public BasicFiniteGrid makeGrid(Map<String,String> map) {
+		double percentFish =doubleParseErrors(map.get("percentFish"));
+		double percentShark = doubleParseErrors(map.get("percentShark"));
+		int fishReproduce = intParseErrors(map.get("fishReproduce"));
+		int sharkDeath = intParseErrors(map.get("sharkDeath"));
+		int sharkReproduce = intParseErrors(map.get("sharkReproduce"));
 		for (int r = 0; r < getRows(); r++) {
 			for (int c = 0; c < getColumns(); c++) {
 				double ranGen = Math.random();

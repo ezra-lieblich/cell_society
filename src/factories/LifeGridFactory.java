@@ -1,5 +1,7 @@
 package factories;
 
+import java.util.Map;
+
 import cellsociety_team01.GridFactory;
 import grids.BasicFiniteGrid;
 import life.AliveCell;
@@ -16,7 +18,8 @@ public class LifeGridFactory extends GridFactory {
 		super(cellShape, bounds, r, c);
 	}
 
-	public BasicFiniteGrid makeGrid(double percentAlive) {
+	public BasicFiniteGrid makeGrid(Map<String,String> map) {
+		double percentAlive = doubleParseErrors(map.get("percentAlive"));
 		for (int r = 0; r < getRows(); r++) {
 			for (int c = 0; c < getColumns(); c++) {
 				double ranGen = Math.random();
