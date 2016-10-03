@@ -103,8 +103,8 @@ public class GridController {
 			reader.getRootElement(file);
 			grids.add(reader.makeGrid());
 			factories.add(reader.getGridFactory());
-			setupLogicObject(grids.size() - 1);
-			init(grids.size() - 1);
+			setupLogicObject(factories.size() - 1);
+			init(factories.size() - 1);
 		}
 		else {
 			AlertBox.displayError("The file you selected is not an XML file. Please select an XML file.");
