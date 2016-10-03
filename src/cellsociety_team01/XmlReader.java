@@ -91,8 +91,10 @@ public class XmlReader {
 			return makeFire(shape,bounds,rows,columns);
 		} else if (sim.equals("WaTor World")) {
 			return makeWaTor(shape,bounds,rows,columns);
-		} else if (sim.equalsIgnoreCase("XO Segregation")) {
+		} else if (sim.equals("XO Segregation")) {
 			return makeXO(shape,bounds,rows,columns);
+//		} else if (sim.equals("Game of Life Specific")) {
+//			return makeLifeSpecific(shape, bounds, rows, columns);
 		}
 		// should never go here
 		else {
