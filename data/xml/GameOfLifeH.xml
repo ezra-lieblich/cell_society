@@ -7,46 +7,28 @@
 	<columns>40</columns>
 	<shape>hex</shape>
 	<bounds>finite</bounds>
-	<x type = "array">
-		<xValue>3</xValue>
-		<xValue>3</xValue>
-		<xValue>3</xValue>
-		<xValue>3</xValue>
-		<xValue>3</xValue>
-		<xValue>4</xValue>
-		<xValue>5</xValue>
-		<xValue>6</xValue>
-		<xValue>6</xValue>
-		<xValue>6</xValue>
-		<xValue>6</xValue>
-		<xValue>6</xValue>
-	</x>
-	<y type = "array">
-		<yValue>10</yValue>
-		<yValue>9</yValue>
-		<YValue>8</YValue>
-		<yValue>7</yValue>
-		<yValue>6</yValue>
-		<yvalue>8</yvalue>
-		<yValue>8</yValue>
-		<yValue>10</yValue>
-		<yValue>9</yValue>
-		<YValue>8</YValue>
-		<yValue>7</yValue>
-		<yValue>6</yValue>
-	</y>
-	<s type = "array">
-		<state>alive</state>
-		<state>alive</state>
-		<state>alive</state>
-		<state>alive</state>
-		<state>alive</state>
-		<state>alive</state>
-		<state>alive</state>
-		<state>alive</state>
-		<state>alive</state>
-		<state>alive</state>
-		<state>alive</state>
-		<state>alive</state>
-	</s>
+	<xValue1>3</xValue1>
+	<xValue2>3</xValue2>
+	<xValue3>3</xValue3>
+	<xValue4>3</xValue4>
+	<xValue5>3</xValue5>
+	<xValue6>4</xValue6>
+	<xValue7>5</xValue7>
+	<xValue8>6</xValue8>
+	<xValue9>6</xValue9>
+	<xValue10>6</xValue10>
+	<xValue11>6</xValue11>
+	<xValue12>6</xValue12>
+	<yValue1>10</yValue1>
+	<yValue2>9</yValue2>
+	<YValue3>8</YValue3>
+	<yValue4>7</yValue4>
+	<yValue5>6</yValue5>
+	<yvalue6>8</yvalue6>
+	<yValue7>8</yValue7>
+	<yValue8>10</yValue8>
+	<yValue9>9</yValue9>
+	<YValue10>8</YValue10>
+	<yValue11>7</yValue11>
+	<yValue12>6</yValue12>
 </Simulation>
