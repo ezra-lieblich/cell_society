@@ -44,11 +44,9 @@ import views.TriangleGridView;
 
 public class GridController {
 	// private
-	private GridLogic logic;
-	private GridView view;
+
 	private XmlReader reader;
 	private Toolbar toolbar;
-	private CellGraph graph;
 	private String title;
 	private Scene scene;
 	private Timeline animation;
@@ -57,10 +55,7 @@ public class GridController {
 	private int screenWidth, screenHeight;
 	private static final String XML_FILES_LOCATION = "data/xml/";
 	private static final String XML_SUFFIX = ".xml";
-	private GridFactory factory;
-	private String simulationName;
-	private BasicFiniteGrid grid;
-	private SliderProperties slider;
+
 	
 	private List<BasicFiniteGrid> grids;
 	private List<GridLogic> logics;
