@@ -11,17 +11,6 @@ public class BasicToroidalGrid extends BasicFiniteGrid {
 		super(x,y);
 	}
 	
-//	@Override
-//	public ArrayList<Cell> getNeighbors(int x, int y) {
-//		ArrayList<Cell> neighbors = new ArrayList<Cell>();
-//
-//		neighbors.add(getAdjustedNeighbor(x, y + 1));
-//		neighbors.add(getAdjustedNeighbor(x, y - 1));
-//		neighbors.add(getAdjustedNeighbor(x + 1, y));
-//		neighbors.add(getAdjustedNeighbor(x - 1, y));
-//
-//		return neighbors;
-//	}
 	
 	@Override
 	protected void addIndex(int x, int y){

@@ -22,7 +22,7 @@ import javafx.scene.layout.VBox;
  *
  */
 public abstract class SliderProperties {
-    public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+    private static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 
 	private Pane box;
     protected ResourceBundle myResources;
@@ -53,8 +53,8 @@ public abstract class SliderProperties {
 	 */
 	private void makeButtons(GridController control) {
 		HBox buttons = new HBox();
-		addButton(myResources.getString("ResetButton"), event -> control.resetSimulation(propertyValues), buttons);
-		addButton(myResources.getString("ChangeButton"), event -> control.changeSimulation(), buttons);
+		addButton(myResources.getString("ResetButton"), event -> control.resetSimulation(propertyValues, this), buttons);
+		addButton(myResources.getString("RemoveButton"), event -> control.removeSimulation(this), buttons);
 		box.getChildren().add(buttons);
 	}
 	/**

@@ -11,7 +11,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 /**
  * Toolbar is called on by the GridController when a simulation is chosen. It allows
  * the user to start, stop, and step through the simulation. It also allows the user
@@ -20,7 +19,7 @@ import javafx.scene.layout.VBox;
  *
  */
 public class Toolbar {
-    public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+    private static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 	
 	private BorderPane root;
 	private GridController controller;
@@ -53,6 +52,7 @@ public class Toolbar {
 		makeButton(myResources.getString("StopButton"), event -> controller.stopSimulation());
 		makeButton(myResources.getString("StepButton"), event -> controller.stepSimulation());
 		makeSlider();
+		makeButton(myResources.getString("AddButton"), event -> controller.addSimulation());
 		BorderPane.setAlignment(toolbar, Pos.BOTTOM_RIGHT);
 	}
 

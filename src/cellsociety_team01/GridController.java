@@ -66,7 +66,7 @@ public class GridController {
 	private List<CellGraph> graphs;
 	private List<GridFactory> factories;
 	private List<SliderProperties> sliders;
-	private List<Pane> simulations;
+	private List<VBox> simulations;
 	
 	private BorderPane root;
 	private Pane simSpace;
@@ -99,7 +99,7 @@ public class GridController {
 		graphs = new ArrayList<CellGraph>();
 		factories = new ArrayList<GridFactory>();
 		sliders = new ArrayList<SliderProperties>();
-		simulations = new ArrayList<Pane>();
+		simulations = new ArrayList<VBox>();
 	}
 	public void parseFile(File file) {
 		if (file.isFile() && file.getName().endsWith(XML_SUFFIX)) {
@@ -167,11 +167,11 @@ public class GridController {
 	}
 
 	private void setupView(int index) {
-		VBox vbox = new VBox(5);
-		graphs.add(new CellGraph(vbox, logics.get(index).getCells()));
-		setupViewObject(vbox, index);
-		sliders.get(index).addBoxtoRoot(vbox);
-		simSpace.getChildren().add(vbox);
+		simulations.add(new VBox(5));
+		graphs.add(new CellGraph(simulations.get(index), logics.get(index).getCells()));
+		setupViewObject(simulations.get(index), index);
+		sliders.get(index).addBoxtoRoot(simulations.get(index));
+		simSpace.getChildren().add(simulations.get(index));
 	}
 
 	private void createTimeline() {
@@ -218,10 +218,9 @@ public class GridController {
 	}
 
 	public void stepSimulation() {
-//		animation.pause();
-//		this.step();
-//		//graph.setupPlots(logic.getCells());
-		simSpace.getChildren().remove(0);
+		animation.pause();
+		this.step();
+
 	}
 
 	public void updateSpeed(double value) {
@@ -229,15 +228,29 @@ public class GridController {
 		animation.setRate(new_rate);
 	}
 
-	public void resetSimulation(Map<String, String> values) {
+	public void resetSimulation(Map<String, String> values, SliderProperties object) {
 		animation.pause();
-		graph.resetGraph();
-		factory.makeGrid(values);
-		graph.setupPlots(logic.getCells());
-		view.step();
+		int index = sliders.indexOf(object);
+		graphs.get(index).resetGraph();
+		factories.get(index).makeGrid(values);
+		views.get(index).step();
 	}
 
-	public void changeSimulation() {
+	public void removeSimulation(SliderProperties object) {
+		animation.pause();
+		int index = sliders.indexOf(object);
+		grids.remove(index);
+		logics.remove(index);
+		views.remove(index);
+		graphs.remove(index);
+		factories.remove(index);
+		sliders.remove(index);
+		simSpace.getChildren().remove(simulations.get(index));
+		simulations.remove(index);
+	}
+	
+	public void addSimulation() {
+		animation.pause();
 		stage.setScene(mainMenu);
 	}
 }
