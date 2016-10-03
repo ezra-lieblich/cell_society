@@ -7,6 +7,6 @@
 	<columns>40</columns>
 	<shape>hex</shape>
 	<bounds>finite</bounds>
-	<percentAlive>.15</percentAlive>
+	<percentAlive>1.15</percentAlive>
 	<percentDead>.65</percentDead>
 </Simulation>
