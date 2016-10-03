@@ -21,9 +21,9 @@ public class TreeGridFactory extends GridFactory {
 
 
 	public BasicFiniteGrid makeGrid(Map<String,String> map) {
-		double percentTree = doubleParseErrors(map.get("percentTree"));
-		double percentBurn = doubleParseErrors(map.get("percentBurn"));
-		double probCatch = doubleParseErrors(map.get("probCatch"));
+		double percentTree = doubleParseErrors(map.get(myResources.getString("PercentTree")));
+		double percentBurn = doubleParseErrors(map.get(myResources.getString("PercentBurn")));
+		double probCatch = doubleParseErrors(map.get(myResources.getString("ProbCatch")));
 		if (checkPercentError(percentTree + percentBurn)) {
 			percentTree = Math.random() * .5;
 			percentBurn = Math.random() *.5;

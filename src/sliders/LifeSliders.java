@@ -8,8 +8,8 @@ import javafx.scene.layout.Pane;
  *
  */
 public class LifeSliders extends SliderProperties{
-	public LifeSliders(Pane root, GridController control) {
-		super(root, control);
+	public LifeSliders(GridController control) {
+		super(control);
 		createSliders();
 	}
 	
@@ -17,6 +17,6 @@ public class LifeSliders extends SliderProperties{
 	 * Adds a slider that controls the percent alive
 	 */
 	protected void createSliders() {
-		super.addSlider(0, 1, "%Alive");
+		super.addSlider(0, 1, myResources.getString("PercentAlive"));
 	}
 }

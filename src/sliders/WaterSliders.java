@@ -9,8 +9,8 @@ import javafx.scene.layout.Pane;
  *
  */
 public class WaterSliders extends SliderProperties{
-	public WaterSliders(Pane root, GridController control) {
-		super(root, control);
+	public WaterSliders(GridController control) {
+		super(control);
 		createSliders();
 		createSpinners();
 	}
@@ -19,8 +19,8 @@ public class WaterSliders extends SliderProperties{
 	 * Creates slider for %Fish and %Shark
 	 */
 	protected void createSliders() {
-		super.addSlider(0, 1, "%Fish");
-		super.addSlider(0, 1, "%Shark");
+		super.addSlider(0, 1, myResources.getString("PercentFish"));
+		super.addSlider(0, 1, myResources.getString("PercentShark"));
 	}
 	
 	/**
@@ -28,9 +28,9 @@ public class WaterSliders extends SliderProperties{
 	 * shark reproduce and time for shark to die
 	 */
 	private void createSpinners() {
-		super.addSpinner("Fish Reproduce");
-		super.addSpinner("Shark Death");
-		super.addSpinner("Shark Reproduce");
+		super.addSpinner(myResources.getString("FishReproduce"));
+		super.addSpinner(myResources.getString("SharkDeath"));
+		super.addSpinner(myResources.getString("SharkReproduce"));
 	}
 	 
 }
