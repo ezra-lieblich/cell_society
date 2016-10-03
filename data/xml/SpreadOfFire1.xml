@@ -7,7 +7,7 @@
 	<columns>60</columns>
 	<shape>tri</shape>
 	<bounds>finite</bounds>
-	<probCatch>0.5</probCatch>
+	<!--  probCatch>0.5</probCatch-->
 	<percentTree>0.895</percentTree>
 	<percentBurn>0.005</percentBurn>
 </Simulation>

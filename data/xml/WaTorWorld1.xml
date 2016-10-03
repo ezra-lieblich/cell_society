@@ -7,9 +7,9 @@
 	<columns>40</columns>
 	<shape>squ</shape>
 	<bounds>toroidal</bounds>
-	<percentFish>0.75</percentFish>
-	<percentShark>0.15</percentShark>
+	<percentFish>0.90</percentFish>
+	<percentShark>0.10</percentShark>
 	<fishReproduce>2</fishReproduce>
 	<sharkDeath>2</sharkDeath>
-	<sharkReproduce>10</sharkReproduce>
+	<sharkReproduce>8</sharkReproduce>
 </Simulation>

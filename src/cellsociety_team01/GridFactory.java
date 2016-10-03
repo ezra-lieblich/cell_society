@@ -84,7 +84,7 @@ public class GridFactory {
 	 * @return
 	 */
 	protected boolean checkPercentError(double totalPercent) {
-		return totalPercent > 1.00;
+		return totalPercent > 1.00 || totalPercent<0;
 	}
 	
 	protected BasicFiniteGrid makeGrid(Map<String, String> map) {

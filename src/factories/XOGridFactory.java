@@ -33,7 +33,7 @@ public class XOGridFactory extends GridFactory {
 		if (checkPercentError(percentX + percentO)) {
 			percentX = Math.random() * .5;
 			percentO = Math.random() * .5;
-			String message = String.format("Invalid user values: percentX, percentO. Default values percentX = %f, percentO = %f will be used.", percentX, percentO);
+			String message = String.format("Invalid or missing user values: percentX, percentO. Default values percentX = %f, percentO = %f will be used.", percentX, percentO);
 			AlertBox.displayError(message);
 		}
 		for (int r = 0; r < getRows(); r++) {
