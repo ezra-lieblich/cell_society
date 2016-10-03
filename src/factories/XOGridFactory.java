@@ -32,6 +32,7 @@ public class XOGridFactory extends GridFactory {
 		if (checkPercentError(percentX + percentO)) {
 			percentX = Math.random() * .5;
 			percentO = Math.random() * .5;
+			//TODO: alert box notifying default
 		}
 		for (int r = 0; r < getRows(); r++) {
 			for (int c = 0; c < getColumns(); c++) {

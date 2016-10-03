@@ -6,8 +6,8 @@ import cellsociety_team01.Cell;
 
 public class HexagonalToroidalGrid extends HexagonalFiniteGrid{
 	
-	public HexagonalToroidalGrid(int x, int y){
-		super(x,y);
+	public HexagonalToroidalGrid(int x, int y,String neighbor){
+		super(x,y, neighbor);
 	}
 
 

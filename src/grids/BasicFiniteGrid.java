@@ -10,6 +10,7 @@ import water.EmptyCell;
 public class BasicFiniteGrid {
 	protected Cell[][] grid;
 	protected ArrayList<Cell> neighbors;
+	protected String neighborType;
 	//need to set originalGrid to the first implementation of grid
 	private Cell [][] originalGrid;
 	private int x;
@@ -17,7 +18,8 @@ public class BasicFiniteGrid {
 	
 	public BasicFiniteGrid(){}
 
-	public BasicFiniteGrid(int x, int y) {
+	public BasicFiniteGrid(int x, int y, String neighbor) {
+		neighborType = neighbor;
 		grid = new Cell[x][y];
 	}
 

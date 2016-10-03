@@ -10,5 +10,4 @@
 	<probCatch>0.5</probCatch>
 	<percentTree>0.895</percentTree>
 	<percentBurn>0.005</percentBurn>
-	<percentEmpty>0.10</percentEmpty>
 </Simulation>
