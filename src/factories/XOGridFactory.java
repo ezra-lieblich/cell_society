@@ -14,16 +14,21 @@ import xo.Group2;
  * @author Eric Song
  */
 public class XOGridFactory extends GridFactory {
+	private double similarPercentage;
 
 	public XOGridFactory(String cellShape, String bounds, String r, String c) {
 		super(cellShape, bounds, r, c);
+	}
+
+	public double getSimilarPercentage() {
+		return similarPercentage;
 	}
 
 
 	public BasicFiniteGrid makeGrid(Map<String,String> map) {
 		double percentX = doubleParseErrors(map.get("percentX"));
 		double percentO = doubleParseErrors(map.get("percentO"));
-		double similarPercentage = doubleParseErrors(map.get("similarPercentage"));
+		similarPercentage = doubleParseErrors(map.get("similarPercentage"));
 		if (checkPercentError(percentX + percentO)) {
 			percentX = Math.random() * .5;
 			percentO = Math.random() * .5;

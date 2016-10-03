@@ -14,20 +14,30 @@ import water.Shark;
  * @author Eric Song
  */
 public class WaterGridFactory extends GridFactory {
+	private int fishReproduce, sharkDeath, sharkReproduce;
 
 	public WaterGridFactory(String cellShape, String bounds, String r, String c) {
 		super(cellShape, bounds, r, c);
 	}
 
+	public int getFishReproduce() {
+		return fishReproduce;
+	}
 
+	public int getSharkDeath() {
+		return sharkDeath;
+	}
 
+	public int getSharkReproduce() {
+		return sharkReproduce;
+	}
 
-	public BasicFiniteGrid makeGrid(Map<String,String> map) {
-		double percentFish =doubleParseErrors(map.get("percentFish"));
+	public BasicFiniteGrid makeGrid(Map<String, String> map) {
+		double percentFish = doubleParseErrors(map.get("percentFish"));
 		double percentShark = doubleParseErrors(map.get("percentShark"));
-		int fishReproduce = intParseErrors(map.get("fishReproduce"));
-		int sharkDeath = intParseErrors(map.get("sharkDeath"));
-		int sharkReproduce = intParseErrors(map.get("sharkReproduce"));
+		fishReproduce = intParseErrors(map.get("fishReproduce"));
+		sharkDeath = intParseErrors(map.get("sharkDeath"));
+		sharkReproduce = intParseErrors(map.get("sharkReproduce"));
 		if (checkPercentError(percentFish + percentShark)) {
 			percentFish = Math.random() * .5;
 			percentShark = Math.random() * .5;
@@ -36,7 +46,7 @@ public class WaterGridFactory extends GridFactory {
 			for (int c = 0; c < getColumns(); c++) {
 				double ranGen = Math.random();
 				if (ranGen <= percentShark)
-					setGridIndex(new Shark(c, r,sharkDeath, sharkReproduce), r, c);
+					setGridIndex(new Shark(c, r, sharkDeath, sharkReproduce), r, c);
 				else if (percentShark < ranGen && ranGen <= percentFish + percentShark)
 					setGridIndex(new Fish(c, r, fishReproduce), r, c);
 				else

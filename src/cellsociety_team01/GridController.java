@@ -10,7 +10,7 @@ import java.util.Map;
 
 import org.w3c.dom.Element;
 
-import factories.XOGridFactory;
+import factories.*;
 import grids.BasicFiniteGrid;
 import grids.BasicToroidalGrid;
 import grids.HexagonalFiniteGrid;
@@ -88,10 +88,10 @@ public class GridController {
 		} else if (simulationName.equals("Spread Of Fire")) {
 			logic = new TreeGridLogic(grid);
 		} else if (simulationName.equals("WaTor World")) {
-			logic = new WaterGridLogic(grid, reader.getFishReproduce(), reader.getSharkDeath(),
-					reader.getSharkReproduce());
+			logic = new WaterGridLogic(grid, ((WaterGridFactory)factory).getFishReproduce(), ((WaterGridFactory)factory).getSharkDeath(),
+					((WaterGridFactory)factory).getSharkReproduce());
 		} else if (simulationName.equals("XO Segregation")) {
-			logic = new XOGridLogic(grid, reader.getPercentSimilar());
+			logic = new XOGridLogic(grid, ((XOGridFactory)factory).getSimilarPercentage());
 		} else {
 			// TODO: throw error
 

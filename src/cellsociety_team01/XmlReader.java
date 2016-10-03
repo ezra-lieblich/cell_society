@@ -118,18 +118,6 @@ public class XmlReader {
 		return ((TreeGridFactory) factory).makeGrid(map);
 	}
 
-	public int getFishReproduce() {
-		return Integer.parseInt(getTextValue(root, "fishReproduce"));
-	}
-
-	public int getSharkDeath() {
-		return Integer.parseInt(getTextValue(root, "sharkDeath"));
-	}
-
-	public int getSharkReproduce() {
-		return Integer.parseInt(getTextValue(root, "sharkReproduce"));
-	}
-
 	private BasicFiniteGrid makeWaTor(String shape, String bounds, String rows, String columns) {
 		factory = new WaterGridFactory(shape, bounds, rows, columns);
 		HashMap<String,String> map = new HashMap<String, String>();
@@ -141,11 +129,7 @@ public class XmlReader {
 		return ((WaterGridFactory) factory).makeGrid(map);
 	}
 
-	public double getPercentSimilar(String shape, String bounds, String rows, String columns) {
-		return Double.parseDouble(getTextValue(root, "similarPercentage"));
-	}
-
-	private BasicFiniteGrid makeXO(String shape, String bounds, int rows, int columns) {
+	private BasicFiniteGrid makeXO(String shape, String bounds, String rows, String columns) {
 		factory = new XOGridFactory(shape, bounds, rows, columns);
 		HashMap<String,String> map = new HashMap<String, String>();
 		map.put("percentX", getTextValue(root, "percentX"));
