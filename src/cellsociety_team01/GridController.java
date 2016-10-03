@@ -77,11 +77,11 @@ public class GridController {
 			grid = reader.makeGrid();
 			factory = reader.getGridFactory();
 			setupLogicObject();
-
 			init();
 		}
-		// TODO: throw exception if not
-
+		else {
+			AlertBox.displayError("The file you selected is not an XML file. Please select an XML file.");
+		}
 	}
 
 	private void setupLogicObject() {
