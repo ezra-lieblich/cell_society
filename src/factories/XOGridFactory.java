@@ -2,6 +2,7 @@ package factories;
 
 import java.util.Map;
 
+import cellsociety_team01.AlertBox;
 import cellsociety_team01.GridFactory;
 import grids.BasicFiniteGrid;
 import xo.Clear;
@@ -32,7 +33,8 @@ public class XOGridFactory extends GridFactory {
 		if (checkPercentError(percentX + percentO)) {
 			percentX = Math.random() * .5;
 			percentO = Math.random() * .5;
-			//TODO: alert box notifying default
+			String message = String.format("Invalid user values: percentX, percentO. Default values percentX = %f, percentO = %f will be used.", percentX, percentO);
+			AlertBox.displayError(message);
 		}
 		for (int r = 0; r < getRows(); r++) {
 			for (int c = 0; c < getColumns(); c++) {

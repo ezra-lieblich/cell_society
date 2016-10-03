@@ -2,6 +2,7 @@ package factories;
 
 import java.util.Map;
 
+import cellsociety_team01.AlertBox;
 import cellsociety_team01.GridFactory;
 import grids.BasicFiniteGrid;
 import tree.BurningCell;
@@ -27,6 +28,13 @@ public class TreeGridFactory extends GridFactory {
 		if (checkPercentError(percentTree + percentBurn)) {
 			percentTree = Math.random() * .5;
 			percentBurn = Math.random() *.5;
+			String message = String.format("Invalid user values: percentTree, percentBurn. Default values percentTree = %f, percentBurn = %f will be used.", percentTree, percentBurn);
+			AlertBox.displayError(message);
+		}
+		if (checkPercentError(probCatch)) {
+			probCatch = Math.random() * .5;
+			String message = String.format("Invalid user values: probCatch. Default values probCatch = %f will be used.", probCatch);
+			AlertBox.displayError(message);
 		}
 		for (int r = 0; r < getRows(); r++) {
 			for (int c = 0; c < getColumns(); c++) {
