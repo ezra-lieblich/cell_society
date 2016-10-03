@@ -14,7 +14,7 @@ import life.DeadCell;
  */
 public class LifeGridFactory extends GridFactory {
 
-	public LifeGridFactory(String cellShape, String bounds, int r, int c) {
+	public LifeGridFactory(String cellShape, String bounds, String r, String c) {
 		super(cellShape, bounds, r, c);
 	}
 

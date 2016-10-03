@@ -15,7 +15,7 @@ import xo.Group2;
  */
 public class XOGridFactory extends GridFactory {
 
-	public XOGridFactory(String cellShape, String bounds, int r, int c) {
+	public XOGridFactory(String cellShape, String bounds, String r, String c) {
 		super(cellShape, bounds, r, c);
 	}
 

@@ -15,7 +15,7 @@ import tree.TreeCell;
  */
 public class TreeGridFactory extends GridFactory {
 
-	public TreeGridFactory(String cellShape, String bounds, int r, int c) {
+	public TreeGridFactory(String cellShape, String bounds, String r, String c) {
 		super(cellShape, bounds, r, c);
 	}
 

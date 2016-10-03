@@ -15,7 +15,7 @@ import water.Shark;
  */
 public class WaterGridFactory extends GridFactory {
 
-	public WaterGridFactory(String cellShape, String bounds, int r, int c) {
+	public WaterGridFactory(String cellShape, String bounds, String r, String c) {
 		super(cellShape, bounds, r, c);
 	}
 

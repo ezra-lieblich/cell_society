@@ -22,11 +22,6 @@ public class XmlReader {
 	// Reset DOCUMENT_BUILDER before every parse
 	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
 	private static Element root;
-	private String sim;
-	private int rows;
-	private int columns;
-	private String shape;
-	private String bounds;
 	private GridFactory factory;
 
 	public XmlReader() {
@@ -78,46 +73,26 @@ public class XmlReader {
 		}
 	}
 
-	// // Returns name of simulation
-	// public String getSim() {
-	// return sim;
-	// }
-
-//	public int rows() {
-//		
-//		return rows;
-//	}
-//
-//	public int getYSize() {
-//		
-//		return columns;
-//	}
-
-	// public String getShape() {
-	// return shape;
-	// }
-	//
-	// public String getBounds() {
-	// return bounds;
-	// }
 	public String getSim() {
 		return getTextValue(root, "simulation_name");
 	}
 
 	public BasicFiniteGrid makeGrid() {
-		sim = getTextValue(root, "simulation_name");
-		shape = getTextValue(root, "shape");
-		bounds = getTextValue(root, "bounds");
-		rows = Integer.parseInt(getTextValue(root, "rows"));
-		columns = Integer.parseInt(getTextValue(root, "columns"));
+
+		String sim = getTextValue(root, "simulation_name");
+		String shape = getTextValue(root, "shape");
+		String bounds = getTextValue(root, "bounds");
+		String rows = getTextValue(root, "rows");
+		String columns = getTextValue(root, "columns");
+		
 		if (sim.equals("Game Of Life")) {
-			return makeLife();
+			return makeLife(shape,bounds,rows,columns);
 		} else if (sim.equals("Spread Of Fire")) {
-			return makeFire();
+			return makeFire(shape,bounds,rows,columns);
 		} else if (sim.equals("WaTor World")) {
-			return makeWaTor();
+			return makeWaTor(shape,bounds,rows,columns);
 		} else if (sim.equalsIgnoreCase("XO Segregation")) {
-			return makeXO();
+			return makeXO(shape,bounds,rows,columns);
 		}
 		// should never go here
 		else {
@@ -127,14 +102,14 @@ public class XmlReader {
 
 
 
-	private BasicFiniteGrid makeLife() {
+	private BasicFiniteGrid makeLife(String shape, String bounds, String rows, String columns){
 		factory = new LifeGridFactory(shape, bounds, rows, columns);
 		HashMap<String,String> map = new HashMap<String, String>();
 		map.put("percentAlive", getTextValue(root, "percentAlive"));
 		return ((LifeGridFactory) factory).makeGrid(map);
 	}
 
-	private BasicFiniteGrid makeFire() {
+	private BasicFiniteGrid makeFire(String shape, String bounds, String rows, String columns) {
 		factory = new TreeGridFactory(shape, bounds, rows, columns);
 		HashMap<String,String> map = new HashMap<String, String>();
 		map.put("percentTree", getTextValue(root, "percentTree"));
@@ -155,7 +130,7 @@ public class XmlReader {
 		return Integer.parseInt(getTextValue(root, "sharkReproduce"));
 	}
 
-	private BasicFiniteGrid makeWaTor() {
+	private BasicFiniteGrid makeWaTor(String shape, String bounds, String rows, String columns) {
 		factory = new WaterGridFactory(shape, bounds, rows, columns);
 		HashMap<String,String> map = new HashMap<String, String>();
 		map.put("percentFish", getTextValue(root, "percentFish"));
@@ -166,11 +141,11 @@ public class XmlReader {
 		return ((WaterGridFactory) factory).makeGrid(map);
 	}
 
-	public double getPercentSimilar() {
+	public double getPercentSimilar(String shape, String bounds, String rows, String columns) {
 		return Double.parseDouble(getTextValue(root, "similarPercentage"));
 	}
 
-	private BasicFiniteGrid makeXO() {
+	private BasicFiniteGrid makeXO(String shape, String bounds, int rows, int columns) {
 		factory = new XOGridFactory(shape, bounds, rows, columns);
 		HashMap<String,String> map = new HashMap<String, String>();
 		map.put("percentX", getTextValue(root, "percentX"));

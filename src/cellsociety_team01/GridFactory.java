@@ -9,9 +9,9 @@ public class GridFactory {
 	private String bounds;
 	private String cellShape;
 
-	public GridFactory(String ce, String b, int r, int c) {
-		rows = r;
-		columns = c;
+	public GridFactory(String ce, String b, String r, String c) {
+		rows = intParseErrors(r);
+		columns = intParseErrors(c);
 		bounds = b;
 		cellShape = ce;
 		setGridType(cellShape, bounds);
