@@ -12,10 +12,6 @@
 	<percentShark>0.10</percentShark>
 	<fishReproduce>2</fishReproduce>
 	<sharkDeath>2</sharkDeath>
-<<<<<<< HEAD
 	<sharkReproduce>6</sharkReproduce>
 	<neighbors>cardinal</neighbors>
-=======
-	<sharkReproduce>8</sharkReproduce>
->>>>>>> 1d3a5072786c10d8f9f3a8f9e92b4bbd2462a008
 </Simulation>
