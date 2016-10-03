@@ -39,15 +39,15 @@ public class GridFactory {
 	private void setGridType(String cellShape, String bounds) {
 		if(bounds.equals("finite")){
 			if(cellShape.equals("hex"))
-				grid = new HexagonalFiniteGrid(columns,rows);
+				grid = new HexagonalFiniteGrid(columns,rows,"");
 			else
-				grid = new BasicFiniteGrid(columns,rows);
+				grid = new BasicFiniteGrid(columns,rows,"");
 		}
 		else{
 			if(cellShape.equals("hex"))
-				grid = new HexagonalToroidalGrid(columns,rows);
+				grid = new HexagonalToroidalGrid(columns,rows,"");
 			else
-				grid = new BasicToroidalGrid(columns,rows);
+				grid = new BasicToroidalGrid(columns,rows,"");
 		}
 	}
 	
@@ -84,7 +84,7 @@ public class GridFactory {
 	 * @return
 	 */
 	protected boolean checkPercentError(double totalPercent) {
-		return totalPercent > 1.00;
+		return totalPercent > 1.00 || totalPercent<0;
 	}
 	
 	protected BasicFiniteGrid makeGrid(Map<String, String> map) {

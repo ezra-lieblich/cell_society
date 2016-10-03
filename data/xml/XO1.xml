@@ -7,7 +7,7 @@
 	<columns>40</columns>
 	<shape>tri</shape>
 	<bounds>toroidal</bounds>
-	<percentX>0.35</percentX>
+	<percentX>1.35</percentX>
 	<percentO>0.35</percentO>
 	<similarPercentage>0.5</similarPercentage>
 </Simulation>

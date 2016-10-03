@@ -69,7 +69,8 @@ public class XmlReader {
 			String a = nodeList.item(0).getTextContent();
 			return a;
 		} else {
-			throw new XMLParserException("XML file has no data for parameter " + tagName);
+			//this will force default value to be set
+			return "-1";
 		}
 	}
 
@@ -91,8 +92,10 @@ public class XmlReader {
 			return makeFire(shape,bounds,rows,columns);
 		} else if (sim.equals("WaTor World")) {
 			return makeWaTor(shape,bounds,rows,columns);
-		} else if (sim.equalsIgnoreCase("XO Segregation")) {
+		} else if (sim.equals("XO Segregation")) {
 			return makeXO(shape,bounds,rows,columns);
+//		} else if (sim.equals("Game of Life Specific")) {
+//			return makeLifeSpecific(shape, bounds, rows, columns);
 		}
 		// should never go here
 		else {

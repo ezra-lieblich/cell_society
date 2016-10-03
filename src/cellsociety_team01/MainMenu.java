@@ -47,7 +47,6 @@ public class MainMenu {
 		return scene;
 	}
 	
-	//private Button createButton(String buttonText, EventHandler<ActionEvent> handler){
 	private Button createButton(String buttonText){
 		Button button = new Button(buttonText);
 		FileChooser fileChooser = new FileChooser();
@@ -58,7 +57,6 @@ public class MainMenu {
 	                public void handle(final ActionEvent e) {             
 	                    File file = fileChooser.showOpenDialog(stage);
 	                    if (file != null) {
-	                    	System.out.println(file.getName());
 	                        controller.parseFile(file);
 	                    }
 	                }
@@ -66,11 +64,7 @@ public class MainMenu {
 		return button;
 	}
 	
-//	private void fileChooser(){
-//		
-//		fileChooser.setTitle("Open Resource File");
-//		fileChooser.showOpenDialog(stage);
-//	}
+
 
 	private Text createText() {
 		Text t = new Text(myResources.getString("Title"));

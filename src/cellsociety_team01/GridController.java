@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 import org.w3c.dom.Element;
 
 import factories.*;
@@ -109,8 +111,9 @@ public class GridController {
 			setupLogicObject(grids.size() - 1);
 			init(grids.size() - 1);
 		}
-		// TODO: throw exception if not
-
+		else {
+			AlertBox.displayError("The file you selected is not an XML file. Please select an XML file.");
+		}
 	}
 
 	private void setupLogicObject(int index) {

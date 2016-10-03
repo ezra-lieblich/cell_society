@@ -2,15 +2,16 @@ package grids;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import cellsociety_team01.Cell;
 import water.EmptyCell;
 
 public class BasicToroidalGrid extends BasicFiniteGrid {
 
-	public BasicToroidalGrid(int x, int y) {
-		super(x,y);
+	public BasicToroidalGrid(int x, int y, String neighbor) {
+		super(x,y,neighbor);
 	}
-	
 	
 	@Override
 	protected void addIndex(int x, int y){
