@@ -53,8 +53,6 @@ public class Toolbar {
 		makeButton(myResources.getString("StopButton"), event -> controller.stopSimulation());
 		makeButton(myResources.getString("StepButton"), event -> controller.stepSimulation());
 		makeSlider();
-		//makeButton(myResources.getString("ResetButton"), event -> controller.resetSimulation());
-		makeButton(myResources.getString("ChangeButton"), event -> controller.changeSimulation());
 		BorderPane.setAlignment(toolbar, Pos.BOTTOM_RIGHT);
 	}
 
