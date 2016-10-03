@@ -8,6 +8,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 import org.w3c.dom.Element;
 
 import factories.*;
@@ -144,6 +146,7 @@ public class GridController {
 		setupViewObject(vbox);
 		toolbar = new Toolbar(root, this);
 		slider.addBoxtoRoot(vbox);
+		JOptionPane.showMessageDialog(null,"hi");
 		return root;
 	}
 

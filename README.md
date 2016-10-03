@@ -17,6 +17,7 @@ rows: integer greater than 0
 columns: integer greater than 0
 shape: squ(default), tri, hex
 bounds: finite(default), toroidal
+neighborType: all(default), cardinal, diagonal
 
 
 Conway's Game of Life

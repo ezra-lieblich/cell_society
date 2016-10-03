@@ -36,9 +36,16 @@ public class WaterGridFactory extends GridFactory {
 	public BasicFiniteGrid makeGrid(Map<String,String> map) {
 		double percentFish = doubleParseErrors(map.get(myResources.getString("PercentFish")));
 		double percentShark = doubleParseErrors(map.get(myResources.getString("PercentShark")));
+<<<<<<< HEAD
+		fishReproduce = intParseErrors(map.get(myResources.getString("FishReproduce")));
+		sharkDeath = intParseErrors(map.get(myResources.getString("SharkDeath")));
+		sharkReproduce = intParseErrors(map.get(myResources.getString("SharkReproduce")));
+
+=======
 		int fishReproduce = intParseErrors(map.get(myResources.getString("FishReproduce")));
 		int sharkDeath = intParseErrors(map.get(myResources.getString("SharkDeath")));
 		int sharkReproduce = intParseErrors(map.get(myResources.getString("SharkReproduce")));
+>>>>>>> cf0830f4e8b80183985716aec8afc232cb1f7f22
 		if (checkPercentError(percentFish + percentShark)) {
 			percentFish = Math.random() * .5;
 			percentShark = Math.random() * .5;

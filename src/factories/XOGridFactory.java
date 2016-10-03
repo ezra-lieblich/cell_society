@@ -29,7 +29,7 @@ public class XOGridFactory extends GridFactory {
 	public BasicFiniteGrid makeGrid(Map<String,String> map) {
 		double percentX = doubleParseErrors(map.get(myResources.getString("PercentX")));
 		double percentO = doubleParseErrors(map.get(myResources.getString("PercentO")));
-		double similarPercentage = doubleParseErrors(map.get(myResources.getString("SimilarPercentage")));
+		similarPercentage = doubleParseErrors(map.get(myResources.getString("SimilarPercentage")));
 		if (checkPercentError(percentX + percentO)) {
 			percentX = Math.random() * .5;
 			percentO = Math.random() * .5;
