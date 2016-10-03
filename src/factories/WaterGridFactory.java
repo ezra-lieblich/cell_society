@@ -17,8 +17,8 @@ import water.Shark;
 public class WaterGridFactory extends GridFactory {
 	private int fishReproduce, sharkDeath, sharkReproduce;
 
-	public WaterGridFactory(String cellShape, String bounds, String r, String c) {
-		super(cellShape, bounds, r, c);
+	public WaterGridFactory(String cellShape, String bounds, String r, String c, String neighbor) {
+		super(cellShape, bounds, r, c, neighbor);
 	}
 
 	public int getFishReproduce() {
@@ -32,13 +32,24 @@ public class WaterGridFactory extends GridFactory {
 	public int getSharkReproduce() {
 		return sharkReproduce;
 	}
+	
+	private int checkIntValues(int var, String varName, int defaultVar){
+		if (var <= 0) {
+			var = defaultVar;
+			String message = String.format("Invalid or missing user values: "+varName+". Default values "+varName+" = %f will be used.", defaultVar);
+			AlertBox.displayError(message);
+		}
+		return var;
+	}
 
 	public BasicFiniteGrid makeGrid(Map<String,String> map) {
-		double percentFish = doubleParseErrors(map.get(myResources.getString("PercentFish")));
-		double percentShark = doubleParseErrors(map.get(myResources.getString("PercentShark")));
-		fishReproduce = intParseErrors(map.get(myResources.getString("FishReproduce")));
-		sharkDeath = intParseErrors(map.get(myResources.getString("SharkDeath")));
-		sharkReproduce = intParseErrors(map.get(myResources.getString("SharkReproduce")));
+		double percentFish = doubleParseErrors(map.get(myViewResources.getString("PercentFish")));
+		double percentShark = doubleParseErrors(map.get(myViewResources.getString("PercentShark")));
+		fishReproduce = intParseErrors(map.get(myViewResources.getString("FishReproduce")));
+		sharkDeath = intParseErrors(map.get(myViewResources.getString("SharkDeath")));
+		sharkReproduce = intParseErrors(map.get(myViewResources.getString("SharkReproduce")));
+		
+		
 
 		if (checkPercentError(percentFish + percentShark)) {
 			percentFish = Math.random() * .5;
@@ -46,21 +57,10 @@ public class WaterGridFactory extends GridFactory {
 			String message = String.format("Invalid or missing user values: PercentFish, PercentShark. Default values PercentFish = %f, PercentShark = %f will be used.", percentFish, percentShark);
 			AlertBox.displayError(message);
 		}
-		if (fishReproduce <= 0) {
-			fishReproduce = 2;
-			String message = String.format("Invalid or missing user values: fishReproduce. Default values fishReproduce = %f will be used.", fishReproduce);
-			AlertBox.displayError(message);
-		}
-		if (sharkDeath <= 0) {
-			sharkDeath = 2;
-			String message = String.format("Invalid or missing user values: sharkDeath. Default values sharkDeath = %f will be used.", sharkDeath);
-			AlertBox.displayError(message);
-		}
-		if (sharkReproduce <= 0) {
-			sharkReproduce = 8;
-			String message = String.format("Invalid or missing user values: sharkReproduce. Default values sharkReproduce = %f will be used.", sharkReproduce);
-			AlertBox.displayError(message);
-		}
+		fishReproduce = checkIntValues(fishReproduce,"fishReproduce", 2);
+		sharkDeath = checkIntValues(sharkDeath,"sharkDeath", 2);
+		sharkReproduce = checkIntValues(sharkReproduce,"sharkReproduce", 8);
+		
 		for (int r = 0; r < getRows(); r++) {
 			for (int c = 0; c < getColumns(); c++) {
 				double ranGen = Math.random();

@@ -15,14 +15,14 @@ import life.DeadCell;
  */
 public class LifeGridFactory extends GridFactory {
 
-	public LifeGridFactory(String cellShape, String bounds, String r, String c) {
-		super(cellShape, bounds, r, c);
+	public LifeGridFactory(String cellShape, String bounds, String r, String c, String neighbors) {
+		super(cellShape, bounds, r, c, neighbors);
 	}
 
 	public BasicFiniteGrid makeGrid(Map<String,String> map) {
-		double percentAlive = doubleParseErrors(map.get(myResources.getString("PercentAlive")));
+		double percentAlive = doubleParseErrors(map.get(myViewResources.getString("PercentAlive")));
 		if (checkPercentError(percentAlive)) {
-			percentAlive = Math.random() * .5;
+			percentAlive = doubleParseErrors(myDefaultValResources.getString("percentAlive"));
 			String message = String.format("Invalid or missing user values: percentAlive. Default values percentAlive = %f will be used.", percentAlive);
 			AlertBox.displayError(message);
 		}
