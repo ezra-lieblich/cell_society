@@ -78,6 +78,10 @@ public class XmlReader {
 		return getTextValue(root, "simulation_name");
 	}
 
+	/**
+	 * Makes a grid based on what XMLReader reads from the simulation_name tag in XML file.
+	 * @return
+	 */
 	public BasicFiniteGrid makeGrid() {
 
 		String sim = getTextValue(root, "simulation_name");
@@ -97,13 +101,10 @@ public class XmlReader {
 		} else if (sim.equals("Game of Life Specific")) {
 			return makeLifeSpecific(shape, bounds, rows, columns);
 		}
-		// should never go here
 		else {
 			return null;
 		}
 	}
-
-
 
 	private BasicFiniteGrid makeLife(String shape, String bounds, String rows, String columns){
 		factory = new LifeGridFactory(shape, bounds, rows, columns);
@@ -145,11 +146,10 @@ public class XmlReader {
 		factory = new CustomLifeGridFactory(shape, bounds, rows, columns);
 		HashMap<String,String> map = new HashMap<String, String>();
 		for (int i = 1; i < 13; i++) {
-//			System.out.println(getTextValue(root, "xValue"+i));
-//			System.out.println(getTextValue(root, "yValue"+i));
 			map.put("xValue"+i, getTextValue(root, "xValue"+i));
 			map.put("yValue"+i, getTextValue(root, "yValue"+i));
 		}
-		return ((CustomLifeGridFactory) factory).makeCustomGrid(map);
+		map.put("percentAlive", getTextValue(root, "percentAlive"));
+		return ((CustomLifeGridFactory) factory).makeGrid(map);
 	}
 }

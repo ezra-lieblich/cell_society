@@ -17,7 +17,7 @@ public class CustomLifeGridFactory extends GridFactory {
 		super(cellShape, bounds, r, c);
 	}
 	
-	public BasicFiniteGrid makeCustomGrid(Map<String,String> map) {
+	public BasicFiniteGrid makeGrid(Map<String,String> map) {
 		List<String> xList = new ArrayList<String>();
 		List<String> yList = new ArrayList<String>();
 		List<Integer> xIntList = new ArrayList<Integer>();
@@ -27,11 +27,6 @@ public class CustomLifeGridFactory extends GridFactory {
 			yIntList.add(intParseErrors(map.get(myResources.getString("yValue"+i))));
 		}	
 	
-//		if (checkPercentError(percentAlive)) {
-//			percentAlive = Math.random() * .5;
-//			String message = String.format("Invalid user values: percentAlive. Default values percentAlive = %f will be used.", percentAlive);
-//			AlertBox.displayError(message);
-//		}
 		for (int r = 0; r < getRows(); r++) {
 			for (int c = 0; c < getColumns(); c++) {
 				if ((xIntList.indexOf(r) != -1) && (xIntList.indexOf(r) == yIntList.indexOf(c))) {

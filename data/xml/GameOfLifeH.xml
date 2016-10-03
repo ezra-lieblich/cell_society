@@ -31,4 +31,6 @@
 	<YValue10>8</YValue10>
 	<yValue11>7</yValue11>
 	<yValue12>6</yValue12>
+	<percentAlive>0.5</percentAlive>
+	<percentDead>0.5</percentDead>
 </Simulation>
