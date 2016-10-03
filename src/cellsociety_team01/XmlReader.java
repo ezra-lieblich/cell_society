@@ -94,8 +94,8 @@ public class XmlReader {
 			return makeWaTor(shape,bounds,rows,columns);
 		} else if (sim.equals("XO Segregation")) {
 			return makeXO(shape,bounds,rows,columns);
-//		} else if (sim.equals("Game of Life Specific")) {
-//			return makeLifeSpecific(shape, bounds, rows, columns);
+		} else if (sim.equals("Game of Life Specific")) {
+			return makeLifeSpecific(shape, bounds, rows, columns);
 		}
 		// should never go here
 		else {
@@ -139,5 +139,17 @@ public class XmlReader {
 		map.put("percentO", getTextValue(root, "percentO"));
 		map.put("similarPercentage", getTextValue(root, "similarPercentage"));
 		return ((XOGridFactory) factory).makeGrid(map);
+	}
+	
+	private BasicFiniteGrid makeLifeSpecific(String shape, String bounds, String rows, String columns) {
+		factory = new CustomLifeGridFactory(shape, bounds, rows, columns);
+		HashMap<String,String> map = new HashMap<String, String>();
+		for (int i = 1; i < 13; i++) {
+//			System.out.println(getTextValue(root, "xValue"+i));
+//			System.out.println(getTextValue(root, "yValue"+i));
+			map.put("xValue"+i, getTextValue(root, "xValue"+i));
+			map.put("yValue"+i, getTextValue(root, "yValue"+i));
+		}
+		return ((CustomLifeGridFactory) factory).makeCustomGrid(map);
 	}
 }
