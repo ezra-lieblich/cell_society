@@ -146,7 +146,6 @@ public class GridController {
 		setupViewObject(vbox);
 		toolbar = new Toolbar(root, this);
 		slider.addBoxtoRoot(vbox);
-		JOptionPane.showMessageDialog(null,"hi");
 		return root;
 	}
 
