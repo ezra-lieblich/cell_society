@@ -15,10 +15,10 @@ public class GridFactory {
 	private String bounds;
 	private String cellShape;
 
-	public GridFactory(String ce, String b, int r, int c) {
+	public GridFactory(String ce, String b, String r, String c) {
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "View");
-		rows = r;
-		columns = c;
+		rows = intParseErrors(r);
+		columns = intParseErrors(c);
 		bounds = b;
 		cellShape = ce;
 		setGridType(cellShape, bounds);

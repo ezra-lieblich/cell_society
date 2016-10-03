@@ -10,7 +10,7 @@ import java.util.Map;
 
 import org.w3c.dom.Element;
 
-import factories.XOGridFactory;
+import factories.*;
 import grids.BasicFiniteGrid;
 import grids.BasicToroidalGrid;
 import grids.HexagonalFiniteGrid;
@@ -93,12 +93,15 @@ public class GridController {
 			logic = new TreeGridLogic(grid);
 			slider = new TreeSliders(this);
 		} else if (simulationName.equals("WaTor World")) {
-			logic = new WaterGridLogic(grid, reader.getFishReproduce(), reader.getSharkDeath(),
-					reader.getSharkReproduce());
+
+			logic = new WaterGridLogic(grid, ((WaterGridFactory)factory).getFishReproduce(), ((WaterGridFactory)factory).getSharkDeath(),
+					((WaterGridFactory)factory).getSharkReproduce());
 			slider = new WaterSliders(this);
+
 		} else if (simulationName.equals("XO Segregation")) {
-			logic = new XOGridLogic(grid, reader.getPercentSimilar());
+			logic = new XOGridLogic(grid, ((XOGridFactory)factory).getSimilarPercentage());
 			slider = new XOSliders(this);
+
 		} else {
 			// TODO: throw error
 
@@ -161,46 +164,6 @@ public class GridController {
 	public String getTitle() {
 		return title;
 	}
-
-	// // for testing, creates a water grid with random types of cells
-	// private BasicFiniteGrid createRandomWaterGrid(int rows, int columns) {
-	// BasicFiniteGrid temp = new HexagonalFiniteGrid(rows, columns);
-	// for (int r = 0; r < rows; r++) {
-	// for (int c = 0; c < columns; c++) {
-	// int ranGen = (int) (Math.random() * 10);
-	// if(ranGen<=1)
-	// temp.setGridIndex(new Shark(r, c), r, c);
-	// else if(1<ranGen&&ranGen<=8)
-	// temp.setGridIndex(new Fish(r, c), r, c);
-	// else
-	// temp.setGridIndex(new water.EmptyCell(r, c), r, c);
-	// }
-	// }
-	// return temp;
-	// }
-
-	// private BasicFiniteGrid createXOGrid(int rows, int columns) {
-	// BasicFiniteGrid temp = new BasicFiniteGrid(rows, columns);
-	// for (int r = 0; r < rows; r++) {
-	// for (int c = 0; c < columns; c++) {
-	// int ranGen = (int) (Math.random() * 3);
-	// switch (ranGen) {
-	// case 0:
-	// temp.setGridIndex(new Clear(r, c), r, c);
-	// break;
-	// case 1:
-	// temp.setGridIndex(new Group1(r, c), r, c);
-	// break;
-	// case 2:
-	// temp.setGridIndex(new Group2(r, c), r, c);
-	// break;
-	// default:
-	// break;
-	// }
-	// }
-	// }
-	// return temp;
-	// }
 
 	public void startSimulation() {
 		animation.play();

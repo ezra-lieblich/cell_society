@@ -14,9 +14,14 @@ import xo.Group2;
  * @author Eric Song
  */
 public class XOGridFactory extends GridFactory {
+	private double similarPercentage;
 
-	public XOGridFactory(String cellShape, String bounds, int r, int c) {
+	public XOGridFactory(String cellShape, String bounds, String r, String c) {
 		super(cellShape, bounds, r, c);
+	}
+
+	public double getSimilarPercentage() {
+		return similarPercentage;
 	}
 
 
