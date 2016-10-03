@@ -19,7 +19,7 @@ public class BasicFiniteGrid {
 
 	public BasicFiniteGrid(int x, int y, String neighbor) {
 		if (!neighbor.equals("all") && !neighbor.equals("cardinal") && !neighbor.equals("diagonal")) {
-			AlertBox.displayError("Missing or invalid neighbor parameter. Default is set to all neighbors");
+			//AlertBox.displayError("Missing or invalid neighbor parameter. Default is set to all neighbors");
 			neighborType = "all";
 		} else
 			neighborType = neighbor;
