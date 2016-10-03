@@ -4,6 +4,7 @@
 	<simulation_name>WaTor World</simulation_name>
 	<simulation_title>Test Case 1</simulation_title>
 	<simulation_author>Christopher Lu</simulation_author>
+	<!-- anything under here can be changed/commented and error handling should fix it-->
 	<rows>40</rows>
 	<columns>40</columns>
 	<shape>squ</shape>
@@ -12,5 +13,6 @@
 	<percentShark>0.10</percentShark>
 	<fishReproduce>2</fishReproduce>
 	<sharkDeath>2</sharkDeath>
-	<sharkReproduce>8</sharkReproduce>
+	<sharkReproduce>6</sharkReproduce>
+	<neighbors>cardinal</neighbors>
 </Simulation>

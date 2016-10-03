@@ -16,23 +16,23 @@ import tree.TreeCell;
  */
 public class TreeGridFactory extends GridFactory {
 
-	public TreeGridFactory(String cellShape, String bounds, String r, String c) {
-		super(cellShape, bounds, r, c);
+	public TreeGridFactory(String cellShape, String bounds, String r, String c, String neighbors) {
+		super(cellShape, bounds, r, c, neighbors);
 	}
 
 
 	public BasicFiniteGrid makeGrid(Map<String,String> map) {
-		double percentTree = doubleParseErrors(map.get(myResources.getString("PercentTree")));
-		double percentBurn = doubleParseErrors(map.get(myResources.getString("PercentBurn")));
-		double probCatch = doubleParseErrors(map.get(myResources.getString("ProbCatch")));
+		double percentTree = doubleParseErrors(map.get(myViewResources.getString("PercentTree")));
+		double percentBurn = doubleParseErrors(map.get(myViewResources.getString("PercentBurn")));
+		double probCatch = doubleParseErrors(map.get(myViewResources.getString("ProbCatch")));
 		if (checkPercentError(percentTree + percentBurn)) {
-			percentTree = Math.random() * .5;
-			percentBurn = Math.random() *.5;
+			percentTree = doubleParseErrors(myDefaultValResources.getString("percentTree"));
+			percentBurn = doubleParseErrors(myDefaultValResources.getString("percentBurn"));
 			String message = String.format("Invalid or missing user values: percentTree, percentBurn. Default values percentTree = %f, percentBurn = %f will be used.", percentTree, percentBurn);
 			AlertBox.displayError(message);
 		}
 		if (checkPercentError(probCatch)) {
-			probCatch = Math.random() * .5;
+			probCatch = doubleParseErrors(myDefaultValResources.getString("probCatch"));
 			String message = String.format("Invalid or missing user values: probCatch. Default values probCatch = %f will be used.", probCatch);
 			AlertBox.displayError(message);
 		}

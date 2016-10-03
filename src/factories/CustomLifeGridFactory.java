@@ -13,8 +13,8 @@ import life.DeadCell;
 
 public class CustomLifeGridFactory extends GridFactory {
 
-	public CustomLifeGridFactory(String cellShape, String bounds, String r, String c) {
-		super(cellShape, bounds, r, c);
+	public CustomLifeGridFactory(String cellShape, String bounds, String r, String c, String neighbors) {
+		super(cellShape, bounds, r, c, neighbors);
 	}
 	
 	public BasicFiniteGrid makeGrid(Map<String,String> map) {
@@ -23,8 +23,9 @@ public class CustomLifeGridFactory extends GridFactory {
 		List<Integer> xIntList = new ArrayList<Integer>();
 		List<Integer> yIntList = new ArrayList<Integer>();
 		for (int i = 1; i < 13; i++) {
-			xIntList.add(intParseErrors(map.get(myResources.getString("xValue"+Integer.toString(i)))));
-			yIntList.add(intParseErrors(map.get(myResources.getString("yValue"+Integer.toString(i)))));
+			xIntList.add(intParseErrors(map.get(myViewResources.getString("xValue"+Integer.toString(i)))));
+			yIntList.add(intParseErrors(map.get(myViewResources.getString("yValue"+Integer.toString(i)))));
+			System.out.println(i);
 		}
 		for (int r = 0; r < getRows(); r++) {
 			for (int c = 0; c < getColumns(); c++) {

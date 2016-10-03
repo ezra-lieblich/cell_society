@@ -11,6 +11,9 @@ public class HexagonalFiniteGrid extends BasicFiniteGrid {
 		super(x, y, "all");
 		if(neighbor.equals("cardinal")||neighbor.equals("diagonal"))
 			AlertBox.displayError("Hexagonal grids may not implement cardinal nor diagonal neighbors");
+		if(!neighbor.equals("all"))
+			AlertBox.displayError("Missing or invalid neighbor parameter. Default is set to all neighbors");
+
 	}
 
 	public ArrayList<Cell> getNeighbors(int x, int y) {

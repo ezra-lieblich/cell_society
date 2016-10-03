@@ -8,20 +8,22 @@ import grids.*;
 public class GridFactory {
     public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 
-    protected ResourceBundle myResources;
+    protected ResourceBundle myViewResources;
+    protected ResourceBundle myDefaultValResources;
 	private int rows;
 	private int columns;
 	private BasicFiniteGrid grid; 
 	private String bounds;
 	private String cellShape;
 
-	public GridFactory(String ce, String b, String r, String c) {
-		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "View");
+	public GridFactory(String ce, String b, String r, String c, String neighbors) {
+		myViewResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "View");
+		myDefaultValResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "DefaultValues");
 		rows = intParseErrors(r);
 		columns = intParseErrors(c);
 		bounds = b;
 		cellShape = ce;
-		setGridType(cellShape, bounds);
+		setGridType(cellShape, bounds,neighbors);
 	}
 	
 	public String getCellShape(){
@@ -36,18 +38,18 @@ public class GridFactory {
 		return columns;
 	}
 
-	private void setGridType(String cellShape, String bounds) {
+	private void setGridType(String cellShape, String bounds,String neighbors) {
 		if(bounds.equals("finite")){
 			if(cellShape.equals("hex"))
-				grid = new HexagonalFiniteGrid(columns,rows,"");
+				grid = new HexagonalFiniteGrid(columns,rows,neighbors);
 			else
-				grid = new BasicFiniteGrid(columns,rows,"");
+				grid = new BasicFiniteGrid(columns,rows,neighbors);
 		}
 		else{
 			if(cellShape.equals("hex"))
-				grid = new HexagonalToroidalGrid(columns,rows,"");
+				grid = new HexagonalToroidalGrid(columns,rows,neighbors);
 			else
-				grid = new BasicToroidalGrid(columns,rows,"");
+				grid = new BasicToroidalGrid(columns,rows,neighbors);
 		}
 	}
 	

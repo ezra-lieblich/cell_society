@@ -23,7 +23,6 @@ neighborType: all(default), cardinal, diagonal
 Conway's Game of Life
 
 percentAlive: decimal between 0 and 1
-percentDead: decimal between 0 and 1
 
 
 Spreading of Fire
