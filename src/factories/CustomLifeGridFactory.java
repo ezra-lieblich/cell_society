@@ -23,10 +23,9 @@ public class CustomLifeGridFactory extends GridFactory {
 		List<Integer> xIntList = new ArrayList<Integer>();
 		List<Integer> yIntList = new ArrayList<Integer>();
 		for (int i = 1; i < 13; i++) {
-			xIntList.add(intParseErrors(map.get(myResources.getString("xValue"+i))));
-			yIntList.add(intParseErrors(map.get(myResources.getString("yValue"+i))));
-		}	
-	
+			xIntList.add(intParseErrors(map.get(myResources.getString("xValue"+Integer.toString(i)))));
+			yIntList.add(intParseErrors(map.get(myResources.getString("yValue"+Integer.toString(i)))));
+		}
 		for (int r = 0; r < getRows(); r++) {
 			for (int c = 0; c < getColumns(); c++) {
 				if ((xIntList.indexOf(r) != -1) && (xIntList.indexOf(r) == yIntList.indexOf(c))) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Simulation SimulationType="GameOfLife">
+	<SimType>GameOfLife</SimType>
 	<simulation_name>Game Of Life Specific</simulation_name>
 	<simulation_title>Test Case 1</simulation_title>
 	<simulation_author>Christopher Lu</simulation_author>

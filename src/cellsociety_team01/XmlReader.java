@@ -75,7 +75,7 @@ public class XmlReader {
 	}
 
 	public String getSim() {
-		return getTextValue(root, "simulation_name");
+		return getTextValue(root, "SimType");
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class XmlReader {
 			return makeWaTor(shape,bounds,rows,columns);
 		} else if (sim.equals("XO Segregation")) {
 			return makeXO(shape,bounds,rows,columns);
-		} else if (sim.equals("Game of Life Specific")) {
+		} else if (sim.equals("Game Of Life Specific")) {
 			return makeLifeSpecific(shape, bounds, rows, columns);
 		}
 		else {
@@ -146,6 +146,7 @@ public class XmlReader {
 		factory = new CustomLifeGridFactory(shape, bounds, rows, columns);
 		HashMap<String,String> map = new HashMap<String, String>();
 		for (int i = 1; i < 13; i++) {
+			System.out.println("hello");
 			map.put("xValue"+i, getTextValue(root, "xValue"+i));
 			map.put("yValue"+i, getTextValue(root, "yValue"+i));
 		}
