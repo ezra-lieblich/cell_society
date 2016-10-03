@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Simulation SimulationType="GameOfLife">
+	<simulation_name>Game Of Life Specific</simulation_name>
+	<simulation_title>Test Case 1</simulation_title>
+	<simulation_author>Christopher Lu</simulation_author>
+	<rows>40</rows>
+	<columns>40</columns>
+	<shape>hex</shape>
+	<bounds>finite</bounds>
+	<x type = "array">
+		<xValue>3</xValue>
+		<xValue>3</xValue>
+		<xValue>3</xValue>
+		<xValue>3</xValue>
+		<xValue>3</xValue>
+		<xValue>4</xValue>
+		<xValue>5</xValue>
+		<xValue>6</xValue>
+		<xValue>6</xValue>
+		<xValue>6</xValue>
+		<xValue>6</xValue>
+		<xValue>6</xValue>
+	</x>
+	<y type = "array">
+		<yValue>10</yValue>
+		<yValue>9</yValue>
+		<YValue>8</YValue>
+		<yValue>7</yValue>
+		<yValue>6</yValue>
+		<yvalue>8</yvalue>
+		<yValue>8</yValue>
+		<yValue>10</yValue>
+		<yValue>9</yValue>
+		<YValue>8</YValue>
+		<yValue>7</yValue>
+		<yValue>6</yValue>
+	</y>
+	<s type = "array">
+		<state>alive</state>
+		<state>alive</state>
+		<state>alive</state>
+		<state>alive</state>
+		<state>alive</state>
+		<state>alive</state>
+		<state>alive</state>
+		<state>alive</state>
+		<state>alive</state>
+		<state>alive</state>
+		<state>alive</state>
+		<state>alive</state>
+	</s>
+</Simulation>
