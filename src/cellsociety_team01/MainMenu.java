@@ -2,6 +2,7 @@ package cellsociety_team01;
 
 import javafx.scene.Scene;
 import java.io.File;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,32 +19,34 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class MainMenu {
-
+    private static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 	private static final int menuWidth = 600;
 	private static final int menuHeight = 400;
 	private Scene scene;
 	private BorderPane root;
 	private GridController controller;
 	private Stage stage;
+    private ResourceBundle myResources;
+
 
 	public MainMenu(GridController controller, Stage stage) {
 		this.stage = stage;
 		this.controller = controller;
-		root = new BorderPane();
-		scene = new Scene(root, menuWidth, menuHeight);
+		this.myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "View");
+		this.root = new BorderPane();
+		this.scene = new Scene(root, menuWidth, menuHeight);
 	}
 
 	public Scene init() {
 		root.getChildren().add(createBackgroundImage());
 		root.setCenter(createText());
 		
-		Button b = createButton("Choose File");
+		Button b = createButton(myResources.getString("ChooseFile"));
 		BorderPane.setAlignment(b, Pos.BASELINE_CENTER);
 		root.setBottom(b);
 		return scene;
 	}
 	
-	//private Button createButton(String buttonText, EventHandler<ActionEvent> handler){
 	private Button createButton(String buttonText){
 		Button button = new Button(buttonText);
 		FileChooser fileChooser = new FileChooser();
@@ -54,7 +57,6 @@ public class MainMenu {
 	                public void handle(final ActionEvent e) {             
 	                    File file = fileChooser.showOpenDialog(stage);
 	                    if (file != null) {
-	                    	System.out.println(file.getName());
 	                        controller.parseFile(file);
 	                    }
 	                }
@@ -62,14 +64,10 @@ public class MainMenu {
 		return button;
 	}
 	
-//	private void fileChooser(){
-//		
-//		fileChooser.setTitle("Open Resource File");
-//		fileChooser.showOpenDialog(stage);
-//	}
+
 
 	private Text createText() {
-		Text t = new Text("Cell Society");
+		Text t = new Text(myResources.getString("Title"));
 		t.setFont(Font.font ("Verdana", 70));
 		t.setFill(Color.WHITE);
 		return t;

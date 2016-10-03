@@ -95,8 +95,12 @@ public class CellGraph {
 	 * called by controller when the user resets the simulation
 	 */
 	public void resetGraph() {
-		graph.getData().clear();
+		for (String name : cellSizes.keySet()) {
+			cellPlots.get(name).getData().clear();
+		}
 		stepNumber = 0;
+		x_axis.setLowerBound(0);
+		x_axis.setUpperBound(MAX_DATA_POINTS);
 	}
 	
 }

@@ -8,6 +8,11 @@
 	<columns>40</columns>
 	<shape>hex</shape>
 	<bounds>finite</bounds>
+<<<<<<< HEAD
 	<percentAlive>0.7</percentAlive>
 	<neighbors>all</neighbors>
+=======
+	<percentAlive>.5</percentAlive>
+	<percentDead>.65</percentDead>
+>>>>>>> 1d3a5072786c10d8f9f3a8f9e92b4bbd2462a008
 </Simulation>
