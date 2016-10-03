@@ -9,8 +9,8 @@ import javafx.scene.layout.Pane;
  *
  */
 public class XOSliders extends SliderProperties{
-	public XOSliders(Pane root, GridController control) {
-		super(root, control);
+	public XOSliders(GridController control) {
+		super(control);
 		createSliders();
 	}
 	
@@ -18,8 +18,8 @@ public class XOSliders extends SliderProperties{
 	 * Create Sliders for %X %O and %Similar
 	 */
 	protected void createSliders() {
-		super.addSlider(0, 1, "%X");
-		super.addSlider(0, 1, "%O");
-		super.addSlider(0, 1, "%Similar");
+		super.addSlider(0, 1, myResources.getString("PercentX"));
+		super.addSlider(0, 1, myResources.getString("PercentO"));
+		super.addSlider(0, 1, myResources.getString("SimilarPercentage"));
 	}
 }

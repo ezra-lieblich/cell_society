@@ -8,8 +8,8 @@ import javafx.scene.layout.Pane;
  *
  */
 public class TreeSliders extends SliderProperties{
-	public TreeSliders(Pane root, GridController control) {
-		super(root, control);
+	public TreeSliders(GridController control) {
+		super(control);
 		createSliders();
 	}
 	
@@ -17,8 +17,8 @@ public class TreeSliders extends SliderProperties{
 	 * Creates sliders for %Tree %Burn and %Catch rate
 	 */
 	protected void createSliders() {
-		super.addSlider(0, 1, "%Tree");
-		super.addSlider(0, 1, "%Burn");
-		super.addSlider(0, 1, "%Catch");	
+		super.addSlider(0, 1, myResources.getString("PercentTree"));
+		super.addSlider(0, 1, myResources.getString("PercentBurn"));
+		super.addSlider(0, 1, myResources.getString("ProbCatch"));	
 	}
 }

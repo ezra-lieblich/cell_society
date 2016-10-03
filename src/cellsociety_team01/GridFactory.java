@@ -1,8 +1,14 @@
 package cellsociety_team01;
 
+import java.util.Map;
+import java.util.ResourceBundle;
+
 import grids.*;
 
 public class GridFactory {
+    public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+
+    protected ResourceBundle myResources;
 	private int rows;
 	private int columns;
 	private BasicFiniteGrid grid; 
@@ -10,6 +16,7 @@ public class GridFactory {
 	private String cellShape;
 
 	public GridFactory(String ce, String b, int r, int c) {
+		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "View");
 		rows = r;
 		columns = c;
 		bounds = b;
@@ -80,5 +87,8 @@ public class GridFactory {
 		return totalPercent > 1.00;
 	}
 	
+	protected BasicFiniteGrid makeGrid(Map<String, String> map) {
+		return null;
+	}
 
 }

@@ -26,24 +26,29 @@ public abstract class SliderProperties {
 
 	private Pane box;
     protected ResourceBundle myResources;
-    private GridController controller;
     //Map of all the properties that the sliders have. Passed to controller when reset
     private Map<String, String> propertyValues;
 
     /**
      * Creates a VBox to handle place all the elements. 
      * Also adds a reset button 
-     * @param root The VBox that holds the simulation aspects
      * @param control controller to call when we reset button
      */
-	public SliderProperties(Pane root, GridController control) {
-		controller = control;
+	public SliderProperties(GridController control) {
 		box = new VBox();
 		propertyValues = new HashMap<String, String>();
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "View");
-		addButton(myResources.getString("ResetButton"), event -> controller.resetSimulation(propertyValues));
+		addButton(myResources.getString("ResetButton"), event -> control.resetSimulation(propertyValues));
+	}
+	
+	/**
+	 * Adds Box to the root view. Separate method to give orientation more flexibility
+	 * @param root Pane that we add Sliders to
+	 */
+	public void addBoxtoRoot(Pane root) {
 		root.getChildren().add(box);
 	}
+	
 	/**
 	 * Creates a button
 	 * @param text Text for the name of the button
@@ -80,7 +85,6 @@ public abstract class SliderProperties {
 			double value = Math.round(slider.getValue() *100.0) / 100.0;
 			cell_percentage.setText(Double.toString(value));
 			updatePropertyFile(slider_name, value);
-			System.out.println(propertyValues);
 		});
 		box.getChildren().add(result);
 	}
@@ -92,16 +96,15 @@ public abstract class SliderProperties {
 	protected void addSpinner(String name) {
 		HBox result = new HBox(2);
 		result.getChildren().add(new Label(name));
-		Spinner<Double> spinner = new Spinner<Double>();
-		SpinnerValueFactory.DoubleSpinnerValueFactory spinnerValue = 
-				new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 100, 4);
+		Spinner<Integer> spinner = new Spinner<Integer>();
+		SpinnerValueFactory.IntegerSpinnerValueFactory spinnerValue = 
+				new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 4);
 		spinnerValue.setAmountToStepBy(1);
 		spinner.setValueFactory(spinnerValue);
-		updatePropertyFile(name, spinnerValue.getValue());
+		propertyValues.put(name, Integer.toString(spinnerValue.getValue()));
 		spinner.setOnMouseReleased(e -> {
-			double value = spinnerValue.getValue();
-			updatePropertyFile(name, value);
-			System.out.println(propertyValues);
+			Integer value = spinnerValue.getValue();
+			propertyValues.put(name, Integer.toString(value));
 		});
 		result.getChildren().add(spinner);
 		box.getChildren().add(result);

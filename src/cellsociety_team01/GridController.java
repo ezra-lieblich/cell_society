@@ -26,7 +26,9 @@ import water.*;
 import xo.*;
 import water.EmptyCell;
 import life.*;
+import sliders.LifeSliders;
 import sliders.SliderProperties;
+import sliders.TreeSliders;
 import sliders.WaterSliders;
 import sliders.XOSliders;
 import tree.*;
@@ -52,6 +54,7 @@ public class GridController {
 	private GridFactory factory;
 	private String simulationName;
 	private BasicFiniteGrid grid;
+	private SliderProperties slider;
 
 	public GridController(Stage stage) {
 		this.stage = stage;
@@ -85,13 +88,17 @@ public class GridController {
 		String simulationName = reader.getSim();
 		if (simulationName.equals("Game Of Life")) {
 			logic = new LifeGridLogic(grid);
+			slider = new LifeSliders(this);
 		} else if (simulationName.equals("Spread Of Fire")) {
 			logic = new TreeGridLogic(grid);
+			slider = new TreeSliders(this);
 		} else if (simulationName.equals("WaTor World")) {
 			logic = new WaterGridLogic(grid, reader.getFishReproduce(), reader.getSharkDeath(),
 					reader.getSharkReproduce());
+			slider = new WaterSliders(this);
 		} else if (simulationName.equals("XO Segregation")) {
 			logic = new XOGridLogic(grid, reader.getPercentSimilar());
+			slider = new XOSliders(this);
 		} else {
 			// TODO: throw error
 
@@ -127,13 +134,13 @@ public class GridController {
 	}
 
 	private BorderPane setupView(BasicFiniteGrid grid) {
-		BorderPane root = new BorderPane();
 		VBox vbox = new VBox(5);
+		BorderPane root = new BorderPane();
 		root.setLeft(vbox);
 		graph = new CellGraph(vbox, logic.getCells());
 		setupViewObject(vbox);
 		toolbar = new Toolbar(root, this);
-		SliderProperties slider = new WaterSliders(vbox, this);
+		slider.addBoxtoRoot(vbox);
 		return root;
 	}
 
@@ -215,13 +222,11 @@ public class GridController {
 	}
 
 	public void resetSimulation(Map<String, String> values) {
-		// Controller will tell grid to reset itself to the original
-		// implementation
-		// need to set original grid to back to
-		// g.resetGrid();
-		//Need to call 		graph.setupPlots();
 		animation.pause();
 		graph.resetGraph();
+		factory.makeGrid(values);
+		graph.setupPlots(logic.getCells());
+		view.step();
 	}
 
 	public void changeSimulation() {

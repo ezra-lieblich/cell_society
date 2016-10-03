@@ -19,7 +19,7 @@ public class LifeGridFactory extends GridFactory {
 	}
 
 	public BasicFiniteGrid makeGrid(Map<String,String> map) {
-		double percentAlive = doubleParseErrors(map.get("percentAlive"));
+		double percentAlive = doubleParseErrors(map.get(myResources.getString("PercentAlive")));
 		for (int r = 0; r < getRows(); r++) {
 			for (int c = 0; c < getColumns(); c++) {
 				double ranGen = Math.random();
