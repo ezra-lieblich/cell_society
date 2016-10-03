@@ -13,25 +13,20 @@ import life.DeadCell;
 
 public class CustomLifeGridFactory extends GridFactory {
 
-	public CustomLifeGridFactory(String cellShape, String bounds, String r, String c) {
-		super(cellShape, bounds, r, c);
+	public CustomLifeGridFactory(String cellShape, String bounds, String r, String c, String neighbors) {
+		super(cellShape, bounds, r, c, neighbors);
 	}
 	
-	public BasicFiniteGrid makeCustomGrid(Map<String,String> map) {
+	public BasicFiniteGrid makeGrid(Map<String,String> map) {
 		List<String> xList = new ArrayList<String>();
 		List<String> yList = new ArrayList<String>();
 		List<Integer> xIntList = new ArrayList<Integer>();
 		List<Integer> yIntList = new ArrayList<Integer>();
 		for (int i = 1; i < 13; i++) {
-			xIntList.add(intParseErrors(map.get(myResources.getString("xValue"+i))));
-			yIntList.add(intParseErrors(map.get(myResources.getString("yValue"+i))));
-		}	
-	
-//		if (checkPercentError(percentAlive)) {
-//			percentAlive = Math.random() * .5;
-//			String message = String.format("Invalid user values: percentAlive. Default values percentAlive = %f will be used.", percentAlive);
-//			AlertBox.displayError(message);
-//		}
+			xIntList.add(intParseErrors(map.get(myViewResources.getString("xValue"+Integer.toString(i)))));
+			yIntList.add(intParseErrors(map.get(myViewResources.getString("yValue"+Integer.toString(i)))));
+			System.out.println(i);
+		}
 		for (int r = 0; r < getRows(); r++) {
 			for (int c = 0; c < getColumns(); c++) {
 				if ((xIntList.indexOf(r) != -1) && (xIntList.indexOf(r) == yIntList.indexOf(c))) {

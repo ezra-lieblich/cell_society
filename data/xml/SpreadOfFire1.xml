@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Simulation SimulationType="SpreadOfFire">
+	<SimType>SpreadOfFire</SimType>
 	<simulation_name>Spread Of Fire</simulation_name>
 	<simulation_title>Test Case 1</simulation_title>
 	<simulation_author>Christopher Lu</simulation_author>
+	<!-- anything under here can be changed/commented and error handling should fix it-->
 	<rows>60</rows>
 	<columns>60</columns>
 	<shape>tri</shape>
 	<bounds>finite</bounds>
-	<!--  probCatch>0.5</probCatch-->
+	<probCatch>0.5</probCatch>
 	<percentTree>0.895</percentTree>
 	<percentBurn>0.005</percentBurn>
+	<neighbors>diagonal</neighbors>
 </Simulation>

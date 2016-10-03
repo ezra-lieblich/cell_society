@@ -112,22 +112,20 @@ public class GridController {
 	}
 
 	private void setupLogicObject(int index) {
-		String simulationName = reader.getSim();
-		if (simulationName.equals("Game Of Life")) {
+		String simulationType = reader.getSim();
+		if (simulationType.equals("GameOfLife")) {
 			logics.add(new LifeGridLogic(grids.get(index)));
 			sliders.add(new LifeSliders(this));
-		} else if (simulationName.equals("Spread Of Fire")) {
+		} else if (simulationType.equals("SpreadOfFire")) {
 			logics.add(new TreeGridLogic(grids.get(index)));
 			sliders.add(new TreeSliders(this));
-		} else if (simulationName.equals("WaTor World")) {
+		} else if (simulationType.equals("WaTorWorld")) {
 			logics.add(new WaterGridLogic(grids.get(index), ((WaterGridFactory)factories.get(index)).getFishReproduce(), ((WaterGridFactory)factories.get(index)).getSharkDeath(),
 					((WaterGridFactory)factories.get(index)).getSharkReproduce()));
 			sliders.add(new WaterSliders(this));
-
-		} else if (simulationName.equals("XO Segregation")) {
+		} else if (simulationType.equals("XO")) {
 			logics.add(new XOGridLogic(grids.get(index), ((XOGridFactory)factories.get(index)).getSimilarPercentage()));
 			sliders.add(new XOSliders(this));
-
 		} else {
 			// TODO: throw error
 		}
@@ -135,7 +133,7 @@ public class GridController {
 	}
 
 	private void setupViewObject(VBox vbox, int index) {
-		
+		System.out.println(factories.get(index));
 		String cellShape = factories.get(index).getCellShape();
 		if (cellShape.equals("squ")) {
 			views.add(new SquareGridView(vbox, grids.get(index), screenWidth, screenHeight));

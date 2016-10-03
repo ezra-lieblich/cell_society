@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Simulation SimulationType="GameOfLife">
+	<SimType>GameOfLife</SimType>
 	<simulation_name>Game Of Life Specific</simulation_name>
 	<simulation_title>Test Case 1</simulation_title>
 	<simulation_author>Christopher Lu</simulation_author>
@@ -21,14 +22,16 @@
 	<xValue12>6</xValue12>
 	<yValue1>10</yValue1>
 	<yValue2>9</yValue2>
-	<YValue3>8</YValue3>
+	<yValue3>8</yValue3>
 	<yValue4>7</yValue4>
 	<yValue5>6</yValue5>
-	<yvalue6>8</yvalue6>
+	<yValue6>8</yValue6>
 	<yValue7>8</yValue7>
 	<yValue8>10</yValue8>
 	<yValue9>9</yValue9>
-	<YValue10>8</YValue10>
+	<yValue10>8</yValue10>
 	<yValue11>7</yValue11>
 	<yValue12>6</yValue12>
+	<percentAlive>0.5</percentAlive>
+	<percentDead>0.5</percentDead>
 </Simulation>

@@ -17,8 +17,8 @@ import xo.Group2;
 public class XOGridFactory extends GridFactory {
 	private double similarPercentage;
 
-	public XOGridFactory(String cellShape, String bounds, String r, String c) {
-		super(cellShape, bounds, r, c);
+	public XOGridFactory(String cellShape, String bounds, String r, String c, String neighbor) {
+		super(cellShape, bounds, r, c, neighbor);
 	}
 
 	public double getSimilarPercentage() {
@@ -27,13 +27,18 @@ public class XOGridFactory extends GridFactory {
 
 
 	public BasicFiniteGrid makeGrid(Map<String,String> map) {
-		double percentX = doubleParseErrors(map.get(myResources.getString("PercentX")));
-		double percentO = doubleParseErrors(map.get(myResources.getString("PercentO")));
-		similarPercentage = doubleParseErrors(map.get(myResources.getString("SimilarPercentage")));
+		double percentX = doubleParseErrors(map.get(myViewResources.getString("PercentX")));
+		double percentO = doubleParseErrors(map.get(myViewResources.getString("PercentO")));
+		similarPercentage = doubleParseErrors(map.get(myViewResources.getString("SimilarPercentage")));
 		if (checkPercentError(percentX + percentO)) {
-			percentX = Math.random() * .5;
-			percentO = Math.random() * .5;
+			percentX = doubleParseErrors(myDefaultValResources.getString("percentX"));
+			percentO = doubleParseErrors(myDefaultValResources.getString("percentO"));
 			String message = String.format("Invalid or missing user values: percentX, percentO. Default values percentX = %f, percentO = %f will be used.", percentX, percentO);
+			AlertBox.displayError(message);
+		}
+		if(checkPercentError(similarPercentage)){
+			similarPercentage = doubleParseErrors(myDefaultValResources.getString("similarPercentage"));
+			String message = String.format("Invalid or missing user values: similarPercentage. Default values similarPercentage = %f will be used.", similarPercentage);
 			AlertBox.displayError(message);
 		}
 		for (int r = 0; r < getRows(); r++) {
