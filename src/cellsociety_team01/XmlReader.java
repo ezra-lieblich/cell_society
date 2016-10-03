@@ -69,7 +69,8 @@ public class XmlReader {
 			String a = nodeList.item(0).getTextContent();
 			return a;
 		} else {
-			throw new XMLParserException("XML file has no data for parameter " + tagName);
+			//this will force default value to be set
+			return "-1";
 		}
 	}
 

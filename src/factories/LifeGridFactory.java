@@ -23,7 +23,7 @@ public class LifeGridFactory extends GridFactory {
 		double percentAlive = doubleParseErrors(map.get(myResources.getString("PercentAlive")));
 		if (checkPercentError(percentAlive)) {
 			percentAlive = Math.random() * .5;
-			String message = String.format("Invalid user values: percentAlive. Default values percentAlive = %f will be used.", percentAlive);
+			String message = String.format("Invalid or missing user values: percentAlive. Default values percentAlive = %f will be used.", percentAlive);
 			AlertBox.displayError(message);
 		}
 		for (int r = 0; r < getRows(); r++) {

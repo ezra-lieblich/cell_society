@@ -28,12 +28,12 @@ public class TreeGridFactory extends GridFactory {
 		if (checkPercentError(percentTree + percentBurn)) {
 			percentTree = Math.random() * .5;
 			percentBurn = Math.random() *.5;
-			String message = String.format("Invalid user values: percentTree, percentBurn. Default values percentTree = %f, percentBurn = %f will be used.", percentTree, percentBurn);
+			String message = String.format("Invalid or missing user values: percentTree, percentBurn. Default values percentTree = %f, percentBurn = %f will be used.", percentTree, percentBurn);
 			AlertBox.displayError(message);
 		}
 		if (checkPercentError(probCatch)) {
 			probCatch = Math.random() * .5;
-			String message = String.format("Invalid user values: probCatch. Default values probCatch = %f will be used.", probCatch);
+			String message = String.format("Invalid or missing user values: probCatch. Default values probCatch = %f will be used.", probCatch);
 			AlertBox.displayError(message);
 		}
 		for (int r = 0; r < getRows(); r++) {

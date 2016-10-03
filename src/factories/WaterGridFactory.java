@@ -43,22 +43,22 @@ public class WaterGridFactory extends GridFactory {
 		if (checkPercentError(percentFish + percentShark)) {
 			percentFish = Math.random() * .5;
 			percentShark = Math.random() * .5;
-			String message = String.format("Invalid user values: PercentFish, PercentShark. Default values PercentFish = %f, PercentShark = %f will be used.", percentFish, percentShark);
+			String message = String.format("Invalid or missing user values: PercentFish, PercentShark. Default values PercentFish = %f, PercentShark = %f will be used.", percentFish, percentShark);
 			AlertBox.displayError(message);
 		}
-		if (fishReproduce < 0) {
-			fishReproduce = 1;
-			String message = String.format("Invalid user values: fishReproduce. Default values fishReproduce = %f will be used.", fishReproduce);
+		if (fishReproduce <= 0) {
+			fishReproduce = 2;
+			String message = String.format("Invalid or missing user values: fishReproduce. Default values fishReproduce = %f will be used.", fishReproduce);
 			AlertBox.displayError(message);
 		}
-		if (sharkDeath < 0) {
-			sharkDeath = 3;
-			String message = String.format("Invalid user values: sharkDeath. Default values sharkDeath = %f will be used.", sharkDeath);
+		if (sharkDeath <= 0) {
+			sharkDeath = 2;
+			String message = String.format("Invalid or missing user values: sharkDeath. Default values sharkDeath = %f will be used.", sharkDeath);
 			AlertBox.displayError(message);
 		}
-		if (sharkReproduce < 0) {
-			sharkReproduce = 2;
-			String message = String.format("Invalid user values: sharkReproduce. Default values sharkReproduce = %f will be used.", sharkReproduce);
+		if (sharkReproduce <= 0) {
+			sharkReproduce = 8;
+			String message = String.format("Invalid or missing user values: sharkReproduce. Default values sharkReproduce = %f will be used.", sharkReproduce);
 			AlertBox.displayError(message);
 		}
 		for (int r = 0; r < getRows(); r++) {
