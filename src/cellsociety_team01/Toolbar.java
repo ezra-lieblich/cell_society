@@ -40,7 +40,7 @@ public class Toolbar {
 		this.myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "View");
 		this.toolbar = new HBox(20);
 		setupButtons();
-		this.root.setCenter(toolbar);
+		this.root.setBottom(toolbar);
 		BorderPane.setAlignment(toolbar, Pos.BOTTOM_CENTER);
 	}
 	

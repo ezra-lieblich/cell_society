@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Element;
@@ -17,7 +18,10 @@ import grids.HexagonalFiniteGrid;
 import grids.HexagonalToroidalGrid;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -55,69 +59,95 @@ public class GridController {
 	private String simulationName;
 	private BasicFiniteGrid grid;
 	private SliderProperties slider;
-
+	
+	private List<BasicFiniteGrid> grids;
+	private List<GridLogic> logics;
+	private List<GridView> views;
+	private List<CellGraph> graphs;
+	private List<GridFactory> factories;
+	private List<SliderProperties> sliders;
+	private List<Pane> simulations;
+	
+	private BorderPane root;
+	private Pane simSpace;
+	
 	public GridController(Stage stage) {
 		this.stage = stage;
-
+		setupScreenResolution();
+		reader = new XmlReader();
+		root = new BorderPane();
+		ScrollPane scroller = new ScrollPane(simSpace);		//scroller.setPrefSize(screenWidth, screenHeight);
+		simSpace = new HBox(100);
+		scroller.setContent(simSpace);
+		scroller.setMaxWidth(screenWidth);
+		scroller.setMaxHeight(screenHeight*.98);
+		root.setLeft(scroller);
+		toolbar = new Toolbar(root, this);
+		setupLists();
+		scene = new Scene(root, screenWidth, screenHeight, Color.WHITE);
 		MainMenu menu = new MainMenu(this, stage);
 		mainMenu = menu.init();
 		stage.setScene(mainMenu);
 		stage.show();
-		setupScreenResolution();
-		// temporary code
-		// TODO: get title from xml
 		title = "Test";
-		//Controller should create initial scene with  BorderPane Root and HBox for views and create scene but not set it
 	}
 
+	private void setupLists() {
+		grids = new ArrayList<BasicFiniteGrid>();
+		logics = new ArrayList<GridLogic>();
+		views = new ArrayList<GridView>();
+		graphs = new ArrayList<CellGraph>();
+		factories = new ArrayList<GridFactory>();
+		sliders = new ArrayList<SliderProperties>();
+		simulations = new ArrayList<Pane>();
+	}
 	public void parseFile(File file) {
 		if (file.isFile() && file.getName().endsWith(XML_SUFFIX)) {
-			reader = new XmlReader();
 			reader.getRootElement(file);
-			grid = reader.makeGrid();
-			factory = reader.getGridFactory();
-			setupLogicObject();
-
-			init();
+			grids.add(reader.makeGrid());
+			factories.add(reader.getGridFactory());
+			setupLogicObject(grids.size() - 1);
+			init(grids.size() - 1);
 		}
 		// TODO: throw exception if not
 
 	}
 
-	private void setupLogicObject() {
+	private void setupLogicObject(int index) {
 		String simulationName = reader.getSim();
 		if (simulationName.equals("Game Of Life")) {
-			logic = new LifeGridLogic(grid);
-			slider = new LifeSliders(this);
+			logics.add(new LifeGridLogic(grids.get(index)));
+			sliders.add(new LifeSliders(this));
 		} else if (simulationName.equals("Spread Of Fire")) {
-			logic = new TreeGridLogic(grid);
-			slider = new TreeSliders(this);
+			logics.add(new TreeGridLogic(grids.get(index)));
+			sliders.add(new TreeSliders(this));
 		} else if (simulationName.equals("WaTor World")) {
-
-			logic = new WaterGridLogic(grid, ((WaterGridFactory)factory).getFishReproduce(), ((WaterGridFactory)factory).getSharkDeath(),
-					((WaterGridFactory)factory).getSharkReproduce());
-			slider = new WaterSliders(this);
+			logics.add(new WaterGridLogic(grids.get(index), ((WaterGridFactory)factories.get(index)).getFishReproduce(), ((WaterGridFactory)factories.get(index)).getSharkDeath(),
+					((WaterGridFactory)factories.get(index)).getSharkReproduce()));
+			sliders.add(new WaterSliders(this));
 
 		} else if (simulationName.equals("XO Segregation")) {
-			logic = new XOGridLogic(grid, ((XOGridFactory)factory).getSimilarPercentage());
-			slider = new XOSliders(this);
+			logics.add(new XOGridLogic(grids.get(index), ((XOGridFactory)factories.get(index)).getSimilarPercentage()));
+			sliders.add(new XOSliders(this));
 
 		} else {
 			// TODO: throw error
-
 		}
 
 	}
 
-	private void setupViewObject(VBox vbox) {
+	private void setupViewObject(VBox vbox, int index) {
 		
-		String cellShape = factory.getCellShape();
-		if (cellShape.equals("squ"))
-			view = new SquareGridView(vbox, grid, screenWidth, screenHeight);
-		else if (cellShape.equals("hex"))
-			view = new HexagonalGridView(vbox, grid, screenWidth, screenHeight);
-		else if (cellShape.equals("tri"))
-			view = new TriangleGridView(vbox, grid, screenWidth, screenHeight);
+		String cellShape = factories.get(index).getCellShape();
+		if (cellShape.equals("squ")) {
+			views.add(new SquareGridView(vbox, grids.get(index), screenWidth, screenHeight));
+		}
+		else if (cellShape.equals("hex")){
+			views.add(new HexagonalGridView(vbox, grids.get(index), screenWidth, screenHeight));
+		}
+		else if (cellShape.equals("tri")) {
+			views.add(new TriangleGridView(vbox, grids.get(index), screenWidth, screenHeight));
+		}
 	}
 
 	private void setupScreenResolution() {
@@ -126,25 +156,22 @@ public class GridController {
 		screenHeight = (int) screenSize.getHeight();
 	}
 
-	public void init() {
+	public void init(int index) {
 
-		BorderPane root = setupView(grid);
+		setupView(index);
 
 		createTimeline();
-		stage.setScene(scene = new Scene(root, screenWidth, screenHeight, Color.WHITE));
+		stage.setScene(scene);
 		// display the view initially before starting simulation
-		view.step();
+		gridViewsStep();
 	}
 
-	private BorderPane setupView(BasicFiniteGrid grid) {
+	private void setupView(int index) {
 		VBox vbox = new VBox(5);
-		BorderPane root = new BorderPane();
-		root.setLeft(vbox);
-		graph = new CellGraph(vbox, logic.getCells());
-		setupViewObject(vbox);
-		toolbar = new Toolbar(root, this);
-		slider.addBoxtoRoot(vbox);
-		return root;
+		graphs.add(new CellGraph(vbox, logics.get(index).getCells()));
+		setupViewObject(vbox, index);
+		sliders.get(index).addBoxtoRoot(vbox);
+		simSpace.getChildren().add(vbox);
 	}
 
 	private void createTimeline() {
@@ -156,11 +183,28 @@ public class GridController {
 	}
 
 	public void step() {
-		view.step();
-		graph.updateGraph();
-		logic.step();
+		gridViewsStep();
+		updateGraphs();
+		gridLogicsStep();
 	}
 
+	private void gridViewsStep() {
+		for (GridView view : views) {
+			view.step();
+		}
+	}
+	
+	private void updateGraphs() {
+		for (CellGraph graph : graphs) {
+			graph.updateGraph();
+		}
+	}
+	
+	private void gridLogicsStep() {
+		for (GridLogic logic : logics) {
+			logic.step();
+		}
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -174,9 +218,10 @@ public class GridController {
 	}
 
 	public void stepSimulation() {
-		animation.pause();
-		this.step();
-		//graph.setupPlots(logic.getCells());
+//		animation.pause();
+//		this.step();
+//		//graph.setupPlots(logic.getCells());
+		simSpace.getChildren().remove(0);
 	}
 
 	public void updateSpeed(double value) {
