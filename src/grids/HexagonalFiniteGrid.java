@@ -2,12 +2,15 @@ package grids;
 
 import java.util.ArrayList;
 
+import cellsociety_team01.AlertBox;
 import cellsociety_team01.Cell;
 
 public class HexagonalFiniteGrid extends BasicFiniteGrid {
 
 	public HexagonalFiniteGrid(int x, int y, String neighbor) {
-		super(x, y, null);
+		super(x, y, "all");
+		if(neighbor.equals("cardinal")||neighbor.equals("diagonal"))
+			AlertBox.displayError("Hexagonal grids may not implement cardinal nor diagonal neighbors");
 	}
 
 	public ArrayList<Cell> getNeighbors(int x, int y) {

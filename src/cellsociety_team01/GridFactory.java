@@ -14,7 +14,7 @@ public class GridFactory {
 	private BasicFiniteGrid grid; 
 	private String bounds;
 	private String cellShape;
-	private String 
+	//private String 
 
 	public GridFactory(String ce, String b, String r, String c) {
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + "View");
