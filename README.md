@@ -10,14 +10,14 @@ XML
 
 General Tags for all Simulations
 
-simulation_name: Game Of Life, WaTor World, Spread Of Fire, XO Segregation
-simulation_title: anything
-simulation_author: anything
-rows: integer greater than 0
-columns: integer greater than 0
-shape: squ(default), tri, hex
-bounds: finite(default), toroidal
-neighborType: all(default), cardinal, diagonal
+simulation_name: Game Of Life, WaTor World, Spread Of Fire, XO Segregation  
+simulation_title: anything  
+simulation_author: anything  
+rows: integer greater than 0  
+columns: integer greater than 0  
+shape: squ(default), tri, hex  
+bounds: finite(default), toroidal  
+neighborType: all(default), cardinal, diagonal  
 
 
 Conway's Game of Life
