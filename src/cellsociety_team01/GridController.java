@@ -104,24 +104,11 @@ public class GridController {
 	}
 
 	private void setupLogicObject(int index) {
-		String simulationType = reader.getSim();
-		if (simulationType.equals("GameOfLife")) {
-			logics.add(new LifeGridLogic(grids.get(index)));
-			sliders.add(new LifeSliders(this));
-		} else if (simulationType.equals("SpreadOfFire")) {
-			logics.add(new TreeGridLogic(grids.get(index)));
-			sliders.add(new TreeSliders(this));
-		} else if (simulationType.equals("WaTorWorld")) {
-			logics.add(new WaterGridLogic(grids.get(index), ((WaterGridFactory)factories.get(index)).getFishReproduce(), ((WaterGridFactory)factories.get(index)).getSharkDeath(),
-					((WaterGridFactory)factories.get(index)).getSharkReproduce()));
-			sliders.add(new WaterSliders(this));
-		} else if (simulationType.equals("XO")) {
-			logics.add(new XOGridLogic(grids.get(index), ((XOGridFactory)factories.get(index)).getSimilarPercentage()));
-			sliders.add(new XOSliders(this));
-		} else {
-			// TODO: throw error
-		}
-
+		String simType = reader.getSim();
+		LogicFactory logicFactory = new LogicFactory();
+		logicFactory.setupLogic(simType, grids.get(index), this, factories.get(index));
+		logics.add(logicFactory.getLogic());
+		sliders.add(logicFactory.getSlider());
 	}
 
 	private void setupViewObject(VBox vbox, int index) {

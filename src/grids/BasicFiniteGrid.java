@@ -12,7 +12,6 @@ public class BasicFiniteGrid {
 	protected ArrayList<Cell> neighbors;
 	protected String neighborType;
 	// need to set originalGrid to the first implementation of grid
-	private Cell[][] originalGrid;
 
 	public BasicFiniteGrid() {
 	}
@@ -66,9 +65,5 @@ public class BasicFiniteGrid {
 
 	public int getRows() {
 		return grid.length;
-	}
-
-	void setOriginalGrid() {
-		originalGrid = grid.clone();
 	}
 }
