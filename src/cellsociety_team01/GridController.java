@@ -32,6 +32,9 @@ import sliders.SliderProperties;
  */
 public class GridController {
 
+public class GridController {
+	private GridLogic logic;
+	private GridView view;
 	private XmlReader reader;
 	private Toolbar toolbar;
 	private String title;

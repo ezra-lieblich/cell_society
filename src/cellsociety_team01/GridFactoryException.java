@@ -1,17 +1,16 @@
 package cellsociety_team01;
 
-
 /**
- * This class represents what might go wrong when using XML files.
- * 
- * @author Robert Duvall
+ * This class represents what might go wrong when using Grid Factories.
+ * A GridFactoryException will be thrown when invalid data in the XML is input by the user.
+ * For example, if the user is running a Game Of Life simulation and enters a percentAlive value greater than 1 (100%) or less than 0
+ * a GridFactoryException will be thrown.
+ * @author Christopher Lu
  */
 public class GridFactoryException extends Exception {
-    // for serialization
     private static final long serialVersionUID = 1L;
     protected static String message = "";
 
-    
     public GridFactoryException(String m) {
     	super(String.format(setMessage(m)));
     }
@@ -48,7 +47,7 @@ public class GridFactoryException extends Exception {
     }
     
     /**
-     * Gets the error message.
+     * Returns the error message, used later when creating pop up error boxes.
      * @return
      */
     public String getErrorMessage() {

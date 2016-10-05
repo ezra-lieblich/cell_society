@@ -9,8 +9,9 @@ import life.AliveCell;
 import life.DeadCell;
 
 /**
- * Creates grid object with Life-type cells from given input.
+ * Creates grid object with Life-type cells from given input. Also has error checking and in the form of a pop up box when values are either missing or invalid. Sets random default values if values are missing/invalid.
  *
+ * @author Christopher Lu
  * @author Eric Song
  */
 public class LifeGridFactory extends GridFactory {

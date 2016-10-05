@@ -6,20 +6,19 @@ import java.util.List;
 import cellsociety_team01.Cell;
 import javafx.scene.paint.Color;
 
+/**
+ * Defines an alive cell and conditions for turning into a dead cell. Dead Cell is false. Alive Cell is true.
+ * @author Christopher Lu
+ *
+ */
+
 public class AliveCell extends Cell{
 	private List<Cell> neighbors;
 	public boolean nextState; 
-	// Dead Cell is false. Alive Cell is true.
 
 	// Initializes alive cell to the x and y coordinates, sets color to green.
 	public AliveCell(int x, int y) {
 		super(x, y, Color.GREEN);
-	}
-	
-	// String "A" represents an alive cell.
-	@Override
-	public String toString(){
-		return "A";
 	}
 	
 	@Override

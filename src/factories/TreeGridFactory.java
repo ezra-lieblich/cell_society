@@ -10,8 +10,8 @@ import tree.EmptyCell;
 import tree.TreeCell;
 
 /**
- * Creates grid object with Tree-type cells from given input.
- *
+ * Creates grid object with Tree-type cells from given input. Also generates error boxes and random default values for invalid/missing XML values
+ * @author Christopher Lu
  * @author Eric Song
  */
 public class TreeGridFactory extends GridFactory {
