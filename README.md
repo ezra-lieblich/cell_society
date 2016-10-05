@@ -1,11 +1,26 @@
 # cellsociety 
 
 Duke CompSci 308 Cell Society Project
-Outline  
-Main class- Where the user can go in a select a simulation  
-Grid class- A visual component that shows the all the elements and is a 2d array.  
 
 
+Group Names- Ezra Lieblich, Chris Lu, Eric Song
+Date: Started- 9/15 Finished- 10/2
+Hours Worked: Ezra- ~40 hrs,
+Roles:
+Ezra- In charge of all XO logic and simulation parts. Worked primarily on UI classes like CellGraph, Toolbar,
+SliderProperties and all their respecitve children. Also worked on GridView parent class. Refactored and 
+worked with GridController to handle interaction between UI and simulation.  
+
+Resources Used- JavaFX documentation, StackOverflow
+Files used to start program- Main.java
+Files used to test project- data/xml has all of our test files for sims
+Resources files used- resource/ contains properties files for strings used in view as well as a css file for 
+formatting
+
+Known Bugs- We have not finished implementing feature that allows XML to specify individual locations so 
+GameOfLifeH.xml does not work currently
+
+Extra Features- User has the ability to delete simulations if they want and view updates and shifts everything
 XML  
   
 General Tags for all Simulations  
@@ -46,3 +61,10 @@ percentShark: decimal between 0 and 1
 fishReproduce: integer greater than 0  
 sharkDeath: integer greater than 0  
 sharkReproduce: integer greater than 0  
+
+
+Impressions:
+Ezra: I really enjoyed this assignment and the challenges it presented. In the future I think having a balance
+between Sprint 2 and 3 would be better as I thought Sprint 3 had significantly more features to implement.
+Also I know there was purposely a lot of features and it was hard to do all them so maybe you could reccomend
+good features to work on that would affirm concepts we are learning in class the most.
