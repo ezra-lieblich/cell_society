@@ -8,17 +8,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.JOptionPane;
-
-import org.w3c.dom.Element;
-
 import factories.*;
 import grids.BasicFiniteGrid;
-import grids.BasicToroidalGrid;
-import grids.HexagonalFiniteGrid;
-import grids.HexagonalToroidalGrid;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
@@ -30,7 +21,6 @@ import javafx.util.Duration;
 import javafx.stage.Stage;
 import water.*;
 import xo.*;
-import water.EmptyCell;
 import life.*;
 import sliders.LifeSliders;
 import sliders.SliderProperties;
@@ -54,7 +44,6 @@ public class GridController {
 	private GridView view;
 	private XmlReader reader;
 	private Toolbar toolbar;
-	private CellGraph graph;
 	private String title;
 	private Scene scene;
 	private Timeline animation;
@@ -63,10 +52,7 @@ public class GridController {
 	private int screenWidth, screenHeight;
 	private static final String XML_FILES_LOCATION = "data/xml/";
 	private static final String XML_SUFFIX = ".xml";
-	private GridFactory factory;
-	private String simulationName;
-	private BasicFiniteGrid grid;
-	private SliderProperties slider;
+
 	
 	private List<BasicFiniteGrid> grids;
 	private List<GridLogic> logics;
@@ -100,6 +86,9 @@ public class GridController {
 		title = "Test";
 	}
 
+	/**
+	 * Creates all the lists for multiple simulations
+	 */
 	private void setupLists() {
 		grids = new ArrayList<BasicFiniteGrid>();
 		logics = new ArrayList<GridLogic>();
@@ -119,8 +108,8 @@ public class GridController {
 			reader.getRootElement(file);
 			grids.add(reader.makeGrid());
 			factories.add(reader.getGridFactory());
-			setupLogicObject(grids.size() - 1);
-			init(grids.size() - 1);
+			setupLogicObject(factories.size() - 1);
+			init(factories.size() - 1);
 		}
 		else {
 			AlertBox.displayError("The file you selected is not an XML file. Please select an XML file.");
@@ -149,7 +138,6 @@ public class GridController {
 	}
 
 	private void setupViewObject(VBox vbox, int index) {
-		System.out.println(factories.get(index));
 		String cellShape = factories.get(index).getCellShape();
 		if (cellShape.equals("squ")) {
 			views.add(new SquareGridView(vbox, grids.get(index), screenWidth, screenHeight));
@@ -167,17 +155,23 @@ public class GridController {
 		screenWidth = (int) screenSize.getWidth();
 		screenHeight = (int) screenSize.getHeight();
 	}
-
+	
+	/**
+	 * Called by parse file after main menu has chosen an xml file. Sets up the view, switches the scene
+	 * @param index proper index to add to reference things for the view
+	 */
 	public void init(int index) {
-
 		setupView(index);
-
 		createTimeline();
 		stage.setScene(scene);
 		// display the view initially before starting simulation
 		gridViewsStep();
 	}
 
+	/**
+	 * Sets up all the view components and  graphs
+	 * @param index index to get corresponding logics and simulations for new components
+	 */
 	private void setupView(int index) {
 		simulations.add(new VBox(5));
 		graphs.add(new CellGraph(simulations.get(index), logics.get(index).getCells()));
@@ -186,6 +180,9 @@ public class GridController {
 		simSpace.getChildren().add(simulations.get(index));
 	}
 
+	/**
+	 * Creates a timeline for the simulation
+	 */
 	private void createTimeline() {
 		int MILLISECOND_DELAY = 500;
 		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> this.step());
@@ -194,24 +191,36 @@ public class GridController {
 		animation.getKeyFrames().add(frame);
 	}
 
+	/**
+	 * Steps through all necessary views and logics, also updates logic
+	 */
 	public void step() {
 		gridViewsStep();
 		updateGraphs();
 		gridLogicsStep();
 	}
 
+	/**
+	 * Steps through all the grids
+	 */
 	private void gridViewsStep() {
 		for (GridView view : views) {
 			view.step();
 		}
 	}
 	
+	/**
+	 * Steps through all the graphs
+	 */
 	private void updateGraphs() {
 		for (CellGraph graph : graphs) {
 			graph.updateGraph();
 		}
 	}
 	
+	/**
+	 * Steps through all the gridlogics
+	 */
 	private void gridLogicsStep() {
 		for (GridLogic logic : logics) {
 			logic.step();
@@ -221,25 +230,44 @@ public class GridController {
 		return title;
 	}
 
+	/**
+	 * Called by the toolbar and starts all the simulations
+	 */
 	public void startSimulation() {
 		animation.play();
 	}
 
+	/**
+	 * Called by the toolbar and pauses the simulation
+	 */
 	public void stopSimulation() {
 		animation.pause();
 	}
 
+	/**
+	 * Called by toolbar. Pauses simulation and steps through all the simulations on screen once.
+	 */
 	public void stepSimulation() {
 		animation.pause();
 		this.step();
 
 	}
 
+	/**
+	 * Called by the toolbar and sets the speed of the simulation based off of slider value
+	 * @param value new speed of simulation
+	 */
 	public void updateSpeed(double value) {
 		double new_rate = value;
 		animation.setRate(new_rate);
 	}
 
+	/**
+	 * Called by Sliders
+	 * Takes in values from the slider and resets the proper grid and also resets the graph
+	 * @param values values passed from the slider that go into factory and resets the grid
+	 * @param object Determine the index in list of sliders
+	 */
 	public void resetSimulation(Map<String, String> values, SliderProperties object) {
 		animation.pause();
 		int index = sliders.indexOf(object);
@@ -248,6 +276,11 @@ public class GridController {
 		views.get(index).step();
 	}
 
+	/**
+	 * Called by the sliders
+	 * Finds the index inside all the maps and removes them from the list and also view
+	 * @param object Need object to figure out what index inside simSpace we are removing
+	 */
 	public void removeSimulation(SliderProperties object) {
 		animation.pause();
 		int index = sliders.indexOf(object);
@@ -261,6 +294,10 @@ public class GridController {
 		simulations.remove(index);
 	}
 	
+	/**
+	 * Called by the toolbar
+	 * Changes to main menu so we can simulation to view
+	 */
 	public void addSimulation() {
 		animation.pause();
 		stage.setScene(mainMenu);

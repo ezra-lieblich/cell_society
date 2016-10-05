@@ -38,25 +38,8 @@ public class Main extends Application {
      */
     @Override
     public void start (Stage s) {
-    	
-    	
-        // create your own game here
         controller = new GridController(s);
         s.setTitle(controller.getTitle());
-
-        // attach game to the stage and display it
-        
-
-
-        // sets the game's loop
-        /*
-        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
-                                      e -> controller.step(SECOND_DELAY));
-        Timeline animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames().add(frame);
-        animation.play();
-        */
     }
     
 
@@ -66,28 +49,5 @@ public class Main extends Application {
      */
     public static void main (String[] args) {
         launch(args);
-//        XmlReader reader = new XmlReader();
-//        SimulationXMLFactory factory = new LifeXMLFactory();
-//        File folder = new File(XML_FILES_LOCATION);
-//        for (File f : folder.listFiles()) {
-//        	if (f.isFile() && f.getName().endsWith(XML_SUFFIX)) {
-//        		try {
-//        			Element root = reader.getRootElement(f.getAbsolutePath());
-//        			Simulation s = factory.getSimulation(root);
-//        			root.getAttribute("percentAlive");
-//        			System.out.println(s);
-//        		}
-//        		catch (XMLFactoryException e) {
-//        			System.err.println("Reading file " + f.getPath());
-//        			e.printStackTrace();
-//        		}
-//        	}
-//        }
     }
-    
-//    public void restartGame(){
-//    	controller.init();
-//    }
-    
-    
 }

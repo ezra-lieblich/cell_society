@@ -1,7 +1,6 @@
 package sliders;
 
 import cellsociety_team01.GridController;
-import javafx.scene.layout.Pane;
 
 /**
  * Creates sliders and spinner for the WaTor World Simulation
