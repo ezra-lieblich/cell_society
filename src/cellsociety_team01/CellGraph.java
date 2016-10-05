@@ -90,7 +90,7 @@ public class CellGraph {
 	 * called by controller when the user resets the simulation
 	 */
 	public void resetGraph() {
-		for (String name : cellSizes.keySet()) {
+		for (String name : cellPlots.keySet()) {
 			cellPlots.get(name).getData().clear();
 		}
 		stepNumber = 0;
