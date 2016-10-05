@@ -7,6 +7,11 @@ import java.util.List;
 
 import cellsociety_team01.Cell;
 
+/**
+@author Christopher Lu
+* Sets properties like the color and its nextState boolean. In this simulation, false means empty. Because a cell burns for only one turn and then becomes empty, the calculateNextState returns false to represent this mechanic.
+**/
+
 public class BurningCell extends Cell{
 	private boolean nextState;
 	

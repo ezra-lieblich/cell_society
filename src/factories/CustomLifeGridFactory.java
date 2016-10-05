@@ -11,6 +11,13 @@ import grids.BasicFiniteGrid;
 import life.AliveCell;
 import life.DeadCell;
 
+/**
+ * 
+ * @author Christopher Lu
+ * Uses data fed from XMLReader to set all the cells and cell states in the simulation grid for Life.
+ *
+ */
+
 public class CustomLifeGridFactory extends GridFactory {
 
 	public CustomLifeGridFactory(String cellShape, String bounds, String r, String c, String neighbors) {

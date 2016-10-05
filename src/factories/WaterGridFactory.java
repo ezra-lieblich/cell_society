@@ -10,8 +10,9 @@ import water.Fish;
 import water.Shark;
 
 /**
- * Creates grid object with Water-type cells from given input.
+ * Creates grid object with Water-type cells from given input. Also generates default values and error boxes when XML file has invalid/missing data.
  *
+ * @author Christopher Lu
  * @author Eric Song
  */
 public class WaterGridFactory extends GridFactory {

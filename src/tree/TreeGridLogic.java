@@ -11,6 +11,13 @@ import tree.EmptyCell;
 import tree.TreeCell;
 import tree.BurningCell;
 
+/**
+ * 
+ * @author Christopher Lu
+ * @author Eric Song
+ * Checks current states and then updates the grid based on the states. Uses the NeighborList created in TreeGrid to calculate the next states.
+ */
+
 public class TreeGridLogic extends GridLogic {
 		
 	public TreeGridLogic(BasicFiniteGrid grid) {
@@ -20,26 +27,17 @@ public class TreeGridLogic extends GridLogic {
 		cellSizes.put(TreeCell.class.getName(), 0);
 	}
 
+	/**
+	 * Updates grid based on states of each cell which is done by checking the neighbors. 
+	 */
 	@Override
 	public void step() {
 		cellSizes.clear();
-		// test print
-//		for (int r = 0; r < grid.getRows(); r++) {
-//			for (int c = 0; c < grid.getColumns(); c++) {
-//				System.out.print(grid.getGridIndex(r, c).toString() + " ");
-//			}
-//			System.out.println();
-//		}
-//		System.out.println();
-		
-		// check state
 		for (int r = 0; r < grid.getRows(); r++) {
 			for (int c = 0; c < grid.getColumns(); c++) {
 				checkState(grid.getGridIndex(r, c), grid.getNeighbors(r, c));
 			}
 		}
-
-		// update grid based on states
 		for (int r = 0; r < grid.getRows(); r++) {
 			for (int c = 0; c < grid.getColumns(); c++) {
 				updateGrid(grid.getGridIndex(r, c));

@@ -5,13 +5,21 @@ import java.util.ArrayList;
 import cellsociety_team01.Cell;
 import grids.BasicFiniteGrid;
 
+/**
+ * Creates list of neighbors for each cell. This is used to determine next state.
+ * @author Christopher Lu
+ *
+ */
+
 public class LifeGrid extends BasicFiniteGrid{
 	
 	public LifeGrid(int x, int y) {
 		grid = new Cell[x][y];
 	}
 	
-	// In game of life, ANY adjacent cell, including diagonal neighbors, is considered a neighbor, so there are 8 entries in the neighbors list.
+	/**
+	 * Adds all adjacent cells to the list of neighbors.
+	 */
 	@Override
 	public ArrayList<Cell> getNeighbors(int x, int y) {
 		ArrayList<Cell> neighbors = new ArrayList<Cell>();
@@ -27,7 +35,6 @@ public class LifeGrid extends BasicFiniteGrid{
 
 		return neighbors;
 	}
-	// Returns cell at specified coordinates (i, j). Cells out of bounds will be considered dead cells.
 
 	private Cell getNeighbor(int i, int j) {
 		if (addBoundaryEmpty(i, getRows()) == true || addBoundaryEmpty(j, getColumns()) == true) {

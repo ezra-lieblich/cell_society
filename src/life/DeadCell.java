@@ -6,19 +6,18 @@ import java.util.List;
 import cellsociety_team01.Cell;
 import javafx.scene.paint.Color;
 
+/**
+ * Defines the dead cell and sets logic for determining its future state.
+ * @author Christopher Lu
+ *
+ */
+
 public class DeadCell extends Cell {
 	private List<Cell> neighbors;
 	public boolean nextState;
 
-	// Dead Cell is false. Alive Cell is true.
-
 	public DeadCell(int x, int y) {
 		super(x, y, Color.RED);
-	}
-
-	@Override
-	public String toString() {
-		return "D";
 	}
 
 	@Override
@@ -27,6 +26,10 @@ public class DeadCell extends Cell {
 		nextState = determineNextState();
 	}
 
+	/**
+	 * Sets logic for determining next state. If less than 2 or more than 3 alive neighbors, the cell will be dead.
+	 * @return
+	 */
 	private boolean determineNextState() {
 		int numAlive = 0;
 		for (Cell c : neighbors) {
@@ -34,17 +37,12 @@ public class DeadCell extends Cell {
 				numAlive++;
 			}
 		}
-		// If less than 2 neighboring cells are alive, cell dies of under
-		// population.
 		if (numAlive < 2) {
 			return false;
 		}
-		// If cell has 2 or 3 neighboring alive cells, cell stays alive.
 		if (numAlive == 2 || numAlive == 3) {
 			return true;
 		}
-		// If cell has more than 3 neighboring alive cells, cell dies of over
-		// population.
 		else {
 			return false;
 		}

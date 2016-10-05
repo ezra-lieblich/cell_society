@@ -1,7 +1,6 @@
 package cellsociety_team01;
 
 import javax.xml.parsers.DocumentBuilder;
-import water.*;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -16,11 +15,24 @@ import grids.BasicFiniteGrid;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * 
+ * @author Christopher Lu
+ * @author Eric Song
+ *
+ * This class is responsible for reading XML file data and using the simulation name value to pass in all parameters needed to make 
+ * the grid for the  correct simulation into a map. This class employs error checking written in separate classes to check for common errors
+ * such as incorrect file format, missing file data, or incorrectly formatted data.
+ * This class depends on BasicFiniteGrid as it should return a certain grid based on the data in the XML File.
+ * This class also depends on factories as the xml data must first be passed into a grid factory before the grid factory can actually make the BasicFiniteGrid.
+ * makeLifeSpecific does not work, as it is simply an attempt at a Game Of Life Simulation that allows its users to specify 
+ * initial conditions via XML File manipulation.
+ *
+ */
+
 public class XmlReader {
-	// Reset DOCUMENT_BUILDER before every parse
 	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
 	private static Element root;
 	private GridFactory factory;
@@ -50,6 +62,13 @@ public class XmlReader {
 
 	}
 
+	/**
+	 * GridFactory and its subclasses are the ones that actually build the grid based on the XML file data passed into it.
+	 * The XML File passes in shape, bounds, rows, columns, and neighbors to Grid Factory, and the corresponding subclasses
+	 * for grid factory fill in the rest of the simmulation speciic data.
+	 * @return
+	 */
+	
 	public GridFactory getGridFactory() {
 		return factory;
 	}
@@ -78,6 +97,10 @@ public class XmlReader {
 		}
 	}
 
+	/**
+	 * This method is needed later on in the logic tree to determine the correct simulation grid to initialize.
+	 * @return
+	 */
 	public String getSim() {
 		return getTextValue(root, "SimType");
 	}
@@ -121,6 +144,16 @@ public class XmlReader {
 		}
 	}
 
+	/**
+	 * These rest of the methods pass in XML file data into a map that the factories use to construct the grid.
+	 * @param shape: Hexagonal, Square, Triangular (shape of each cell).
+	 * @param bounds: Finite, toroidal (bound behavior of the grid).
+	 * @param rows
+	 * @param columns
+	 * @param neighbors— Cardinal, Diagonal, All (Which surrounding cells should be considered neighbors).
+	 * @return
+	 */
+	
 	private BasicFiniteGrid makeLife(String shape, String bounds, String rows, String columns, String neighbors) {
 		factory = new LifeGridFactory(shape, bounds, rows, columns, neighbors);
 		HashMap<String, String> map = new HashMap<String, String>();

@@ -42,8 +42,14 @@ import views.HexagonalGridView;
 import views.SquareGridView;
 import views.TriangleGridView;
 
+/**
+@author Ezra Lieblich
+@author Christopher Lu
+@author Eric Song
+* THIS CLASS DOES A LOT.
+**/
+
 public class GridController {
-	// private
 	private GridLogic logic;
 	private GridView view;
 	private XmlReader reader;
@@ -103,6 +109,11 @@ public class GridController {
 		sliders = new ArrayList<SliderProperties>();
 		simulations = new ArrayList<VBox>();
 	}
+	
+	/**
+	 * Checks if file is a file, gets file name, and checks that it is an xml file by looking at the .xml suffix.
+	 * @param file
+	 */
 	public void parseFile(File file) {
 		if (file.isFile() && file.getName().endsWith(XML_SUFFIX)) {
 			reader.getRootElement(file);
