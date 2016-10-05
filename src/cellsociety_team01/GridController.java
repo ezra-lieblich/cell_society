@@ -1,3 +1,5 @@
+//This File from 99 to 113 is part of my masterpiece as it goes with refactored code
+//Ezra Lieblich  
 package cellsociety_team01;
 
 import javafx.animation.KeyFrame;
@@ -22,10 +24,12 @@ import javafx.stage.Stage;
 
 import sliders.SliderProperties;
 
-import views.HexagonalGridView;
-import views.SquareGridView;
-import views.TriangleGridView;
-
+/**
+ * GridController that handles the animation timeline of the loop/simulation and passes everything to each other
+ *  It also switches scenes between the main menu and simulation scene 
+ * @author ezra
+ *
+ */
 public class GridController {
 
 	private XmlReader reader;
@@ -51,8 +55,13 @@ public class GridController {
 	private BorderPane root;
 	private Pane simSpace;
 	
-	public GridController(Stage stage) {
-		this.stage = stage;
+	/**
+	 * Creates simulation space and BorderPane and also sets the screen size, and intially sets scene to main menu
+	 * to pick a simulation.
+	 * @param stage Stage passed from main when launched
+	 */
+	public GridController(Stage s) {
+		stage = s;
 		setupScreenResolution();
 		reader = new XmlReader();
 		root = new BorderPane();
@@ -69,7 +78,7 @@ public class GridController {
 		mainMenu = menu.init();
 		stage.setScene(mainMenu);
 		stage.show();
-		title = "Test";
+		title = "Cell Society";
 	}
 
 	/**
@@ -84,6 +93,12 @@ public class GridController {
 		sliders = new ArrayList<SliderProperties>();
 		simulations = new ArrayList<VBox>();
 	}
+	
+	/**
+	 * Based on the file, creates the proper grid and factory and then calls helper methods to
+	 * set up logic and view of the simulation
+	 * @param file Xml File selected
+	 */
 	public void parseFile(File file) {
 		if (file.isFile() && file.getName().endsWith(XML_SUFFIX)) {
 			reader.getRootElement(file);
@@ -97,6 +112,11 @@ public class GridController {
 		}
 	}
 
+	/**
+	 * Adds the sliders and logic to the corresponding lists based on the type of simulation.
+	 * Relies on LogicFactory to get proper logic/sliders
+	 * @param index
+	 */
 	private void setupLogicObject(int index) {
 		String simType = reader.getSim();
 		LogicFactory logicFactory = new LogicFactory();
@@ -105,6 +125,11 @@ public class GridController {
 		sliders.add(logicFactory.getSlider());
 	}
 
+	/**
+	 * Creates the proper view and adds it to the VBox holding the sim elements
+	 * @param vbox Pane that holds individual sim, sliders, and graph
+	 * @param index index to get proper grid to add to gridview
+	 */
 	private void setupViewObject(VBox vbox, int index) {
 		String cellShape = factories.get(index).getCellShape();
 		ViewFactory viewFactory = new ViewFactory();
@@ -113,6 +138,9 @@ public class GridController {
 		views.add(view);
 	}
 
+	/**
+	 * Sets up the view of the scene
+	 */
 	private void setupScreenResolution() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		screenWidth = (int) screenSize.getWidth();
