@@ -24,8 +24,7 @@ public class SquareGridView extends GridView{
 	 * @param grid
 	 *            We need the grid so GridView can read it and update the View.
 	 */
-	public SquareGridView(VBox root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
-		super(root,grid,screenWidth,screenHeight);
+	public SquareGridView() {
 	}
 
 	/**

@@ -17,8 +17,7 @@ public class HexagonalGridView extends GridView {
 	private static final double HEX_HEIGHT_MULTIPLIER = Math.sqrt(3);
 	private static final double HEX_WIDTH_MULTIPLIER = 1.5;
 
-	public HexagonalGridView(VBox root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
-		super(root, grid, screenWidth, screenHeight);
+	public HexagonalGridView() {
 	}
 
 	@Override

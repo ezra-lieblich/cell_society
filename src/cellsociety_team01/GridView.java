@@ -31,16 +31,18 @@ public abstract class GridView {
 	 * @param grid
 	 *            We need the grid so GridView can read it and update the View.
 	 */
-	public GridView(VBox root, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
-		gridView = new Group();
-		gridWidth = 400;
-		gridHeight = 400;
-		this.root = root;
+	public GridView() {
+	}
+
+	public void init (VBox box, BasicFiniteGrid grid, int screenWidth, int screenHeight) {
+		this.gridView = new Group();
+		this.gridWidth = 400;
+		this.gridHeight = 400;
+		this.root = box;
 		this.grid = grid;
 		setupPixelSize();
 		this.root.getChildren().add(gridView);
 	}
-
 	/**
 	 * Loops through each Cell in grid and adds it to the root to change the
 	 * view

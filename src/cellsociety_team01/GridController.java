@@ -19,15 +19,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import javafx.stage.Stage;
-import water.*;
-import xo.*;
-import life.*;
-import sliders.LifeSliders;
+
 import sliders.SliderProperties;
-import sliders.TreeSliders;
-import sliders.WaterSliders;
-import sliders.XOSliders;
-import tree.*;
+
 import views.HexagonalGridView;
 import views.SquareGridView;
 import views.TriangleGridView;
@@ -113,15 +107,10 @@ public class GridController {
 
 	private void setupViewObject(VBox vbox, int index) {
 		String cellShape = factories.get(index).getCellShape();
-		if (cellShape.equals("squ")) {
-			views.add(new SquareGridView(vbox, grids.get(index), screenWidth, screenHeight));
-		}
-		else if (cellShape.equals("hex")){
-			views.add(new HexagonalGridView(vbox, grids.get(index), screenWidth, screenHeight));
-		}
-		else if (cellShape.equals("tri")) {
-			views.add(new TriangleGridView(vbox, grids.get(index), screenWidth, screenHeight));
-		}
+		ViewFactory viewFactory = new ViewFactory();
+		GridView view = viewFactory.setupView(cellShape);
+		view.init(vbox, grids.get(index), screenWidth, screenHeight);
+		views.add(view);
 	}
 
 	private void setupScreenResolution() {
