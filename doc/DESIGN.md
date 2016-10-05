@@ -6,8 +6,8 @@ CompSci 308: Cell Society Brainstorm
 
 ## INTRODUCTION
 
-This project involves designing several different cell automata simulations. Specifically, this project will build simulations such as [Schelling’s model of segregation](http://nifty.stanford.edu/2014/mccown-schelling-model-segregation/), [Wa-Tor World model of predator-prey relationships](http://nifty.stanford.edu/2011/scott-wator-world/), [Spreading of Fire](http://nifty.stanford.edu/2007/shiflet-fire/). In order to successfully build these simulations,  we will have to display understanding of 2D arrays, random number generation, user interface design, algorithm design, JavaFx, XML, class inheritance and many other important topics in software design and implementation.
-Our primary design goal is to seamlessly transition between different cell automata simulations. This includes the ability to easily change the rules of interaction between cells, the appearance of cells, and the appearance of the grid, among other things. Other design goals include laying down the foundation of a friendly user interface that can be easily tailored to the user’s needs.
+This project involves designing several different cell automata simulations. Specifically, this project will build simulations such as [Schellingâ€™s model of segregation](http://nifty.stanford.edu/2014/mccown-schelling-model-segregation/), [Wa-Tor World model of predator-prey relationships](http://nifty.stanford.edu/2011/scott-wator-world/), [Spreading of Fire](http://nifty.stanford.edu/2007/shiflet-fire/). In order to successfully build these simulations,  we will have to display understanding of 2D arrays, random number generation, user interface design, algorithm design, JavaFx, XML, class inheritance and many other important topics in software design and implementation.
+Our primary design goal is to seamlessly transition between different cell automata simulations. This includes the ability to easily change the rules of interaction between cells, the appearance of cells, and the appearance of the grid, among other things. Other design goals include laying down the foundation of a friendly user interface that can be easily tailored to the userâ€™s needs.
 In order to achieve maximum flexibility by providing the user with as many options to modify the simulations as possible, our architecture will be completely open. Third-parties will be able to add their own cell types, grid types, cell interactions, and many other factors that will maximize the potential of our Cell Automata simulator.
 
 ## OVERVIEW
@@ -35,7 +35,7 @@ In charge of stepping.
 
 ### GridLogic
 
-Parent class would contain simple methods that all simulations need to interact with the grid. It will access the Grid class to manipulate the grid. It will call each Cell’s method that determines the next state and update the Grid accordingly depending on the simulations specific logic 
+Parent class would contain simple methods that all simulations need to interact with the grid. It will access the Grid class to manipulate the grid. It will call each Cellâ€™s method that determines the next state and update the Grid accordingly depending on the simulations specific logic 
 
 **Subclasses**
 
@@ -57,6 +57,16 @@ Model class that has a 2D array of all the different type of cells. It will have
 ### Cell
 
 Parent class that has a state representation and calculate next state
+
+###Slider Properties
+Each simulation will have Slider in UI to alter parameters of simulation. This class Creates buttons, sliders for it
+
+### Cell Graph
+Plots the data of number of cells into a line chart
+### XML Reader
+Reads in the XML File chosen
+### GridFactory
+Makes the grid based off of the parameters passed from XML Reader
 
 **Subclasses**
 
@@ -116,7 +126,7 @@ Overall there will be two scenes: the main menu scene and the simulation scene.
 
 *Apply the rules to a middle cell: set the next state of a cell to dead by counting its number of neighbors using the Game of Life rules for a cell in the middle (i.e., with all its neighbors).*
 
-GRIDLOGIC calls cell.performLogic method, which has CELL calculate the next state for the middle cell. Method in GRIDLOGIC then sets the cell’s next state in the grid. GRIDVIEW then displays the changed state of the middle cell.
+GRIDLOGIC calls cell.performLogic method, which has CELL calculate the next state for the middle cell. Method in GRIDLOGIC then sets the cellâ€™s next state in the grid. GRIDVIEW then displays the changed state of the middle cell.
 
 
 *Apply the rules to an edge cell: set the next state of a cell to live by counting its number of neighbors using the Game of Life rules for a cell on the edge (i.e., with some of its neighbors missing).*
@@ -143,10 +153,18 @@ MAINMENU will be responsible for choosing the different simulations to switch to
 
 ## DESIGN CONSIDERATIONS
 
-The first design decision we had to make was where to determine the next state of the cell. We were debating whether to perform that in the Cell class or our GridLogic class. Putting in in our logic class would make it easier to write the methods since it would have easier access to the grid and it’s neighbors. This would also make the Cell class a lot simpler and have less sub-classes. However, we ultimately decided to put the method in cell class. This makes the logic class a lot cleaner because we don’t need an if tree figuring out what state it is in and then performing logic based off its state. Instead we just go through each cell and call Cells handle next state method.
+The first design decision we had to make was where to determine the next state of the cell. We were debating whether to perform that in the Cell class or our GridLogic class. Putting in in our logic class would make it easier to write the methods since it would have easier access to the grid and itâ€™s neighbors. This would also make the Cell class a lot simpler and have less sub-classes. However, we ultimately decided to put the method in cell class. This makes the logic class a lot cleaner because we donâ€™t need an if tree figuring out what state it is in and then performing logic based off its state. Instead we just go through each cell and call Cells handle next state method.
 Another design choice we made was to have a Grid class have methods to update the grid instead of putting those methods inside GridLogic. We thought that since have a separate GridView class that does depend on Grid, that putting in those methods in GridLogic would be too much dependence. 
-Separate Toolbar from GridView was another design choice we made. Originally we thought it would make sense to put the whole UI view component in one class. However, since the Toolbar is going to be handling the parameters of the Grid and GridView we decided to create a separate class for this. Also this is good because now Toolbar interacts with the GridLogic and GridView doesn’t, so this separates the dependencies. 
+Separate Toolbar from GridView was another design choice we made. Originally we thought it would make sense to put the whole UI view component in one class. However, since the Toolbar is going to be handling the parameters of the Grid and GridView we decided to create a separate class for this. Also this is good because now Toolbar interacts with the GridLogic and GridView doesnâ€™t, so this separates the dependencies. 
 
+We originally had XML Reader both read the XML file and then create the grid from there in the class. This we thought was originally a good idea because that way, we wouldnt need to pass all this information around to controller and then back to some other class. However, we realized after the second sprint this was not the best solution. The XML Reader was huge and had big if trees to determine which simulation and which grid to 
+make. We ultimately decided to make a GridFactory that made the grid and XML reader called it to make the grid. The bad part is now XML Reader needs to pass all these parameters to Factory to make the grid but we reconciled this by having a map of properties where the properties file maintains consistency of keys. Also, now to reset graph slider properties just call the Factory class rather then XML Reader which doesnt make much sense. 
+## ADD New Simulation
+To add a new simulation you probably need to first make an xml file to specify the parameters and follow the documentation in the readme. 
+Next you need to add the sim in the XML Reader so it can choose the right GridFactory which is next class you need to make. You need to create the 
+initial grid here based off of the specifications passed from XML. Next you need to create the Cells associated with the simulation and specify the 
+color and how the cell determines its next state. You need to add a Logic class that updates the grid each step and finally you need a slider class for
+the view to update the parameters. All these classes extend a parent class that has clear implementation and tells you what methods you need to have in each class.
 ## TEAM RESPONSIBILITIES
 
 Classes Everyone Will Work On:
@@ -156,7 +174,7 @@ Eric:
 Grid, Wator,  MainMenu
 
 Ezra:
-GridView,Toolbar, XO
+GridView,Toolbar, XO, Grid Controller, SliderProperties
 
 Chris:
 XML, Tree, Life
