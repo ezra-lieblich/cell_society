@@ -5,6 +5,13 @@ import java.util.ResourceBundle;
 
 import grids.*;
 
+/**
+@author Christopher Lu
+@author Eric Song
+This class creates a BasicFiniteGrid based on data that XMLReader passes along to it. The Grid Factory sets the type of Grid.
+This includes both shape and border type. It also throws XMLParserExceptions if the format of XML data is incorrect (e.g. a non-numerical value in a percent parameter.
+**/
+
 public class GridFactory {
     public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 
@@ -53,7 +60,6 @@ public class GridFactory {
 		}
 	}
 	
-	// Detects incorrectly formatted data.
 	protected double doubleParseErrors(String input) throws XMLParserException {
 
 		try {

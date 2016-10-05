@@ -10,8 +10,8 @@ import xo.Group1;
 import xo.Group2;
 
 /**
- * Creates grid object with XO-type cells from given input.
- *
+ * Creates grid object with XO-type cells from given input. Generates error boxes and default values if data in XML file is invalid or missing.
+ * @author Christopher Lu
  * @author Eric Song
  */
 public class XOGridFactory extends GridFactory {

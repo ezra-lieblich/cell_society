@@ -7,6 +7,12 @@ import java.util.List;
 
 import cellsociety_team01.Cell;
 
+/**
+ * 
+ * @author Christopher Lu
+ * Sets properties like color, probCatch, and nextState for the Tree cell. 
+ */
+
 public class TreeCell extends Cell{
 	private List<Cell> neighbors;
 	public boolean nextState;
@@ -20,6 +26,10 @@ public class TreeCell extends Cell{
 		this.probCatch = probCatch;
 	}
 	
+	/**
+	 * A TreeCell can only catch fire if one of its neighbors is burning. This method checks if one of its neighbors is burning.
+	 * @return
+	 */
 	private boolean nearFire() {
 		for (Cell c: neighbors) {
 			if (c instanceof BurningCell)  {
@@ -35,6 +45,10 @@ public class TreeCell extends Cell{
 		nextState = determineNextState();
 	}
 	
+	/**
+	 * Based on the probCatch value, this tree cell will either burn or not burn the next turn.
+	 * @return
+	 */
 	private boolean determineNextState() {
 		if (nearFire()) {
 			double rand = Math.random();

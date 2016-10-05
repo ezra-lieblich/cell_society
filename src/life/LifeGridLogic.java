@@ -10,6 +10,11 @@ import grids.BasicFiniteGrid;
 import life.DeadCell;
 import life.AliveCell;
 
+/**
+@author Christopher Lu
+Checks current states and then updates the grid based on the states. Uses the NeighborList created in LifeGrid to calculate the next states.
+**/
+
 public class LifeGridLogic extends GridLogic {
 	
 	public LifeGridLogic(BasicFiniteGrid grid) {
