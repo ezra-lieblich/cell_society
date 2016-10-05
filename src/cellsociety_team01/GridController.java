@@ -36,7 +36,8 @@ import views.TriangleGridView;
 @author Ezra Lieblich
 @author Christopher Lu
 @author Eric Song
-* THIS CLASS DOES A LOT.
+* This class controls the simulation with a timeline and also handles the dependencies between the model and view of our
+* simulations.
 **/
 
 public class GridController {
