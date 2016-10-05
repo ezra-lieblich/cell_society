@@ -5,7 +5,6 @@ import grids.BasicFiniteGrid;
 import javafx.scene.Group;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
 
 /**
  * GridView is called on by gridController and updates the view. It determines
@@ -49,7 +48,6 @@ public abstract class GridView {
 	public void step() {
 		gridView.getChildren().clear();
 		BorderPane.setAlignment(gridView, Pos.CENTER_LEFT);
-		//root.setRight(gridView);
 		visualizeGrid();
 	}
 

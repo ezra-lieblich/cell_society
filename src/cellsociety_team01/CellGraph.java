@@ -1,16 +1,11 @@
 package cellsociety_team01;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import javafx.scene.Group;
-import javafx.scene.chart.Chart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 /**

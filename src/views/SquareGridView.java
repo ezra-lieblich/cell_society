@@ -2,7 +2,6 @@ package views;
 
 import cellsociety_team01.GridView;
 import grids.BasicFiniteGrid;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -33,7 +32,6 @@ public class SquareGridView extends GridView{
 	 * Loops through each Cell in grid and adds it to the root to change the
 	 * view
 	 */
-
 	@Override
 	protected void visualizeGrid() {
 		for (int r = 0; r < grid.getRows(); r++) {

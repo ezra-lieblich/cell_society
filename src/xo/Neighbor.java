@@ -1,8 +1,6 @@
 package xo;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import cellsociety_team01.Cell;
 import javafx.scene.paint.Color;
 
