@@ -22,7 +22,7 @@ import cellsociety_team01.GridFactoryException;
  * This is the main program, it is basically boilerplate to create
  * an animated scene.
  * 
- * @author Eric S. Song
+ * @author Eric Song
  */
 public class Main extends Application {
     private static final int MILLISECOND_DELAY = 200;

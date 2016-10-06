@@ -12,7 +12,7 @@ import javafx.scene.shape.Rectangle;
  * what is in each cell value in grid
  * 
  * @author ezra
- *
+ * @author ericsong
  */
 public class SquareGridView extends GridView{
 

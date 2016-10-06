@@ -9,6 +9,12 @@ import cellsociety_team01.GridLogic;
 import grids.BasicFiniteGrid;
 import grids.BasicToroidalGrid;
 
+/**
+ * The logic class for the water world simulation
+ * 
+ * @author ericsong
+ *
+ */
 public class WaterGridLogic extends GridLogic {
 
 	private BasicFiniteGrid grid;
@@ -26,17 +32,13 @@ public class WaterGridLogic extends GridLogic {
 		this.sharkReproduce = sharkReproduce;
 	}
 
+	/*
+	 * loops through each cell to check the next state, and then perform the
+	 * update
+	 */
 	@Override
 	public void step() {
 		cellSizes.clear();
-		// // test print
-		// for (int r = 0; r < grid.getRows(); r++) {
-		// for (int c = 0; c < grid.getColumns(); c++) {
-		// System.out.print(grid.getGridIndex(r, c).toString() + " ");
-		// }
-		// System.out.println();
-		// }
-		// System.out.println();
 
 		// check state
 		for (int r = 0; r < grid.getRows(); r++) {
@@ -54,10 +56,22 @@ public class WaterGridLogic extends GridLogic {
 
 	}
 
+	/**
+	 * each cell knows how to calculate its next state based on its neighbors
+	 * list
+	 * 
+	 * @param cell
+	 * @param neighbors
+	 */
 	private void checkState(Cell cell, List<Cell> neighbors) {
 		cell.calculateNextState(neighbors);
 	}
 
+	/**
+	 * updates the cell and also adds to a counter for graph view
+	 * 
+	 * @param cell
+	 */
 	private void updateGrid(Cell cell) {
 		if (cell instanceof EmptyCell)
 			return;
@@ -75,6 +89,12 @@ public class WaterGridLogic extends GridLogic {
 		}
 	}
 
+	/**
+	 * goes through all possibilities of a fish's next potential state, and also
+	 * checks for collisions
+	 * 
+	 * @param fish
+	 */
 	private void updateFish(Fish fish) {
 		Cell nextLocation = fish.getNextLocation();
 		if (nextLocation == null
@@ -100,6 +120,12 @@ public class WaterGridLogic extends GridLogic {
 		}
 	}
 
+	/**
+	 * goes through all possibilities of a shark's next potential state, and
+	 * also checks for collisions
+	 * 
+	 * @param shark
+	 */
 	private void updateShark(Shark shark) {
 		if (shark.isDead()) {
 			grid.setGridIndex(new EmptyCell(shark.getCoordsX(), shark.getCoordsY()), shark.getCoordsX(),
@@ -131,7 +157,5 @@ public class WaterGridLogic extends GridLogic {
 		}
 
 	}
-
-	// set methods for all classes
 
 }

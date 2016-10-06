@@ -33,12 +33,12 @@ import views.SquareGridView;
 import views.TriangleGridView;
 
 /**
-@author Ezra Lieblich
-@author Christopher Lu
-@author Eric Song
-* This class controls the simulation with a timeline and also handles the dependencies between the model and view of our
-* simulations.
-**/
+ * @author Ezra Lieblich
+ * @author Christopher Lu
+ * @author Eric Song This class controls the simulation with a timeline and also
+ *         handles the dependencies between the model and view of our
+ *         simulations.
+ **/
 
 public class GridController {
 	private GridLogic logic;
@@ -54,7 +54,6 @@ public class GridController {
 	private static final String XML_FILES_LOCATION = "data/xml/";
 	private static final String XML_SUFFIX = ".xml";
 
-	
 	private List<BasicFiniteGrid> grids;
 	private List<GridLogic> logics;
 	private List<GridView> views;
@@ -62,20 +61,27 @@ public class GridController {
 	private List<GridFactory> factories;
 	private List<SliderProperties> sliders;
 	private List<VBox> simulations;
-	
+
 	private BorderPane root;
 	private Pane simSpace;
-	
+
+	/**
+	 * Constructor for the controller class. Sets up most of the other objects
+	 * required for the backend and frontend to run the simulation
+	 * 
+	 * @param stage
+	 */
 	public GridController(Stage stage) {
 		this.stage = stage;
 		setupScreenResolution();
 		reader = new XmlReader();
 		root = new BorderPane();
-		ScrollPane scroller = new ScrollPane(simSpace);		//scroller.setPrefSize(screenWidth, screenHeight);
+		ScrollPane scroller = new ScrollPane(simSpace); // scroller.setPrefSize(screenWidth,
+														// screenHeight);
 		simSpace = new HBox(100);
 		scroller.setContent(simSpace);
 		scroller.setMaxWidth(screenWidth);
-		scroller.setMaxHeight(screenHeight*.98);
+		scroller.setMaxHeight(screenHeight * .98);
 		root.setLeft(scroller);
 		toolbar = new Toolbar(root, this);
 		setupLists();
@@ -99,9 +105,11 @@ public class GridController {
 		sliders = new ArrayList<SliderProperties>();
 		simulations = new ArrayList<VBox>();
 	}
-	
+
 	/**
-	 * Checks if file is a file, gets file name, and checks that it is an xml file by looking at the .xml suffix.
+	 * Checks if file is a file, gets file name, and checks that it is an xml
+	 * file by looking at the .xml suffix.
+	 * 
 	 * @param file
 	 */
 	public void parseFile(File file) {
@@ -111,12 +119,16 @@ public class GridController {
 			factories.add(reader.getGridFactory());
 			setupLogicObject(factories.size() - 1);
 			init(factories.size() - 1);
-		}
-		else {
+		} else {
 			AlertBox.displayError("The file you selected is not an XML file. Please select an XML file.");
 		}
 	}
 
+	/**
+	 * Sets up the logic class based on the type of simuation requested
+	 * 
+	 * @param index
+	 */
 	private void setupLogicObject(int index) {
 		String simulationType = reader.getSim();
 		if (simulationType.equals("GameOfLife")) {
@@ -126,11 +138,14 @@ public class GridController {
 			logics.add(new TreeGridLogic(grids.get(index)));
 			sliders.add(new TreeSliders(this));
 		} else if (simulationType.equals("WaTorWorld")) {
-			logics.add(new WaterGridLogic(grids.get(index), ((WaterGridFactory)factories.get(index)).getFishReproduce(), ((WaterGridFactory)factories.get(index)).getSharkDeath(),
-					((WaterGridFactory)factories.get(index)).getSharkReproduce()));
+			logics.add(
+					new WaterGridLogic(grids.get(index), ((WaterGridFactory) factories.get(index)).getFishReproduce(),
+							((WaterGridFactory) factories.get(index)).getSharkDeath(),
+							((WaterGridFactory) factories.get(index)).getSharkReproduce()));
 			sliders.add(new WaterSliders(this));
 		} else if (simulationType.equals("XO")) {
-			logics.add(new XOGridLogic(grids.get(index), ((XOGridFactory)factories.get(index)).getSimilarPercentage()));
+			logics.add(
+					new XOGridLogic(grids.get(index), ((XOGridFactory) factories.get(index)).getSimilarPercentage()));
 			sliders.add(new XOSliders(this));
 		} else {
 			// TODO: throw error
@@ -138,15 +153,19 @@ public class GridController {
 
 	}
 
+	/**
+	 * Sets up the view of the grid based on the type of cell shape
+	 * 
+	 * @param vbox
+	 * @param index
+	 */
 	private void setupViewObject(VBox vbox, int index) {
 		String cellShape = factories.get(index).getCellShape();
 		if (cellShape.equals("squ")) {
 			views.add(new SquareGridView(vbox, grids.get(index), screenWidth, screenHeight));
-		}
-		else if (cellShape.equals("hex")){
+		} else if (cellShape.equals("hex")) {
 			views.add(new HexagonalGridView(vbox, grids.get(index), screenWidth, screenHeight));
-		}
-		else if (cellShape.equals("tri")) {
+		} else if (cellShape.equals("tri")) {
 			views.add(new TriangleGridView(vbox, grids.get(index), screenWidth, screenHeight));
 		}
 	}
@@ -156,10 +175,13 @@ public class GridController {
 		screenWidth = (int) screenSize.getWidth();
 		screenHeight = (int) screenSize.getHeight();
 	}
-	
+
 	/**
-	 * Called by parse file after main menu has chosen an xml file. Sets up the view, switches the scene
-	 * @param index proper index to add to reference things for the view
+	 * Called by parse file after main menu has chosen an xml file. Sets up the
+	 * view, switches the scene
+	 * 
+	 * @param index
+	 *            proper index to add to reference things for the view
 	 */
 	public void init(int index) {
 		setupView(index);
@@ -170,8 +192,11 @@ public class GridController {
 	}
 
 	/**
-	 * Sets up all the view components and  graphs
-	 * @param index index to get corresponding logics and simulations for new components
+	 * Sets up all the view components and graphs
+	 * 
+	 * @param index
+	 *            index to get corresponding logics and simulations for new
+	 *            components
 	 */
 	private void setupView(int index) {
 		simulations.add(new VBox(5));
@@ -209,7 +234,7 @@ public class GridController {
 			view.step();
 		}
 	}
-	
+
 	/**
 	 * Steps through all the graphs
 	 */
@@ -218,7 +243,7 @@ public class GridController {
 			graph.updateGraph();
 		}
 	}
-	
+
 	/**
 	 * Steps through all the gridlogics
 	 */
@@ -227,6 +252,7 @@ public class GridController {
 			logic.step();
 		}
 	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -246,7 +272,8 @@ public class GridController {
 	}
 
 	/**
-	 * Called by toolbar. Pauses simulation and steps through all the simulations on screen once.
+	 * Called by toolbar. Pauses simulation and steps through all the
+	 * simulations on screen once.
 	 */
 	public void stepSimulation() {
 		animation.pause();
@@ -255,8 +282,11 @@ public class GridController {
 	}
 
 	/**
-	 * Called by the toolbar and sets the speed of the simulation based off of slider value
-	 * @param value new speed of simulation
+	 * Called by the toolbar and sets the speed of the simulation based off of
+	 * slider value
+	 * 
+	 * @param value
+	 *            new speed of simulation
 	 */
 	public void updateSpeed(double value) {
 		double new_rate = value;
@@ -264,10 +294,14 @@ public class GridController {
 	}
 
 	/**
-	 * Called by Sliders
-	 * Takes in values from the slider and resets the proper grid and also resets the graph
-	 * @param values values passed from the slider that go into factory and resets the grid
-	 * @param object Determine the index in list of sliders
+	 * Called by Sliders Takes in values from the slider and resets the proper
+	 * grid and also resets the graph
+	 * 
+	 * @param values
+	 *            values passed from the slider that go into factory and resets
+	 *            the grid
+	 * @param object
+	 *            Determine the index in list of sliders
 	 */
 	public void resetSimulation(Map<String, String> values, SliderProperties object) {
 		animation.pause();
@@ -278,9 +312,12 @@ public class GridController {
 	}
 
 	/**
-	 * Called by the sliders
-	 * Finds the index inside all the maps and removes them from the list and also view
-	 * @param object Need object to figure out what index inside simSpace we are removing
+	 * Called by the sliders Finds the index inside all the maps and removes
+	 * them from the list and also view
+	 * 
+	 * @param object
+	 *            Need object to figure out what index inside simSpace we are
+	 *            removing
 	 */
 	public void removeSimulation(SliderProperties object) {
 		animation.pause();
@@ -294,10 +331,9 @@ public class GridController {
 		simSpace.getChildren().remove(simulations.get(index));
 		simulations.remove(index);
 	}
-	
+
 	/**
-	 * Called by the toolbar
-	 * Changes to main menu so we can simulation to view
+	 * Called by the toolbar Changes to main menu so we can simulation to view
 	 */
 	public void addSimulation() {
 		animation.pause();

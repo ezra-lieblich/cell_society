@@ -5,6 +5,11 @@ import java.util.List;
 
 import javafx.scene.paint.Color;
 
+
+/**
+@author Eric Song
+* A parent class that all types of objects for each simulation will inherit from
+**/
 public class Cell {
 	private List<Cell> neighbors;
 	private Color color;
@@ -14,6 +19,13 @@ public class Cell {
 	
 	public Cell(){}
 	
+	
+	/**
+	 * Constructor with (x,y) coordinate in grid and color c
+	 * @param x
+	 * @param y
+	 * @param c
+	 */
 	public Cell(int x, int y, Color c){
 		XPosition = x;
 		YPosition = y;
@@ -42,6 +54,7 @@ public class Cell {
 		return YPosition;
 	}
 	
+	// Gets the color of cell
 	public Color getColor(){
 		return color;
 	}

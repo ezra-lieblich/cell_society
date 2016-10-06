@@ -21,26 +21,30 @@ public class HexagonalGridView extends GridView {
 		super(root, grid, screenWidth, screenHeight);
 	}
 
+	/**
+	 * Loops through each Cell in grid and draws the 6 vertices of the hexagon,
+	 * and then adds to root to display in the view
+	 */
 	@Override
 	protected void visualizeGrid() {
 		for (int r = 0; r < grid.getRows(); r++) {
 			for (int c = 0; c < grid.getColumns(); c++) {
 				Polygon polygon = new Polygon();
 				Double[] rootPoint;
-				double currIterWidth = c*pixelWidth*HEX_WIDTH_MULTIPLIER;
+				double currIterWidth = c * pixelWidth * HEX_WIDTH_MULTIPLIER;
 				double offset = 0;
-				if(c%2==1){
-				 offset = pixelWidth*HEX_HEIGHT_MULTIPLIER/2;
+				if (c % 2 == 1) {
+					offset = pixelWidth * HEX_HEIGHT_MULTIPLIER / 2;
 				}
-					rootPoint = new Double[]{
-							currIterWidth-pixelWidth/2,r*pixelWidth*HEX_HEIGHT_MULTIPLIER-offset,
-							currIterWidth-pixelWidth,(r+0.5)*pixelWidth*HEX_HEIGHT_MULTIPLIER-offset,
-							currIterWidth-pixelWidth/2,(r+1)*pixelWidth*HEX_HEIGHT_MULTIPLIER-offset,
-							currIterWidth+pixelWidth/2,(r+1)*pixelWidth*HEX_HEIGHT_MULTIPLIER-offset,
-							currIterWidth+pixelWidth,(r+0.5)*pixelWidth*HEX_HEIGHT_MULTIPLIER-offset,
-							currIterWidth+pixelWidth/2,r*pixelWidth*HEX_HEIGHT_MULTIPLIER-offset,
-							
-							};
+				rootPoint = new Double[] { currIterWidth - pixelWidth / 2,
+						r * pixelWidth * HEX_HEIGHT_MULTIPLIER - offset, currIterWidth - pixelWidth,
+						(r + 0.5) * pixelWidth * HEX_HEIGHT_MULTIPLIER - offset, currIterWidth - pixelWidth / 2,
+						(r + 1) * pixelWidth * HEX_HEIGHT_MULTIPLIER - offset, currIterWidth + pixelWidth / 2,
+						(r + 1) * pixelWidth * HEX_HEIGHT_MULTIPLIER - offset, currIterWidth + pixelWidth,
+						(r + 0.5) * pixelWidth * HEX_HEIGHT_MULTIPLIER - offset, currIterWidth + pixelWidth / 2,
+						r * pixelWidth * HEX_HEIGHT_MULTIPLIER - offset,
+
+				};
 
 				polygon.getPoints().addAll(rootPoint);
 				polygon.setFill(grid.getGridIndex(c, r).getColor());

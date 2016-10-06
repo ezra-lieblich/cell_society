@@ -6,6 +6,11 @@ import java.util.List;
 import cellsociety_team01.Cell;
 import javafx.scene.paint.Color;
 
+/**
+ * Shark object and logic for water world simuation
+ * @author ericsong
+ *
+ */
 public class Shark extends Cell {
 
 	private int currentReproduceTurn;
@@ -40,10 +45,18 @@ public class Shark extends Cell {
 
 	}
 
+	/**
+	 * checks and see if shark should die
+	 * @return
+	 */
 	private boolean checkDeath() {
 		return turnsNoFish >= turnsPerSharkDeath;
 	}
 
+	/**
+	 * checks to see if shark reproduces
+	 * @return
+	 */
 	private boolean handleTurn() {
 		currentReproduceTurn++;
 		if (currentReproduceTurn == turnsPerSharkReproduce) {
@@ -53,6 +66,10 @@ public class Shark extends Cell {
 		return false;
 	}
 
+	/**
+	 * checks where its next location should be based on its neighbors
+	 * @return
+	 */
 	private Cell determineNextLocation() {
 		ArrayList<Cell> tempFish = new ArrayList<Cell>();
 		ArrayList<Cell> tempEmpty = new ArrayList<Cell>();
@@ -73,6 +90,11 @@ public class Shark extends Cell {
 		return tempFish.get((int) (Math.random() * tempFish.size()));
 	}
 
+	/**
+	 * move to empty cell
+	 * @param tempEmpty
+	 * @return
+	 */
 	private Cell checkEmptyMovement(ArrayList<Cell> tempEmpty) {
 		// dont move if nowhere to move
 		if (tempEmpty.size() == 0)

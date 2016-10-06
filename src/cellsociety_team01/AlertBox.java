@@ -16,6 +16,11 @@ import javax.swing.SwingUtilities;
 
 public class AlertBox {
 
+	
+	/**
+	 * Displays a pop-up box with message errorMessage
+	 * @param errorMessage
+	 */
 	public static void displayError(String errorMessage) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -24,8 +29,6 @@ public class AlertBox {
 				JOptionPane.showMessageDialog(frame, errorMessage);
 			}
 		});
-		// Frame frame = new Frame();
-		// JOptionPane.showMessageDialog(frame,errorMessage);
 	}
 
 }
