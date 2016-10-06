@@ -1,3 +1,24 @@
+// This entire file is part of my masterpiece.
+// CHRISTOPHER LU
+/**
+ * PURPOSE: This class parses data from the XML file. It first checks to see if the file is or is not an XML file. If not, it throws an error
+ * that tells the user to choose an actual XML file. This class then retrieves the data in string format. The simulation name is then 
+ * used to determine which gridfactory to pass the parameters to in order to actually initialize the correct simulation.
+ * WHY IS IT GOOD DESIGN: 
+ * 			This code is very readable, with descriptive method names, variable names, and comments. 
+ * 			The delegation of tasks to various methods minimizes the code smell of duplicated code and makes methods as concise as possible. 
+ * 			There are no inline comments, all comments are javadoc format.
+ * 			This code splits up the XML reading and the grid building well and splits up the gridfactory building by simulation, so testing is easy. 
+ * 			Any parsing errors can be fixed by debugging the first 100 lines of this class. If parsing supposedly works, but the text value is incorrect,
+ * 			getTextValue() would be the suspect. This can be tested by running the program with print statements in getTextvalue() and comparing them to
+ * 			the actual value in the XML file. Because different simulations have gridFactories created in separate methods, debugging and testing separate simulations
+ * 			comes with ease as well. The division of code eliminates long methods and duplicated code. There may be an issue with having a large amount of parameters,
+ * 			but all these parameters are needed to build the GridFactory. I could have used an array, but then the I would have to remembeer the order I placed
+ * 			the array in. There also is little to no conditional complexity and no combinitorial explosion. There is no type embedding either, because even though the
+ * 			data is passed in as a map to the gridFactory, the user can choose any structure to put the data in and change the GridFactory accordingly. There is also no 
+ * 			dead code. Every bit of code is used in this class.
+ */
+
 package cellsociety_team01;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -31,7 +52,6 @@ import java.util.ResourceBundle;
  * initial conditions via XML File manipulation.
  *
  */
-
 public class XmlReader {
 	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
 	private static Element root;
@@ -45,7 +65,7 @@ public class XmlReader {
 	/**
 	 * Throws XMLParserException if file is not XML File.
 	 * 
-	 * @param xmlFile
+	 * @param xmlFile File that is being read.
 	 * @return
 	 */
 	public void getRootElement(File xmlFile) {
@@ -62,17 +82,6 @@ public class XmlReader {
 
 	}
 
-	/**
-	 * GridFactory and its subclasses are the ones that actually build the grid based on the XML file data passed into it.
-	 * The XML File passes in shape, bounds, rows, columns, and neighbors to Grid Factory, and the corresponding subclasses
-	 * for grid factory fill in the rest of the simmulation speciic data.
-	 * @return
-	 */
-	
-	public GridFactory getGridFactory() {
-		return factory;
-	}
-
 	private static DocumentBuilder getDocumentBuilder() {
 		try {
 			return DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -81,6 +90,16 @@ public class XmlReader {
 		}
 	}
 
+	/**
+	 * GridFactory and its subclasses are the ones that actually build the grid based on the XML file data passed into it.
+	 * The XML File passes in shape, bounds, rows, columns, and neighbors to Grid Factory, and the corresponding subclasses
+	 * for grid factory fill in the rest of the simmulation speciic data.
+	 * @return
+	 */
+	public GridFactory getGridFactory() {
+		return factory;
+	}
+	
 	/**
 	 * Get the text value of a node. Assumes you want the textValue of the first
 	 * node with this tagName. Throws XMLParserException if XML file is empty.
@@ -104,7 +123,34 @@ public class XmlReader {
 	public String getSim() {
 		return getTextValue(root, "SimType");
 	}
-
+	
+	/**
+	 * Chooses the simulation based on simName, then makes corresponding grid.
+	 * @param simName: Simulation Name
+	 * @param shape: Hex, Square, Triangle
+	 * @param bounds: finite, toroidal
+	 * @param rows
+	 * @param columns
+	 * @param neighbors: cardinal, diagonal, all
+	 * @return
+	 */
+	private BasicFiniteGrid chooseSim(String simName, String shape, String bounds, String rows, String columns, String neighbors) {
+		if (simName.equals("Game Of Life")) {
+			return makeLife(shape, bounds, rows, columns, neighbors);
+		} else if (simName.equals("Spread Of Fire")) {
+			return makeFire(shape, bounds, rows, columns, neighbors);
+		} else if (simName.equals("WaTor World")) {
+			return makeWaTor(shape, bounds, rows, columns, neighbors);
+		} else if (simName.equals("XO Segregation")) {
+			return makeXO(shape,bounds,rows,columns, neighbors);
+		} else if (simName.equals("Game Of Life Specific")) {
+			return makeLifeSpecific(shape, bounds, rows, columns, neighbors);
+		}
+		else {
+			return null;
+		}
+	}
+	
 	/**
 	 * Makes a grid based on what XMLReader reads from the simulation_name tag
 	 * in XML file.
@@ -112,7 +158,6 @@ public class XmlReader {
 	 * @return
 	 */
 	public BasicFiniteGrid makeGrid() {
-
 		String sim = getTextValue(root, "simulation_name");
 		String shape = getTextValue(root, "shape");
 		if (!shape.equals("squ") && !shape.equals("tri") && !shape.equals("hex")) {
@@ -127,22 +172,10 @@ public class XmlReader {
 		String rows = getTextValue(root, "rows");
 		String columns = getTextValue(root, "columns");
 		String neighbors = getTextValue(root, "neighbors");
-
-		if (sim.equals("Game Of Life")) {
-			return makeLife(shape, bounds, rows, columns, neighbors);
-		} else if (sim.equals("Spread Of Fire")) {
-			return makeFire(shape, bounds, rows, columns, neighbors);
-		} else if (sim.equals("WaTor World")) {
-			return makeWaTor(shape, bounds, rows, columns, neighbors);
-		} else if (sim.equals("XO Segregation")) {
-			return makeXO(shape,bounds,rows,columns, neighbors);
-		} else if (sim.equals("Game Of Life Specific")) {
-			return makeLifeSpecific(shape, bounds, rows, columns, neighbors);
-		}
-		else {
-			return null;
-		}
+		BasicFiniteGrid ans = chooseSim(sim, shape, bounds, rows, columns, neighbors);
+		return ans;
 	}
+	
 
 	/**
 	 * These rest of the methods pass in XML file data into a map that the factories use to construct the grid.
@@ -150,7 +183,7 @@ public class XmlReader {
 	 * @param bounds: Finite, toroidal (bound behavior of the grid).
 	 * @param rows
 	 * @param columns
-	 * @param neighbors— Cardinal, Diagonal, All (Which surrounding cells should be considered neighbors).
+	 * @param neighbors√ë Cardinal, Diagonal, All (Which surrounding cells should be considered neighbors).
 	 * @return
 	 */
 	
