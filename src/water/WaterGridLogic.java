@@ -1,3 +1,10 @@
+// This entire file is part of my masterpiece.
+// Eric Song
+// I believe that this class efficiently implements the general parent grid class as well as 
+// delegates the next state calculation to the Cell children (Fish and Shark). It then also 
+// checks the interactions and collisions between different Cell types to perform the 
+// necessary movements to update the grid to the next frame
+
 package water;
 
 import java.util.ArrayList;
@@ -24,12 +31,19 @@ public class WaterGridLogic extends GridLogic {
 
 	public WaterGridLogic(BasicFiniteGrid grid, int fishReproduce, int sharkDeath, int sharkReproduce) {
 		this.grid = grid;
-		cellSizes = new HashMap<String, Integer>();
-		cellSizes.put(Fish.class.getName(), 0);
-		cellSizes.put(Shark.class.getName(), 0);
 		this.fishReproduce = fishReproduce;
 		this.sharkDeath = sharkDeath;
 		this.sharkReproduce = sharkReproduce;
+		setupGraph();
+	}
+
+	/**
+	 * sets up Map to count the number of each type of cell at each time point
+	 */
+	private void setupGraph() {
+		cellSizes = new HashMap<String, Integer>();
+		cellSizes.put(Fish.class.getName(), 0);
+		cellSizes.put(Shark.class.getName(), 0);
 	}
 
 	/*
@@ -47,10 +61,19 @@ public class WaterGridLogic extends GridLogic {
 			}
 		}
 
+		// doing in two separate loops ensures that all cells only act based on
+		// previous state of neighbors
+
 		// update grid based on states
 		for (int r = 0; r < grid.getRows(); r++) {
 			for (int c = 0; c < grid.getColumns(); c++) {
-				updateGrid(grid.getGridIndex(c, r));
+				Cell cell = grid.getGridIndex(c, r);
+
+				if (cell instanceof Fish)
+					updateGrid((Fish) cell);
+
+				else if (cell instanceof Shark)
+					updateGrid((Shark) cell);
 			}
 		}
 
@@ -68,25 +91,23 @@ public class WaterGridLogic extends GridLogic {
 	}
 
 	/**
-	 * updates the cell and also adds to a counter for graph view
+	 * updates the fish and also adds to a counter for graph view
 	 * 
-	 * @param cell
+	 * @param fish
 	 */
-	private void updateGrid(Cell cell) {
-		if (cell instanceof EmptyCell)
-			return;
-		if (cell instanceof Fish) {
-			Fish fish = (Fish) cell;
-			updateFish(fish);
-			updateCellSizes(fish.getClass().getName());
-			return;
-		}
-		if (cell instanceof Shark) {
-			Shark shark = (Shark) cell;
-			updateShark(shark);
-			updateCellSizes(shark.getClass().getName());
-			return;
-		}
+	private void updateGrid(Fish fish) {
+		updateFish(fish);
+		updateCellSizes(fish.getClass().getName());
+	}
+
+	/**
+	 * updates the shark and also adds to a counter for graph view
+	 * 
+	 * @param fish
+	 */
+	private void updateGrid(Shark shark) {
+		updateShark(shark);
+		updateCellSizes(shark.getClass().getName());
 	}
 
 	/**
@@ -97,8 +118,9 @@ public class WaterGridLogic extends GridLogic {
 	 */
 	private void updateFish(Fish fish) {
 		Cell nextLocation = fish.getNextLocation();
-		if (nextLocation == null
-				|| (nextLocation.getCoordsX() == fish.getCoordsX() && nextLocation.getCoordsY() == fish.getCoordsY()))
+
+		// check to see if movement is needed
+		if (!checkMovement(fish, nextLocation))
 			return;
 
 		// resolve conflicts
@@ -108,16 +130,8 @@ public class WaterGridLogic extends GridLogic {
 			return;
 		}
 
-		// save previous coords because it is about to change
-		int fishX = fish.getCoordsX();
-		int fishY = fish.getCoordsY();
+		moveAndCheckReproduce(fish, nextLocation);
 
-		grid.moveCellGridIndex(fish.getCoordsX(), fish.getCoordsY(), nextLocation.getCoordsX(),
-				nextLocation.getCoordsY());
-
-		if (fish.isReproducing()) {
-			grid.setGridIndex(new Fish(fishX, fishY, fishReproduce), fishX, fishY);
-		}
 	}
 
 	/**
@@ -127,6 +141,8 @@ public class WaterGridLogic extends GridLogic {
 	 * @param shark
 	 */
 	private void updateShark(Shark shark) {
+
+		// replace shark with empty cell
 		if (shark.isDead()) {
 			grid.setGridIndex(new EmptyCell(shark.getCoordsX(), shark.getCoordsY()), shark.getCoordsX(),
 					shark.getCoordsY());
@@ -135,8 +151,8 @@ public class WaterGridLogic extends GridLogic {
 
 		Cell nextLocation = shark.getNextLocation();
 
-		if (nextLocation == null
-				|| (nextLocation.getCoordsX() == shark.getCoordsX() && nextLocation.getCoordsY() == shark.getCoordsY()))
+		// see if movement is needed
+		if (!checkMovement(shark, nextLocation))
 			return;
 
 		// resolve conflicts
@@ -145,17 +161,39 @@ public class WaterGridLogic extends GridLogic {
 			updateShark(shark);
 			return;
 		}
-		// save previous coords because it is about to change
-		int sharkX = shark.getCoordsX();
-		int sharkY = shark.getCoordsY();
 
-		grid.moveCellGridIndex(shark.getCoordsX(), shark.getCoordsY(), nextLocation.getCoordsX(),
+		moveAndCheckReproduce(shark, nextLocation);
+	}
+
+	/**
+	 * check to see if movement is necessary
+	 * 
+	 * @param nextLocation
+	 * @param currObj
+	 * @return
+	 */
+	private boolean checkMovement(Cell currObj, Cell nextLocation) {
+		return nextLocation != null && !(nextLocation.getCoordsX() == currObj.getCoordsX()
+				&& nextLocation.getCoordsY() == currObj.getCoordsY());
+	}
+
+	private void moveAndCheckReproduce(Cell currObj, Cell nextLocation) {
+		// save previous coords because it is about to change
+		int objX = currObj.getCoordsX();
+		int objY = currObj.getCoordsY();
+
+		// move fish or shark
+		grid.moveCellGridIndex(currObj.getCoordsX(), currObj.getCoordsY(), nextLocation.getCoordsX(),
 				nextLocation.getCoordsY());
 
-		if (shark.isReproducing()) {
-			grid.setGridIndex(new Shark(sharkX, sharkY, sharkDeath, sharkReproduce), sharkX, sharkY);
+		// put a fish where the fish moved from
+		if (currObj instanceof Fish && ((Fish) currObj).isReproducing()) {
+			grid.setGridIndex(new Fish(objX, objY, fishReproduce), objX, objY);
 		}
 
+		if (currObj instanceof Shark && ((Shark) currObj).isReproducing()) {
+			grid.setGridIndex(new Shark(objX, objY, sharkDeath, sharkReproduce), objX, objY);
+		}
 	}
 
 }
